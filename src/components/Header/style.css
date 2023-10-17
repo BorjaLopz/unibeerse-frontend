@@ -1,10 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-header {
+#highView {
+  visibility: visible;
   min-height: 5rem;
   display: flex;
   flex-direction: row;
@@ -19,7 +22,17 @@ header {
   );
 }
 
-#mainIcon {
+#lowView {
+  background: rgb(37, 39, 53);
+  /* background: radial-gradient(
+    circle,
+    rgba(9, 79, 121, 0.35) 0%,
+    rgba(0, 212, 255, 0.05) 100%
+  ); */
+  display: none;
+}
+
+#highView .mainIcon {
   min-width: 4rem;
   min-height: 4rem;
   align-self: center;
@@ -36,3 +49,50 @@ header menu {
   font-size: 1.5rem;
 }
 
+#hamburguerMenu {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  flex-flow: column nowrap;
+  z-index: 10;
+}
+
+@media (max-width: 850px) {
+  #highView {
+    display: none;
+  }
+
+  #lowView {
+    padding: 0.4rem;
+    height: 10rem;
+    visibility: visible;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  .mainTitle {
+    font-size: 48px;
+    letter-spacing: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    background: linear-gradient(
+      to right,
+      #fc4c2d,
+      #ecae95
+    ); /* Degradado de colores (puedes ajustar los colores a tu preferencia) */
+    background-clip: text; /* Recorte de texto para que el degradado se aplique solo al texto */
+    color: transparent; /* Hace que el texto sea transparente para que se muestre el degradado */
+    text-align: center; /* Alineación del texto */
+    -webkit-text-fill-color: transparent; /* Hace que el texto sea transparente en navegadores webkit */
+  }
+
+  #hamburguerMenu {
+    display: fixed;
+    padding-left: 10px;
+  }
+}
