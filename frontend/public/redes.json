@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Github",
+    "url": "https://github.com/BorjaLopz",
+    "icon": "github"
+  },
+
+  {
+    "id": 2,
+    "name": "LinkedIn",
+    "url": "https://www.linkedin.com/in/borjalopezdiaz/",
+    "icon": "linkedin"
+  },
+
+  {
+    "id": 3,
+    "name": "Email",
+    "url": "borja.lpzdz5@gmail.com",
+    "icon": "email"
+  },
+
+  {
+    "id": 4,
+    "name": "Buy me a beer",
+    "url": "https://www.buymeacoffee.com/BorjaLopz",
+    "icon": "BuyMeABeer_Icon"
+  }
+]

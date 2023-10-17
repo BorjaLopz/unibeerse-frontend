@@ -1,0 +1,155 @@
+main {
+  max-width: 100%;
+}
+
+.home-component-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.home-component {
+  padding: 2rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  width: 95vw;
+}
+
+.container-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-title img {
+  max-width: 6rem;
+}
+
+.home-component h2 {
+  text-align: center;
+  font-size: 8rem;
+  font-weight: 700;
+  color: #8750a5;
+  font-family: "Soria", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+    sans-serif;
+  letter-spacing: 2px;
+  background-image: linear-gradient(180deg, #3354a2, #4a6ec2, #3354a2, #3354a2);
+  background-clip: text;
+  color: transparent;
+}
+
+.home-component p {
+  color: #020203;
+  margin: 20px 0;
+  font-size: 3rem;
+}
+
+#div-container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#div-container:hover > img {
+  animation: arrowAnimation 1s ease-out infinite;
+}
+
+#container-car-text {
+  display: flex;
+  flex-direction: column;
+}
+
+#container-text-arrow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+}
+
+#container-text-arrow img {
+  max-width: 2rem;
+  color: #3354a2;
+}
+
+#first-paragraph {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+#container-text-arrow:hover > img {
+  animation: arrowAnimation 1s ease-out infinite;
+}
+
+@keyframes arrowAnimation {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25%,
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+#text {
+  display: flex;
+  flex-direction: column;
+}
+
+#text p {
+  font-size: 1.1rem;
+}
+
+#car-home > img {
+  height: 10.5rem;
+}
+
+@keyframes arrowAnimation {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25%,
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+@media (max-width: 577px) {
+  .home-component h2 {
+    font-size: 6rem;
+  }
+
+  .home-component p {
+    margin: 20px 0;
+    font-size: 2rem;
+  }
+
+  .container-title img {
+    max-width: 4rem;
+  }
+
+  #div-container {
+    font-size: 24px;
+    margin-bottom: 2rem;
+  }
+
+  #car-home {
+    display: inline-block;
+    width: 100%;
+  }
+
+  #car-home > img {
+    height: 14rem;
+  }
+}

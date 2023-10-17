@@ -1,0 +1,68 @@
+[
+  {
+    "active": true,
+    "style": "Lager",
+    "description": "Las Lager son las cervezas más populares en Europa occidental; normalmente son cervezas claras, para servirse frías con una alta drinkability. Dentro de las Lager podemos encontrar tres subtipos principales: la Pilsen, la Lager especial y la Lager extra.",
+    "itemKey": "lager"
+  },
+  {
+    "active": true,
+    "style": "Lager Pilsen",
+    "description": "Son las cervezas más populares en España. Tiene una graduación de alcohol media-baja, rondando el 4%. Son cervezas rubias elaboradas con maltas claras como la Malta Pilsner o la Premium Pilsner. Tienen un ligero aroma a lúpulo con notas suaves y frescas, siendo las Lagers más ligeras.",
+    "itemKey": "pilsen"
+  },
+  {
+    "active": true,
+    "style": "Ale",
+    "description": "Antes de las lagers, fueron durante siglos el tipo de cerveza más popular. Suelen tener una graduación más alta y sabores más intensos. Para su elaboración se usan principalmente levaduras tipo Saccharomyces cerevisiae como la Safale US-05 y la Safale S-04, fermentando rápidamente a temperaturas entre 15 y 25º.",
+    "itemKey": "ale belgica"
+  },
+  {
+    "active": true,
+    "style": "Pale Ale",
+    "description": "Las cervezas Pale Ale son uno de los tipos de cerveza más de moda actualmente. Son las cervezas Ale más pálidas (de ahí su nombre). No obstante, son cervezas muy lupuladas y de intenso sabor (algunas pueden llegar a ser bastante amargas). Dentro de las Pale Ale, se encuentran también las conocidas IPA (India Pale Ale).",
+    "itemKey": "IPA"
+  },
+  {
+    "active": false,
+    "style": "Ale belgas",
+    "description": "Son las cervezas originarias de Bélgica. Las dos más conocidas son la Ales belgas trapenses y las Saison belgas.",
+    "itemKey": "ale"
+  },
+  {
+    "active": true,
+    "style": "Trapenses",
+    "description": "Cerveza originariamente producida en los monasterios trapenses de Bélgica. Son cervezas Ale de carácter fuerte con una segunda fermentación en botella. Son cervezas afrutadas, con colores que oscilan entre el bronce y el marrón oscuro. La graduación de este tipo de cerveza es bastante alta (entre 6 y 8º).",
+    "itemKey": "trapenses"
+  },
+  {
+    "active": true,
+    "style": "Saison belgas",
+    "description": "La comúnmente conocida como la cerveza del verano. De sabor fresco y afrutado.",
+    "itemKey": "saison"
+  },
+  {
+    "active": true,
+    "style": "Ale",
+    "description": "Perdieron bastante popularidad al aparecer las Lager. No obstante, siguen quedando algunos tipos con bastantes adeptos. Una de las más conocidas es la Kölsh, un tipo de cerveza Ale de color pálido con la particularidad de madurar en frío. Cervezas suaves y afrutadas con una graduación alcohólica de 6º.",
+    "itemKey": "ale"
+  },
+  {
+    "active": true,
+    "style": "Abadia",
+    "description": "Una cerveza de color bronceado con una espuma ligeramente tostada y con mucha persistencia. Un aroma afrutado con notas a caramelo. Este tipo suele tener una graduación alrededor de los 6º y en boca se presenta muy sabrosa y seca.",
+    "itemKey": "abadia"
+  },
+  {
+    "active": true,
+    "style": "Stout",
+    "description": "Cervezas muy oscuras hechas con malta tostada",
+    "itemKey": "stout"
+  },
+  {
+    "active": true,
+    "style": "Porter",
+    "description": "Una variedad aun más fuerte. Suelen ser muy cremosas y pueden tener matices a chocolate o café.",
+    "itemKey": "porter"
+  }
+]

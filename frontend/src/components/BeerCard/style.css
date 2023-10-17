@@ -1,0 +1,162 @@
+main {
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+._beerCard {
+  min-height: 25rem;
+  height: fit-content;
+  width: 35rem;
+
+  display: flex;
+  flex-direction: row;
+
+  border-radius: 1rem;
+  background-color: #eeeeee;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.404);
+}
+
+#informacion_card {
+  flex: 50;
+  display: flex;
+  flex-direction: column;
+}
+
+#informacion_card #brand_name_beerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  flex: 50;
+}
+
+#informacion_card #brand_name_beerCard h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-style: italic;
+}
+
+#informacion_card #brand_name_beerCard h3 {
+  text-align: center;
+  font-size: 2rem;
+}
+
+#informacion_card #container_graduation_style_beerCard {
+  flex: 10;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#informacion_card #container_graduation_style_beerCard p {
+  font-size: 1.2rem;
+}
+
+#informacion_card #container_country_icon_beerCard {
+  flex: 40;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#beer_icon_card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex: 50;
+
+  border-radius: 1rem 0 0 1rem;
+  max-width: 14rem;
+
+  box-shadow: 1px 0 5px rgba(0, 0, 0, 0.24);
+}
+
+#beer_icon_card * :not(img) {
+  height: 100%;
+  border-radius: 1rem 0 0 1rem;
+  object-fit: contain;
+}
+
+#beer_icon_card img {
+  height: 14rem;
+  align-self: center;
+  object-fit: cover;
+}
+
+#beer_country_card {
+  width: 5rem;
+}
+
+#flag_icon_card {
+  width: 4rem;
+}
+
+.arrow {
+  padding: 10px 20px;
+  position: absolute;
+  top: 30%;
+  border-radius: 5px;
+  background-color: #eeeeee;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.404);
+}
+
+.arrow:hover {
+  background-color: #3354a221;
+  box-shadow: 0 0 5px #3354a2be;
+}
+
+.arrow img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.left {
+  left: 100px;
+  margin-right: auto;
+}
+
+.rigth {
+  right: 100px;
+  margin-left: auto;
+}
+
+.main-container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 40vh;
+}
+
+#commentas_card {
+  margin: 50px 0 10px 0;
+  background-color: #eeeeee;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.404);
+  width: 125%;
+  border-radius: 0.8rem;
+}
+
+#comments_beer_card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#h2_notas {
+  margin-top: 8px;
+  font-size: 1.4rem;
+  font-style: italic;
+}
+
+#comments_beer_card #comment {
+  font-size: 1.2rem;
+  padding: 1rem 0;
+}
+
+

@@ -1,0 +1,78 @@
+.container-footer {
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.container-column {
+  flex: 1;
+  padding: 0 20px;
+  margin: 1rem 0;
+  max-height: 15rem;
+}
+
+.container-column > .redes-icon > ul,
+.container-column ul {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-height: 10rem;
+}
+
+.container-column ul {
+  width: 100%;
+}
+
+.column-title {
+  font-size: 1.4rem;
+  font-style: italic;
+}
+
+.redes-icon ul {
+  width: 100%;
+}
+
+.redes-icon ul * {
+  max-width: 2rem;
+}
+
+ul {
+  gap: 1rem;
+}
+
+h3,
+p {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+.column-animation li:hover, 
+#listado-redes li:hover {
+  animation: scaleAnimation 0.15s forwards;
+}
+
+.footer-bottom {
+  border-radius: 8px;
+  background-color: #dddddd;
+  text-align: center;
+  padding: 10px 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.404);
+}
+
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.25);
+  }
+}
