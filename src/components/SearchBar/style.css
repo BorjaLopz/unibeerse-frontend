@@ -9,7 +9,7 @@
   border: 1px solid grey;
   border-radius: 5px;
   height: 2.5rem;
-  width: 60%;
+  width: 100%;
   outline: 0;
   background-color: #f5f5f5;
   padding: 10px 30px 10px 40px;
@@ -21,8 +21,8 @@
   transition: width 0.4s ease-in-out;
 }
 
-.search input :enabled {
-  width: 60%;
+.search input:enabled {
+  width: 100%;
 }
 
 input:focus {
@@ -51,4 +51,10 @@ textarea:hover {
 
 input[type="search"] {
   padding-left: 40px;
+}
+
+@media (max-width: 850px) {
+  .search {
+    color: black;
+  }
 }

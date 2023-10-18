@@ -33,7 +33,7 @@ function Header({ handleCustomFilter }) {
             <h2 className="mainTitle">UNIBEERSE</h2>
           </div>
 
-          <HamburguerMenuComponent searchBar={SearchBar}/>
+          <HamburguerMenuComponent handleFilter={handleFilter} />
         </section>
       </header>
     </>

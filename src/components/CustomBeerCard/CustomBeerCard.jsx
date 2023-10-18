@@ -11,8 +11,12 @@ function CustomBeerCard({ data }) {
     <Link key={id} to={`/beer/${id - 1}`} className="currentBeer">
       <div id="beer_card">
         <div id="beer_brand_name">
-          <h2 id="beer_brand">{brand}</h2>
-          <h2 id="beer_name">{name}</h2>
+          <h2 id="beer_brand">{`${
+            brand.length > 8 ? `${brand.substring(0, 8)}...` : brand
+          }`}</h2>
+          <h2 id="beer_name">{`${
+            name.length > 15 ? `${name.substring(0, 15)}...` : name
+          }`}</h2>
         </div>
         <div id="beer_icon">
           {img_file === "" ? (
@@ -31,7 +35,9 @@ function CustomBeerCard({ data }) {
         </div>
         <div id="container_graduation_style">
           <p id="beer_graduation">{graduation}</p>
-          <p id="beer_style">{style}</p>
+          <p id="beer_style">{`${
+            style.length > 15 ? `${style.substring(0, 14)}...` : style
+          }`}</p>
         </div>
         <div id="container_country_icon">
           <div id="container_country">

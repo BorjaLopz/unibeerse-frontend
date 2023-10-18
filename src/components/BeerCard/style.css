@@ -226,9 +226,9 @@ main {
   }
 
   .arrow {
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
     position: absolute;
-    top: 85%;
+    top: 88%;
     border-radius: 5px;
     background-color: #eeeeee;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.404);
@@ -242,10 +242,10 @@ main {
   }
 
   .rigth {
-    right: 39%;
+    right: 10%;
   }
 
   .left {
-    left: 39%;
+    left: 10%;
   }
 }

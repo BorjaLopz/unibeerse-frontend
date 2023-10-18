@@ -45,7 +45,7 @@ function AllBeersComponent({ customFilter }) {
       setBeerJSON(beerData.data);
       // console.log("beerData.data");
       // console.log(beerData.data);
-      setLoading(true)
+      setLoading(true);
     } catch (e) {
       console.error(`Error: ${e}`);
     }
@@ -58,20 +58,33 @@ function AllBeersComponent({ customFilter }) {
     setTotalPages(Math.ceil(beers.length / itemsPerPage));
   }, []);
 
-  beers.filter((beer) => {
-    if (customFilter === "") {
-      return beer;
-    } else if (
-      removingAccents(beer.name.toLowerCase()).includes(customFilter) ||
+  //Añadimos cervezas filtradas desde el archivo JSON
+  if(customFilter !== "") {
+    beerJSON.filter((beer) => {
+      if(removingAccents(beer.name.toLowerCase()).includes(customFilter) ||
       removingAccents(beer.style.toLowerCase()).includes(customFilter) ||
       removingAccents(beer.brand.toLowerCase()).includes(customFilter) ||
       removingAccents(beer.country.toLowerCase()).includes(customFilter) ||
-      removingAccents(beer.graduation.toLowerCase()).includes(customFilter)
-    ) {
-      filteredBeers.push(beer);
-      return beer;
-    }
-  });
+      removingAccents(beer.graduation.toLowerCase()).includes(customFilter)) {
+        filteredBeers.push(beer);
+        return beer;
+      }
+    })
+  }
+  // beers.filter((beer) => {
+  //   if (customFilter === "") {
+  //     return beer;
+  //   } else if (
+  //     removingAccents(beer.name.toLowerCase()).includes(customFilter) ||
+  //     removingAccents(beer.style.toLowerCase()).includes(customFilter) ||
+  //     removingAccents(beer.brand.toLowerCase()).includes(customFilter) ||
+  //     removingAccents(beer.country.toLowerCase()).includes(customFilter) ||
+  //     removingAccents(beer.graduation.toLowerCase()).includes(customFilter)
+  //   ) {
+  //     filteredBeers.push(beer);
+  //     return beer;
+  //   }
+  // });
 
   return (
     <>

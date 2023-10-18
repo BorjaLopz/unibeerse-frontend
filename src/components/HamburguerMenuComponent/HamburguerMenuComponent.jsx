@@ -1,10 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./style.css";
+import SearchBar from "../SearchBar/SearchBar";
 
-function HamburguerMenuComponent({ searchBar }) {
+function HamburguerMenuComponent({ handleFilter }) {
   const location = useLocation();
   const [isMenuClicked, setIsMenuClicked] = useState(false);
+
+  const beerPage = location.pathname.includes("beers");
 
   useEffect(() => {
     setIsMenuClicked(false);
@@ -31,10 +34,15 @@ function HamburguerMenuComponent({ searchBar }) {
       </nav>
 
       <div className={menuClass}>
-        <Link to="/">Inicio</Link>
-        <Link to="/beers/page/1">Cervezas</Link>
-        <Link to="/styles">Estilos</Link>
-        <Link to="/contact">Contacto</Link>
+        <div id="searchRoutes">
+          <Link to="/">Inicio</Link>
+          <Link to="/beers/page/1">Cervezas</Link>
+          <Link to="/styles">Estilos</Link>
+          <Link to="/contact">Contacto</Link>
+        </div>
+        <div id="searchHamburguer">
+          {beerPage && <SearchBar handleFilter={handleFilter} />}
+        </div>
       </div>
     </div>
   );

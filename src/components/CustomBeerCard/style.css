@@ -324,4 +324,10 @@ button.disabled {
     max-height: 80%;
     margin: auto;
   }
+
+  .pagination {
+    width: 80%;
+  }
+
+  
 }
