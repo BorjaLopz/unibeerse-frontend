@@ -10,6 +10,7 @@ function CustomPagination({
   RenderComponent,
   filter,
 }) {
+
   let pages = Math.ceil(data.length / dataLimit);
   const [currentPage, setCurrentPage] = useState(1);
   const { numberPage } = useParams();

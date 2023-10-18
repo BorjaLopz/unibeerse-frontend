@@ -6,6 +6,8 @@ import useServer from "../../hooks/useServer";
 import BeerIcon from "../BeerIcon";
 import { splitCountryName, getCodeCountryByName } from "../../helpers";
 
+import beerData from "/public/beer-data.json";
+
 function BeerCard() {
   const { get } = useServer();
   const [beer, setBeer] = useState({});
@@ -64,10 +66,55 @@ function BeerCard() {
     }
   };
 
+  const fetchCurrentBeerJSON = () => {
+    try {
+      const currentBeer = beerData.data.find((b) => {
+        if (parseInt(b.id) === parseInt(id) + 1) {
+          return b;
+        }
+      });
+
+      setBeer(currentBeer);
+    } catch (e) {
+      console.error(`Error: ${e}`);
+    }
+  };
+
+  const fetchNextBeerJSON = () => {
+    try {
+      const nextBeer = beerData.data.find((b) => {
+        if (parseInt(b.id) === parseInt(id) + 2) {
+          return b;
+        }
+      });
+
+      setNextBeer(nextBeer);
+    } catch (e) {
+      console.error(`Error: ${e}`);
+    }
+  };
+
+  const fetchPreviousBeerJSON = () => {
+    try {
+      const prevBeer = beerData.data.find((b) => {
+        if (parseInt(b.id) === parseInt(id)) {
+          return b;
+        }
+      });
+
+      setPreviousBeer(prevBeer);
+    } catch (e) {
+      console.error(`Error: ${e}`);
+    }
+  };
+
   useEffect(() => {
-    fetchBeerId();
-    fetchPreviousBeer();
-    fetchNextsBeer();
+    // fetchBeerId();
+    // fetchPreviousBeer();
+    // fetchNextsBeer();
+    fetchCurrentBeerJSON();
+    fetchNextBeerJSON();
+    fetchPreviousBeerJSON();
   }, [id]);
 
   return (

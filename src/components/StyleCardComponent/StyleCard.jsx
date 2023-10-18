@@ -7,6 +7,8 @@ import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import { removingAccents } from "../../helpers";
 import "./style.css";
 
+import beerData from "/public/beer-data.json";
+
 function StyleCard() {
   const { style } = useParams();
   const [currentStyle, setCurrentStyle] = useState();
@@ -47,9 +49,30 @@ function StyleCard() {
         "https://primer-proyecto-nodejs.glitch.me/api/v1/beers/all"
       );
       const data = await res.json();
-      setBeers(data.data);
 
       const filteredBeers = data.data.filter((b) => {
+        if (style.split(" ").length > 1) {
+          if (
+            b?.style?.toLowerCase().includes(style.split(" ").slice(0)[0]) &&
+            removingAccents(style.split(" ").slice(-1)[0]) ===
+              removingAccents(b?.country.toLowerCase())
+          ) {
+            return b;
+          }
+        }
+        if (b?.style?.toLowerCase() === currentStyle?.itemKey?.toLowerCase()) {
+          return b;
+        }
+      });
+      setBeers(filteredBeers);
+    } catch (e) {
+      console.error(`Error: ${e}`);
+    }
+  };
+
+  const getBeersJSON = () => {
+    try {
+      const filteredBeers = beerData.data.filter((b) => {
         if (style.split(" ").length > 1) {
           if (
             b?.style?.toLowerCase().includes(style.split(" ").slice(0)[0]) &&
@@ -97,7 +120,8 @@ function StyleCard() {
   });
 
   useEffect(() => {
-    getBeers();
+    // getBeers();
+    getBeersJSON();
   }, [currentStyle]);
 
   useEffect(() => {

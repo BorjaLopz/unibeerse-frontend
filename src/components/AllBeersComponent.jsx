@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import useServer from "../hooks/useServer";
 import LoadingComponent from "./LoadingComponent/LoadingComponent";
 
+import beerData from "/public/beer-data.json";
+
 import CustomPagination from "./CustomPagination/CustomPagination";
 import CustomBeerCard from "./CustomBeerCard/CustomBeerCard";
 import { removingAccents } from "../helpers";
@@ -11,6 +13,8 @@ function AllBeersComponent({ customFilter }) {
   const { get } = useServer();
   const [loading, setLoading] = useState(false);
   let filteredBeers = [];
+
+  const [beerJSON, setBeerJSON] = useState({});
 
   const [totalPages, setTotalPages] = useState(0);
 
@@ -23,7 +27,7 @@ function AllBeersComponent({ customFilter }) {
       );
       const data = await res.json();
       setBeers(data.data);
-      setLoading(true)
+      setLoading(true);
     } catch (e) {
       console.error(`Error: ${e}`);
     }
@@ -36,8 +40,20 @@ function AllBeersComponent({ customFilter }) {
     // setBeers(data.data);
   };
 
+  const getBeersJSON = () => {
+    try {
+      setBeerJSON(beerData.data);
+      // console.log("beerData.data");
+      // console.log(beerData.data);
+      setLoading(true)
+    } catch (e) {
+      console.error(`Error: ${e}`);
+    }
+  };
+
   useEffect(() => {
-    getBeers();
+    // getBeers();
+    getBeersJSON();
 
     setTotalPages(Math.ceil(beers.length / itemsPerPage));
   }, []);
@@ -64,7 +80,7 @@ function AllBeersComponent({ customFilter }) {
       <main>
         {loading ? (
           <CustomPagination
-            data={customFilter !== "" ? filteredBeers : beers}
+            data={customFilter !== "" ? filteredBeers : beerJSON}
             pageLimit={5}
             dataLimit={20}
             RenderComponent={CustomBeerCard}
