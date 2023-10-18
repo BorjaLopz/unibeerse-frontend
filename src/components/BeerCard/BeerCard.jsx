@@ -142,12 +142,13 @@ function BeerCard() {
               <BeerIcon style={beer.style} />
             )}
           </div>
-          <div id="informacion_card">
-            <div id="brand_name_beerCard">
-              <h2>{beer?.brand}</h2>
-              <h3>{beer?.name}</h3>
-            </div>
 
+          <div id="brand_name_beerCard">
+            <h2>{beer?.brand}</h2>
+            <h3>{beer?.name}</h3>
+          </div>
+
+          <div id="informacion_card">
             <div id="container_graduation_style_beerCard">
               <p id="beer_graduation">{beer?.graduation}</p>
               <p id="beer_style">{beer?.style}</p>
@@ -194,9 +195,9 @@ function BeerCard() {
           </div>
         </div>
 
-        {beer?.comments ? (
+        {/* Comentamos comentarios jejeje */}
+        {/* {beer?.comments ? (
           <div id="commentas_card">
-            {/* Comentarios */}
             <div id="comments_beer_card">
               <h2 id="h2_notas">Notas</h2>
               <h2 id="comment">{beer?.comments}</h2>
@@ -204,7 +205,7 @@ function BeerCard() {
           </div>
         ) : (
           <></>
-        )}
+        )} */}
         <Link to={`/beer/${idInteger + 1}`}>
           {nextBeer !== undefined ? (
             <>

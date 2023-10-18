@@ -76,3 +76,32 @@ h3 {
     transform: scale(1.25);
   }
 }
+
+@media (max-width: 850px) { 
+  .container-column:nth-child(2) {
+    display: none;
+  }
+
+  .container-column {
+    height: 3rem;
+  }
+
+  .container-column #listado-redes {
+    flex-direction: row;
+    justify-content: space-around;
+    /* gap: 4rem; */
+  }
+
+  .column-title{
+    font-size: 0;
+  }
+
+  .redes-icon ul * {
+    max-width: 3rem;
+  }
+
+  .container-column {
+    margin-bottom: 3rem;
+  }
+}
+

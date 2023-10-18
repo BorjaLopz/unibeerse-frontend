@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&display=swap");
 
 * {
   margin: 0;
@@ -68,27 +68,26 @@ header menu {
     padding: 0.4rem;
     height: 10rem;
     visibility: visible;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 80% 1fr;
     justify-content: space-between;
     align-items: center;
   }
 
-
   .mainTitle {
     font-size: 48px;
     letter-spacing: 4px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-weight: bold;
     background: linear-gradient(
       to right,
       #fc4c2d,
       #ecae95
-    ); /* Degradado de colores (puedes ajustar los colores a tu preferencia) */
-    background-clip: text; /* Recorte de texto para que el degradado se aplique solo al texto */
-    color: transparent; /* Hace que el texto sea transparente para que se muestre el degradado */
-    text-align: center; /* Alineación del texto */
-    -webkit-text-fill-color: transparent; /* Hace que el texto sea transparente en navegadores webkit */
+    ); 
+    background-clip: text; 
+    color: transparent; 
+    text-align: center; 
+    -webkit-text-fill-color: transparent; 
   }
 
   #hamburguerMenu {
