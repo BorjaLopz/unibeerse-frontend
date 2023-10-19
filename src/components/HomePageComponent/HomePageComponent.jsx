@@ -28,7 +28,7 @@ function HomePageComponent() {
         <img src="/favicon.svg" alt="beer" />
         <h2>SE</h2>
       </div>
-      <p>¡Bienvenido/a!</p>
+      <p id="welcomeText">¡Bienvenido/a!</p>
       <div id="container-car-text">
         <div id="text">
           <p>

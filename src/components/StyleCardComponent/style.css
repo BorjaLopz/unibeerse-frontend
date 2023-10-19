@@ -4,3 +4,83 @@
   border-radius: 0.4rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.158);
 }
+
+@media (max-width: 850px) {
+  #style-main {
+    margin-top: 4rem;
+  }
+  .style-article {
+    background-color: #004cff23;
+  }
+
+  .style-article-disable {
+    background-color: #3354a221;
+  }
+
+  #beer_examples {
+    flex-direction: row;
+    flex-wrap: wrap;
+    box-shadow: none;
+    background-color: inherit;
+    width: 100%;
+    background-color: #dde2ee5b;
+    border-radius: 1rem;
+  }
+
+  .currentBeer_style {
+    height: 12rem;
+    min-width: 8rem;
+    width: 8rem;
+    background-color: #eaf1ff;
+    box-shadow: 0 0 5px rgba(37, 39, 53, 0.4);
+  }
+
+  #beer_card_style {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 20% 20% 10%;
+    gap: 2px;
+  }
+
+  #beer_card_style #beer_brand_name {
+    width: 105%;
+    grid-row: 1;
+    grid-column: 1 / span 2;
+  }
+
+  #beer_card_style #beer_brand_name h2 {
+    font-family: "Poppins";
+    font-style: normal;
+  }
+  #beer_card_style #beer_brand_name #beer_brand {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  #beer_card_style #beer_brand_name #beer_name {
+    font-size: 0.9rem;
+  }
+
+  #beer_card_style #beer_icon_style {
+    width: 100%;
+    height: 100%;
+    grid-column: 1;
+    grid-row: 2 / span 3;
+  }
+
+  #beer_card_style #container_graduation_style {
+    grid-column: 2;
+    grid-row: 2 / span 3;
+  }
+
+  #mainTitleSection {
+    margin-bottom: 2rem;
+  }
+
+  #mainTitleSection h2 {
+    font-family: "Poppins";
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+}

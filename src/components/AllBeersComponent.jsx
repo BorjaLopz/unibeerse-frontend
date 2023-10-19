@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useRef } from "react";
 import useServer from "../hooks/useServer";
 import LoadingComponent from "./LoadingComponent/LoadingComponent";
 
@@ -12,6 +12,10 @@ function AllBeersComponent({ customFilter }) {
   const [beers, setBeers] = useState([]);
   const { get } = useServer();
   const [loading, setLoading] = useState(false);
+
+  const screenWidth = useRef(window.innerWidth);
+  const screenHeight = useRef(window.innerHeight);
+
   let filteredBeers = [];
 
   const [beerJSON, setBeerJSON] = useState({});
@@ -59,17 +63,19 @@ function AllBeersComponent({ customFilter }) {
   }, []);
 
   //Añadimos cervezas filtradas desde el archivo JSON
-  if(customFilter !== "") {
+  if (customFilter !== "") {
     beerJSON.filter((beer) => {
-      if(removingAccents(beer.name.toLowerCase()).includes(customFilter) ||
-      removingAccents(beer.style.toLowerCase()).includes(customFilter) ||
-      removingAccents(beer.brand.toLowerCase()).includes(customFilter) ||
-      removingAccents(beer.country.toLowerCase()).includes(customFilter) ||
-      removingAccents(beer.graduation.toLowerCase()).includes(customFilter)) {
+      if (
+        removingAccents(beer.name.toLowerCase()).includes(customFilter) ||
+        removingAccents(beer.style.toLowerCase()).includes(customFilter) ||
+        removingAccents(beer.brand.toLowerCase()).includes(customFilter) ||
+        removingAccents(beer.country.toLowerCase()).includes(customFilter) ||
+        removingAccents(beer.graduation.toLowerCase()).includes(customFilter)
+      ) {
         filteredBeers.push(beer);
         return beer;
       }
-    })
+    });
   }
   // beers.filter((beer) => {
   //   if (customFilter === "") {
@@ -86,19 +92,45 @@ function AllBeersComponent({ customFilter }) {
   //   }
   // });
 
+  console.log("filteredBeers");
+  console.log(filteredBeers);
   return (
     <>
       {/* <AllBeersComponent /> */}
       {/* <SearchBar data={beers} /> */}
       <main>
-        {loading ? (
+        {/* {loading ? (
           <CustomPagination
             data={customFilter !== "" ? filteredBeers : beerJSON}
-            pageLimit={5}
+            pageLimit={`${screenWidth.current < 500 ? 2 : 4}`}
             dataLimit={20}
             RenderComponent={CustomBeerCard}
             filter={customFilter}
           />
+        ) : (
+          <LoadingComponent />
+        )} */}
+
+        {loading ? (
+          customFilter === "" ? (
+            <CustomPagination
+              data={beerJSON}
+              pageLimit={`${screenWidth.current < 500 ? 2 : 4}`}
+              dataLimit={20}
+              RenderComponent={CustomBeerCard}
+              filter={customFilter}
+
+            />
+          ) : (
+            <CustomPagination
+              data={filteredBeers}
+              pageLimit={`${screenWidth.current < 500 ? 2 : 4}`}
+              dataLimit={filteredBeers.length}
+              RenderComponent={CustomBeerCard}
+              filter={customFilter}
+              isShown={false}
+            />
+          )
         ) : (
           <LoadingComponent />
         )}

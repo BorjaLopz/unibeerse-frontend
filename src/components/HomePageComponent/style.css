@@ -78,8 +78,10 @@ main {
 }
 
 #first-paragraph {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-family: "Poppins";
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 #container-text-arrow:hover > img {
@@ -125,18 +127,27 @@ main {
   }
 }
 
-@media (max-width: 577px) {
-  .home-component h2 {
-    font-size: 6rem;
+@media (max-width: 850px) {
+
+  .home-component .container-title {
+    display: none;
   }
 
-  .home-component p {
-    margin: 20px 0;
-    font-size: 2rem;
+  .home-component #welcomeText{
+    font-family: "Poppins";
+    text-align: center;
+    font-weight: 500;
+    margin: 3.8rem 0 0 0;
+    font-size: 2.8rem;
+    letter-spacing: 3px;
+  }
+  .home-component #container-car-text {
+    font-family: "Poppins";
   }
 
-  .container-title img {
-    max-width: 4rem;
+  .home-component #container-car-text p{
+    font-size: 1.2rem;
+    text-align: center;
   }
 
   #div-container {
@@ -150,6 +161,6 @@ main {
   }
 
   #car-home > img {
-    height: 14rem;
+    height: 8rem;
   }
 }

@@ -38,6 +38,10 @@ main {
   font-style: italic;
 }
 
+#brand_name_beerCard .brandShorter {
+  font-size: 2rem;
+}
+
 #brand_name_beerCard h3 {
   text-align: center;
   font-size: 2rem;

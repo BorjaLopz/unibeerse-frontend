@@ -36,7 +36,7 @@ function CustomBeerCard({ data }) {
         <div id="container_graduation_style">
           <p id="beer_graduation">{graduation}</p>
           <p id="beer_style">{`${
-            style.length > 15 ? `${style.substring(0, 14)}...` : style
+            style.length > 12 ? `${style.substring(0, 11)}...` : style
           }`}</p>
         </div>
         <div id="container_country_icon">

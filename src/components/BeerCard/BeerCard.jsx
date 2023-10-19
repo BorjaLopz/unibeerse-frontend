@@ -144,7 +144,7 @@ function BeerCard() {
           </div>
 
           <div id="brand_name_beerCard">
-            <h2>{beer?.brand}</h2>
+            <h2 className={`${beer?.brand?.length > 14 ? "brandShorter" : ""}`}>{beer?.brand}</h2>
             <h3>{beer?.name}</h3>
           </div>
 

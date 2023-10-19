@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useServer from "../../hooks/useServer";
 import BeerStyleComponent from "../BeerStyleComponent/BeerStyleComponent";
 import stylejson from "../../../public/styles.json";
@@ -8,6 +8,7 @@ import { removingAccents } from "../../helpers";
 import "./style.css";
 
 import beerData from "/public/beer-data.json";
+import ScrollTopComponent from "../ScrollTop/ScrollTopComponent";
 
 function StyleCard() {
   const { style } = useParams();
@@ -17,6 +18,8 @@ function StyleCard() {
   const [randomBeers, setRandomBeers] = useState([]);
   const navigate = useNavigate();
   const { get } = useServer();
+
+
 
   const beerStyleExample = [];
 
@@ -161,6 +164,9 @@ function StyleCard() {
           <article id="ejemplos-cerveza">
             {randomBeers.length > 0 ? (
               <>
+                <div id="mainTitleSection">
+                  <h2>Cervezas similares</h2>
+                </div>
                 <ul id="beer_examples">
                   {randomBeers.map((b) => {
                     if (b !== undefined) {
@@ -174,6 +180,7 @@ function StyleCard() {
             )}
           </article>
         )}
+        <ScrollTopComponent />
       </main>
     </>
   );
