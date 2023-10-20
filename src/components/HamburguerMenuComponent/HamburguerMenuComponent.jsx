@@ -16,6 +16,8 @@ function HamburguerMenuComponent({ handleFilter }) {
   const menuClass = isMenuClicked
     ? "menuBurguer visible"
     : "menuBurguer closed";
+
+  const newMenuClass = beerPage ? menuClass + " gap" : menuClass;
   const burguerItem = isMenuClicked
     ? "burguerBar clicked"
     : "burguerBar unclicked";
@@ -33,7 +35,7 @@ function HamburguerMenuComponent({ handleFilter }) {
         </div>
       </nav>
 
-      <div className={menuClass}>
+      <div className={newMenuClass}>
         <div id="searchRoutes">
           <Link to="/">Inicio</Link>
           <Link to="/beers/page/1">Cervezas</Link>

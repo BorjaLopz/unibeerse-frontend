@@ -46,19 +46,20 @@
   color: white;
 
   border-radius: 0 0 2rem 2rem;
-}
 
-.menuBurguer {
   padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  gap: 5px;
   transform: translateY(-10rem); /* Inicialmente oculto */
   opacity: 0;
   z-index: -20;
   animation: menuAnimationReverse 0.5s forwards; /* Utiliza una animación llamada "menuAnimation" */
+}
+
+.menuBurguer.gap {
+  gap: 2rem;
 }
 
 #searchRoutes {

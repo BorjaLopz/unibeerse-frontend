@@ -9,6 +9,11 @@ function ContactComponent() {
   const [formEmail, setFormEmail] = useState();
   const [formMessage, setFormMessage] = useState();
 
+  const currenWidth = window.innerWidth;
+
+  console.log("currenWidth");
+  console.log(currenWidth);
+
   const form = useRef();
 
   const capitalizeEveryWord = (_sentence) => {
@@ -97,11 +102,11 @@ function ContactComponent() {
                 <textarea
                   name="mensaje"
                   id="mensaje"
-                  cols={60}
+                  cols={`${currenWidth < 850 ? 40 : 60}`}
                   rows={4}
                   required
                   wrap="soft"
-                  style={{ fontSize: 16 }}
+                  style={{ fontSize: 16, minHeight: "150px" }}
                   value={formMessage}
                   onChange={(e) => setFormMessage(e.target.value)}
                 />
