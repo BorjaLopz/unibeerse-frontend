@@ -69,8 +69,8 @@ header menu {
     height: 10rem;
     visibility: visible;
     display: grid;
-    grid-template-columns: 80% 1fr;
-    justify-content: space-between;
+    grid-template-columns: 70% 1fr;
+    justify-items: center;
     align-items: center;
   }
 
