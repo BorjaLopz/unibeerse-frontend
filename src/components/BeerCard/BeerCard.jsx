@@ -7,6 +7,8 @@ import BeerIcon from "../BeerIcon";
 import { splitCountryName, getCodeCountryByName } from "../../helpers";
 
 import beerData from "/public/beer-data.json";
+import BeerFormComponent from "../BeerFormComponent/BeerFormComponent";
+import BeerCommentsComponent from "../BeerCommentsComponent/BeerCommentsComponent";
 
 function BeerCard() {
   const { get } = useServer();
@@ -120,17 +122,6 @@ function BeerCard() {
   return (
     <main>
       <section className="main-container">
-        <Link to={`/beer/${idInteger - 1}`}>
-          {idInteger !== 0 ? (
-            <>
-              <div className="arrow left">
-                <img src="/icons/LeftArrow.svg" alt="" />
-              </div>
-            </>
-          ) : (
-            ""
-          )}
-        </Link>
         <div className="_beerCard">
           <div id="beer_icon_card">
             {beer.img_file !== "" ? (
@@ -144,7 +135,9 @@ function BeerCard() {
           </div>
 
           <div id="brand_name_beerCard">
-            <h2 className={`${beer?.brand?.length > 14 ? "brandShorter" : ""}`}>{beer?.brand}</h2>
+            <h2 className={`${beer?.brand?.length > 14 ? "brandShorter" : ""}`}>
+              {beer?.brand}
+            </h2>
             <h3>{beer?.name}</h3>
           </div>
 
@@ -206,18 +199,31 @@ function BeerCard() {
         ) : (
           <></>
         )} */}
-        <Link to={`/beer/${idInteger + 1}`}>
-          {nextBeer !== undefined ? (
-            <>
-              <div className="arrow rigth">
-                <img src="/icons/RigthArrow.svg" alt="" />
-              </div>
-            </>
-          ) : (
-            ""
-          )}
-        </Link>
+        <div className="arrowContainer">
+          <div className={`left ${idInteger === 0 ? "blocked" : ""}`}>
+            <Link to={`/beer/${idInteger - 1}`}>
+              <>
+                <div className="arrow">
+                  <img src="/icons/LeftArrow.svg" alt="" />
+                </div>
+              </>
+            </Link>
+          </div>
+          <div className={`right ${nextBeer === undefined ? "blocked" : ""}`}>
+            <Link to={`/beer/${idInteger + 1}`}>
+              <>
+                <div className="arrow">
+                  <img src="/icons/RigthArrow.svg" alt="" />
+                </div>
+              </>
+            </Link>
+          </div>
+        </div>
       </section>
+
+      {/* En caso de que se pudiera modificar un fichero desde cliente, que no se puede :/ */}
+      {/* <BeerFormComponent /> */}
+      {/* <BeerCommentsComponent /> */}
     </main>
   );
 }

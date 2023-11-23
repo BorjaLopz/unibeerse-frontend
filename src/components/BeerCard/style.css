@@ -105,7 +105,7 @@ main {
 
 .arrow {
   padding: 10px 20px;
-  position: absolute;
+  /* position: absolute; */
   top: 30%;
   border-radius: 5px;
   background-color: #eeeeee;
@@ -113,6 +113,7 @@ main {
 }
 
 .arrow:hover {
+  /* cursor: pointer; */
   background-color: #3354a221;
   box-shadow: 0 0 5px #3354a2be;
 }
@@ -123,13 +124,22 @@ main {
 }
 
 .left {
-  left: 100px;
-  margin-right: auto;
+  grid-column: 2;
+  /* left: 100px;
+  margin-right: auto; */
 }
 
-.rigth {
-  right: 100px;
-  margin-left: auto;
+.right {
+  grid-column: 4;
+  /* right: 100px;
+  margin-left: auto; */
+}
+
+.blocked {
+  color: #666; /* Color de texto más oscuro para mejorar la legibilidad */
+  cursor: not-allowed; /* Cambiar el cursor para indicar que no es interactivo */
+  /* Agregar otros estilos según sea necesario */
+  pointer-events: none;
 }
 
 .main-container {
@@ -139,7 +149,7 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 40vh;
+  height: 60vh;
 }
 
 #commentas_card {
@@ -166,6 +176,21 @@ main {
   font-size: 1.2rem;
   padding: 1rem 0;
 }
+
+.arrowContainer {
+  margin-top: 2rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.blocked .arrow {
+    background-color: rgba(136, 136, 136, 0.2);
+  }
+
+  .blocked .arrow img {
+    opacity: 0.4;
+  }
 
 @media (max-width: 850px) {
   ._beerCard {
@@ -224,18 +249,24 @@ main {
     flex-direction: column;
     justify-content: center;
   }
-  #informacion_card #container_country_icon_beerCard *{
+  #informacion_card #container_country_icon_beerCard * {
     font-size: 0;
     gap: 5px;
   }
 
   .arrow {
-    /* padding: 10px 20px; */
-    position: absolute;
-    top: 88%;
-    border-radius: 5px;
+    /* top: 88%; */
+    /* border-radius: 5px; */
     background-color: #eeeeee;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.404);
+  }
+
+  .blocked .arrow {
+    background-color: rgba(136, 136, 136, 0.2);
+  }
+
+  .blocked .arrow img {
+    opacity: 0.4;
   }
 
   #flag_icon_card {
@@ -245,11 +276,26 @@ main {
     overflow: hidden;
   }
 
-  .rigth {
+  /* .rigth {
     right: 10%;
   }
 
   .left {
     left: 10%;
+  } */
+}
+
+@media (max-width: 450px) {
+  ._beerCard {
+    max-width: 65%;
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 40% 30% 25%;
+    background-color: #eaf1ff;
+  }
+
+  #beer_icon_card img {
+    height: 10rem;
   }
 }
