@@ -26,7 +26,7 @@ function CustomBeerCard({ data }) {
           ) : (
             <>
               <img
-                src={`/public/BeerImages/${img_file}`}
+                src={`/BeerImages/${img_file}`}
                 alt={`Imagen de ${name}`}
                 className="beer_image"
               />

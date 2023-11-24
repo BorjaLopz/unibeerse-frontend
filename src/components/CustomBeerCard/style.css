@@ -207,6 +207,7 @@ button.disabled {
   display: flex;
   align-items: center;
   max-height: 60%;
+  justify-content: center;
 
   overflow: hidden;
   object-fit: contain;
