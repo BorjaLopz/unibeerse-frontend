@@ -125,20 +125,15 @@ main {
 
 .left {
   grid-column: 2;
-  /* left: 100px;
-  margin-right: auto; */
 }
 
 .right {
   grid-column: 4;
-  /* right: 100px;
-  margin-left: auto; */
 }
 
 .blocked {
-  color: #666; /* Color de texto más oscuro para mejorar la legibilidad */
-  cursor: not-allowed; /* Cambiar el cursor para indicar que no es interactivo */
-  /* Agregar otros estilos según sea necesario */
+  color: #666; 
+  cursor: not-allowed; 
   pointer-events: none;
 }
 

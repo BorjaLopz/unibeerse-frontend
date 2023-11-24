@@ -11,9 +11,6 @@ function ContactComponent() {
 
   const currenWidth = window.innerWidth;
 
-  console.log("currenWidth");
-  console.log(currenWidth);
-
   const form = useRef();
 
   const capitalizeEveryWord = (_sentence) => {

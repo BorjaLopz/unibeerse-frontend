@@ -119,7 +119,6 @@ function AllBeersComponent({ customFilter }) {
               dataLimit={20}
               RenderComponent={CustomBeerCard}
               filter={customFilter}
-
             />
           ) : (
             <CustomPagination

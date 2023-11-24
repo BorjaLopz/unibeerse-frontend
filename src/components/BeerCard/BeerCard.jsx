@@ -126,7 +126,7 @@ function BeerCard() {
           <div id="beer_icon_card">
             {beer.img_file !== "" ? (
               <img
-                src={`../${beer?.img_file}`}
+                src={`/public/beerImages/${beer?.img_file}`}
                 alt={`Imagen de ${beer.brand} | ${beer.name}`}
               />
             ) : (

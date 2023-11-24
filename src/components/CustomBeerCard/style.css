@@ -37,12 +37,21 @@ main {
   box-shadow: 0 0 5px #3354a2be;
 }
 
-.currentBeer img,
+/* Aplicamos estilo a todas las imagenes menos a la clase beer_image */
+.currentBeer img:not(.beer_image),
 .currentBeer svg {
-  min-width: 8rem;
+  min-width: 7rem;
   align-self: center;
   width: 8rem;
   flex-grow: 1;
+}
+
+.currentBeer .beer_image {
+  /* max-height: 2rem; */
+  /* height: 4rem; */
+  max-height: 6rem;
+  height: 100%;
+  object-fit: cover;
 }
 
 .pagination {
@@ -88,7 +97,6 @@ main {
   color: #888;
   pointer-events: none;
 }
-
 
 .prev.disabled,
 .next.disabled {
@@ -331,6 +339,4 @@ button.disabled {
   .pagination {
     width: 80%;
   }
-
-  
 }
