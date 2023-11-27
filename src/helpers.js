@@ -3221,7 +3221,7 @@ const countries = [
   },
   {
     name_en: "Türkiye",
-    name_es: "Turquía",
+    name_es: "Turquia",
     continent_en: "Asia",
     continent_es: "Asia",
     capital_en: "Ankara",
