@@ -11,9 +11,12 @@ function CustomPagination({
   filter,
   isShown = true,
 }) {
-  let pages = Math.ceil(data?.length / dataLimit);
-  const [currentPage, setCurrentPage] = useState(1);
   const { numberPage } = useParams();
+  const NumericNumberPage = Number(numberPage);
+
+  let pages = Math.ceil(data?.length / dataLimit);
+  const [currentPage, setCurrentPage] = useState(NumericNumberPage || 1);
+  const [dataAvailable, setDataAvailable] = useState([]);
   const navigate = useNavigate();
 
   function goToNextPage() {
@@ -39,8 +42,14 @@ function CustomPagination({
 
   const getPaginatedData = () => {
     const startIndex = currentPage * dataLimit - dataLimit;
+
+    console.log("startIndex");
+    console.log(startIndex);
     const endIndex = startIndex + dataLimit;
-    return data?.slice(startIndex, endIndex);
+    console.log("endIndex");
+    console.log(endIndex);
+
+    setDataAvailable(data?.slice(startIndex, endIndex));
   };
 
   const getPaginationGroup = () => {
@@ -52,11 +61,15 @@ function CustomPagination({
   };
 
   useEffect(() => {
+    getPaginatedData();
     window.scrollTo({ behavior: "smooth", top: "0px" });
-    if (numberPage > pages) {
+    if (NumericNumberPage > pages) {
       navigate("/404");
     }
   }, [currentPage]);
+
+  console.log("dataAvailable");
+  console.log(dataAvailable);
 
   return (
     <>
@@ -83,10 +96,16 @@ function CustomPagination({
             )}
           </article>
           <section id="beer-area">
-            {getPaginatedData().map((d, index) => {
+            {dataAvailable.map((d, index) => {
+              console.log("d");
+              console.log(d);
               return (
                 <>
-                  <RenderComponent data={d} key={index} />
+                  <RenderComponent
+                    data={d}
+                    key={index}
+                    page={NumericNumberPage}
+                  />
                 </>
               );
             })}

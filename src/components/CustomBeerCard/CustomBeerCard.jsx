@@ -1,10 +1,10 @@
 import "./style.css";
 import BeerIcon from "../BeerIcon";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getCodeCountryByName } from "../../helpers";
 import { splitCountryName } from "../../helpers";
 
-function CustomBeerCard({ data }) {
+function CustomBeerCard({ data, page }) {
   const { id, brand, name, style, graduation, country, img_file } = data;
 
   return (
