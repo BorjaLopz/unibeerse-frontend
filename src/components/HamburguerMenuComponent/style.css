@@ -19,8 +19,8 @@ body {
 }
 
 .burguerMenu {
-  height: 100%;
-  width: 4em;
+  height: 80%;
+  width: 3em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,10 +30,10 @@ body {
 }
 
 .burguerBar {
-  width: 3em;
-  height: 0.4em;
+  width: 2.6em;
+  height: 0.3em;
   background-color: rgb(255, 255, 255);
-  border-radius: 0.5em;
+  border-radius: 0.4em;
 }
 
 .menuBurguer {
