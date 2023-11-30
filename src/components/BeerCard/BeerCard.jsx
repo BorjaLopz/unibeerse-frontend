@@ -9,12 +9,15 @@ import { splitCountryName, getCodeCountryByName } from "../../helpers";
 import beerData from "/public/beer-data.json";
 import BeerFormComponent from "../BeerFormComponent/BeerFormComponent";
 import BeerCommentsComponent from "../BeerCommentsComponent/BeerCommentsComponent";
+import ReportIssueIcon from "../ReportIssueIcon";
+import FormReportIssueComponent from "../FormReportIssueComponent/FormReportIssueComponent";
 
 function BeerCard() {
   const { get } = useServer();
   const [beer, setBeer] = useState({});
   const [previousBeer, setPreviousBeer] = useState({});
   const [nextBeer, setNextBeer] = useState({});
+  const [formIssueVisibility, setFormIssueVisibility] = useState(false);
   const { id } = useParams();
   const idInteger = parseInt(id);
   const navigate = useNavigate();
@@ -110,6 +113,10 @@ function BeerCard() {
     }
   };
 
+  const handleReportIssueToggle = () => {
+    setFormIssueVisibility(!formIssueVisibility);
+  };
+
   useEffect(() => {
     // fetchBeerId();
     // fetchPreviousBeer();
@@ -124,6 +131,15 @@ function BeerCard() {
       <section className="main-container">
         <div className="_beerCard">
           <div id="beer_icon_card">
+            <div id="buttonReportIssue">
+              <button onClick={handleReportIssueToggle}>
+                <img
+                  src="/public/reportIssueIcon_1.svg"
+                  alt="Report Issue Icon"
+                  className="ReportIssueIcon"
+                />
+              </button>
+            </div>
             {beer.img_file !== "" ? (
               <img
                 src={`/BeerImages/${beer?.img_file}`}
@@ -199,6 +215,15 @@ function BeerCard() {
         ) : (
           <></>
         )} */}
+
+        
+        {/* MOSTRAMOS EL FORMULARIO PARA REPORTAR ALGÚN ERROR */}
+        {formIssueVisibility && (
+          <FormReportIssueComponent
+            onClose={handleReportIssueToggle}
+            content={beer}
+          />
+        )}
         <div className="arrowContainer">
           <div className={`left ${idInteger === 0 ? "blocked" : ""}`}>
             <Link to={`/beer/${idInteger - 1}`}>

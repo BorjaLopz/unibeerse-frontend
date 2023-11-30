@@ -56,13 +56,22 @@ function CustomPagination({
     });
   };
 
+
   useEffect(() => {
+    // Actualizar currentPage cuando NumericNumberPage cambie
+    setCurrentPage(NumericNumberPage);
+  }, [NumericNumberPage]);
+
+  useEffect(() => {
+    // Lógica para cargar la lista de datos paginados y otras acciones necesarias
     getPaginatedData();
     window.scrollTo({ behavior: "smooth", top: "0px" });
+
+    // Manejar casos donde la página solicitada es mayor que el total de páginas
     if (NumericNumberPage > pages) {
       navigate("/404");
     }
-  }, [currentPage]);
+  }, [pages, navigate]);
 
   return (
     <>

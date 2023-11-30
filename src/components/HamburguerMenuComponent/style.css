@@ -100,7 +100,7 @@ body {
 }
 
 .burguerBar.clicked:nth-child(1) {
-  transform: rotate(45deg) translate(0.75em, 1.1em);
+  transform: rotate(45deg) translate(0.55em, 0.9em);
   transition: ease-out 0.25s;
 }
 

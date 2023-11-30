@@ -1,3 +1,6 @@
+* {
+  --anchoIcono: 2rem;
+}
 main {
   align-items: center;
   justify-content: center;
@@ -12,6 +15,8 @@ main {
   display: grid;
   grid-template-columns: 40% 60%;
   grid-template-rows: 40% 30% 30%;
+
+  position: relative;
 
   border-radius: 1rem;
   background-color: #eeeeee;
@@ -45,6 +50,37 @@ main {
 #brand_name_beerCard h3 {
   text-align: center;
   font-size: 2rem;
+}
+
+#buttonReportIssue {
+  position: absolute;
+  top: calc((var(--anchoIcono) / -2));
+  right: calc((var(--anchoIcono) / -2));
+  margin: 10px;
+}
+
+#buttonReportIssue .ReportIssueIcon {
+  width: var(--anchoIcono);
+  height: var(--anchoIcono);
+  padding: 0;
+
+  transition: transform 0.15s ease-in-out, color 0.3s ease-in-out; /* Agrega una transición suave */
+
+  /* --ancho: 2.4rem;
+  width: var(--ancho);
+  position: absolute;
+  top: calc((var(--ancho) / -2) + (var(--ancho) / 6));
+  right: calc((var(--ancho) / -2) + (var(--ancho) / 6)); */
+  /* filter: grayscale(1); */
+}
+
+#buttonReportIssue .ReportIssueIcon:hover {
+  transform: scale(2.4);
+  filter: grayscale(0);
+}
+
+.ReportIssueIcon img:hover {
+  filter: hue-rotate(255deg);
 }
 
 #informacion_card #container_graduation_style_beerCard {
@@ -132,8 +168,8 @@ main {
 }
 
 .blocked {
-  color: #666; 
-  cursor: not-allowed; 
+  color: #666;
+  cursor: not-allowed;
   pointer-events: none;
 }
 
@@ -180,12 +216,12 @@ main {
 }
 
 .blocked .arrow {
-    background-color: rgba(136, 136, 136, 0.2);
-  }
+  background-color: rgba(136, 136, 136, 0.2);
+}
 
-  .blocked .arrow img {
-    opacity: 0.4;
-  }
+.blocked .arrow img {
+  opacity: 0.4;
+}
 
 @media (max-width: 850px) {
   ._beerCard {
