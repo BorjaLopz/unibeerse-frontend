@@ -43,11 +43,7 @@ function CustomPagination({
   const getPaginatedData = () => {
     const startIndex = currentPage * dataLimit - dataLimit;
 
-    console.log("startIndex");
-    console.log(startIndex);
     const endIndex = startIndex + dataLimit;
-    console.log("endIndex");
-    console.log(endIndex);
 
     setDataAvailable(data?.slice(startIndex, endIndex));
   };
@@ -67,9 +63,6 @@ function CustomPagination({
       navigate("/404");
     }
   }, [currentPage]);
-
-  console.log("dataAvailable");
-  console.log(dataAvailable);
 
   return (
     <>
@@ -97,8 +90,6 @@ function CustomPagination({
           </article>
           <section id="beer-area">
             {dataAvailable.map((d, index) => {
-              console.log("d");
-              console.log(d);
               return (
                 <>
                   <RenderComponent
@@ -170,6 +161,19 @@ function CustomPagination({
             </Link>
           </div>
         )}
+        <div>
+          {currentPage !== pages ? (
+            <p>
+              {dataLimit * (currentPage - 1) + 1} - {dataLimit * currentPage} de{" "}
+              {data.length}
+            </p>
+          ) : (
+            <p>
+              {dataLimit * (currentPage - 1) + 1} - {data.length} de{" "}
+              {data.length}
+            </p>
+          )}
+        </div>
       </>
       <ScrollTopComponent />
     </>
