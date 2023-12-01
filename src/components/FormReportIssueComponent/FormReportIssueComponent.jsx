@@ -3,7 +3,12 @@ import "./style.css";
 import emailjs from "@emailjs/browser";
 import toast from "react-hot-toast";
 
-function FormReportIssueComponent({ onClose, content }) {
+function FormReportIssueComponent({
+  onClose,
+  content,
+  classes,
+  formIssueVisibility,
+}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [issue, setIssue] = useState("");
@@ -44,20 +49,23 @@ function FormReportIssueComponent({ onClose, content }) {
     setIssue("");
   };
 
-  console.log("content");
-  console.log(content);
   return (
-    <div className="overlay">
-      <div className="overlay-content">
+    <section
+      className={`overlay ${formIssueVisibility === true ? "BGVisible" : ""}`}
+    >
+      <div className={`overlay-content ${classes}`}>
         {/*  */}
         <button onClick={onClose} className="closeFormButton">
           <img
-            src="/public/CrossWindowIcon.svg"
+            src="/public/icons/CrossWindowIcon.png"
             alt="Report Issue Icon"
             className="ReportIssueIcon"
           />
         </button>
         <form ref={form} onSubmit={handleSubmitForm} className="formIssues">
+          <h3
+            style={{ fontStyle: "italic" }}
+          >{`${content.name} - ${content.brand}`}</h3>
           <label className="formulario-label">
             Nombre:
             <input
@@ -96,7 +104,7 @@ function FormReportIssueComponent({ onClose, content }) {
           </button>
         </form>
       </div>
-    </div>
+    </section>
   );
 }
 export default FormReportIssueComponent;

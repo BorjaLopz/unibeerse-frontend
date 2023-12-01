@@ -114,7 +114,7 @@ function BeerCard() {
   };
 
   const handleReportIssueToggle = () => {
-    setFormIssueVisibility(!formIssueVisibility);
+    setFormIssueVisibility((prevVisibility) => !prevVisibility);
   };
 
   useEffect(() => {
@@ -134,7 +134,7 @@ function BeerCard() {
             <div id="buttonReportIssue">
               <button onClick={handleReportIssueToggle}>
                 <img
-                  src="/public/reportIssueIcon_1.svg"
+                  src="/public/icons/reportIssueIcon_2.png"
                   alt="Report Issue Icon"
                   className="ReportIssueIcon"
                 />
@@ -151,7 +151,7 @@ function BeerCard() {
           </div>
 
           <div id="brand_name_beerCard">
-            <h2 className={`${beer?.brand?.length > 14 ? "brandShorter" : ""}`}>
+            <h2 className={`${beer?.brand?.length > 12 ? "brandShorter" : ""}`}>
               {beer?.brand}
             </h2>
             <h3>{beer?.name}</h3>
@@ -216,14 +216,23 @@ function BeerCard() {
           <></>
         )} */}
 
-        
         {/* MOSTRAMOS EL FORMULARIO PARA REPORTAR ALGÚN ERROR */}
-        {formIssueVisibility && (
+        {/* {formIssueVisibility && (
           <FormReportIssueComponent
             onClose={handleReportIssueToggle}
             content={beer}
+            classes={`${formIssueVisibility === true ? "visibleForm" : ""}`}
+            formIssueVisibility={formIssueVisibility}
           />
-        )}
+        )} */}
+
+        <FormReportIssueComponent
+          onClose={handleReportIssueToggle}
+          content={beer}
+          classes={`${formIssueVisibility === true ? "visibleForm" : ""}`}
+          formIssueVisibility={formIssueVisibility}
+        />
+
         <div className="arrowContainer">
           <div className={`left ${idInteger === 0 ? "blocked" : ""}`}>
             <Link to={`/beer/${idInteger - 1}`}>

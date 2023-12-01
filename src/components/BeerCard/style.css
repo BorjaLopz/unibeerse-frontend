@@ -44,7 +44,7 @@ main {
 }
 
 #brand_name_beerCard .brandShorter {
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 #brand_name_beerCard h3 {
@@ -75,12 +75,7 @@ main {
 }
 
 #buttonReportIssue .ReportIssueIcon:hover {
-  transform: scale(2.4);
-  filter: grayscale(0);
-}
-
-.ReportIssueIcon img:hover {
-  filter: hue-rotate(255deg);
+  transform: scale(1.4);
 }
 
 #informacion_card #container_graduation_style_beerCard {
@@ -146,6 +141,19 @@ main {
   border-radius: 5px;
   background-color: #eeeeee;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.404);
+
+  display: flex;
+
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.right .arrow {
+  justify-content: end;
+}
+
+.left .arrow {
+  justify-content: start;
 }
 
 .arrow:hover {
