@@ -57,7 +57,7 @@ function FormReportIssueComponent({
         {/*  */}
         <button onClick={onClose} className="closeFormButton">
           <img
-            src="/public/icons/CrossWindowIcon.png"
+            src="/icons/CrossWindowIcon.png"
             alt="Report Issue Icon"
             className="ReportIssueIcon"
           />

@@ -134,7 +134,7 @@ function BeerCard() {
             <div id="buttonReportIssue">
               <button onClick={handleReportIssueToggle}>
                 <img
-                  src="/public/icons/reportIssueIcon_2.png"
+                  src="/icons/reportIssueIcon_2.png"
                   alt="Report Issue Icon"
                   className="ReportIssueIcon"
                 />
