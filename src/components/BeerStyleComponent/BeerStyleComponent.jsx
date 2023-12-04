@@ -23,7 +23,7 @@ function BeerStyleComponent({ b }) {
           ) : (
             <>
               <img
-                src={b?.img_file}
+                src={`/BeerImages/${b?.img_file}`}
                 alt={`Imagen de ${b?.name}`}
                 id="beer_image_style"
               />
@@ -32,7 +32,9 @@ function BeerStyleComponent({ b }) {
           <div id="container_graduation_style">
             <p id="beer_graduation">{b?.graduation}</p>
             <p id="beer_style">{`${
-              b?.style.length > 15 ? `${b?.style.substring(0, 15)}...` : b?.style
+              b?.style.length > 15
+                ? `${b?.style.substring(0, 15)}...`
+                : b?.style
             }`}</p>
           </div>
         </div>

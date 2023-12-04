@@ -56,7 +56,6 @@ function CustomPagination({
     });
   };
 
-
   useEffect(() => {
     // Actualizar currentPage cuando NumericNumberPage cambie
     setCurrentPage(NumericNumberPage);
@@ -71,7 +70,7 @@ function CustomPagination({
     if (NumericNumberPage > pages) {
       navigate("/404");
     }
-  }, [pages, navigate]);
+  }, [pages, navigate, filter]);
 
   return (
     <>

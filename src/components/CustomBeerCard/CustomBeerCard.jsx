@@ -63,15 +63,17 @@ function CustomBeerCard({ data, page }) {
           <div id="container_country_flag">
             {splitCountryName(country)?.length ? (
               <>
-                {splitCountryName(country).map((item) => {
-                  return (
-                    <img
-                      src={`https://flagcdn.com/w1280/${item}.png`}
-                      alt={`Bandera de ${country}`}
-                      id="flag_icon"
-                    />
-                  );
-                })}
+                <div id="container_country_flag_multiple">
+                  {splitCountryName(country).map((item) => {
+                    return (
+                      <img
+                        src={`https://flagcdn.com/w1280/${item}.png`}
+                        alt={`Bandera de ${country}`}
+                        className="flag_icon"
+                      />
+                    );
+                  })}
+                </div>
               </>
             ) : (
               <img
@@ -79,7 +81,7 @@ function CustomBeerCard({ data, page }) {
                   country
                 )}.png`}
                 alt={`Bandera de ${country}`}
-                id="flag_icon"
+                className="flag_icon"
               />
             )}
           </div>

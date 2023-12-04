@@ -6,6 +6,7 @@ import stylejson from "../../../public/styles.json";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import { removingAccents } from "../../helpers";
 import "./style.css";
+import CustomBeerCard from "../CustomBeerCard/CustomBeerCard";
 
 import beerData from "/public/beer-data.json";
 import ScrollTopComponent from "../ScrollTop/ScrollTopComponent";
@@ -18,8 +19,6 @@ function StyleCard() {
   const [randomBeers, setRandomBeers] = useState([]);
   const navigate = useNavigate();
   const { get } = useServer();
-
-
 
   const beerStyleExample = [];
 
@@ -170,7 +169,7 @@ function StyleCard() {
                 <ul id="beer_examples">
                   {randomBeers.map((b) => {
                     if (b !== undefined) {
-                      return <BeerStyleComponent b={b} />;
+                      return <CustomBeerCard data={b} />;
                     }
                   })}
                 </ul>

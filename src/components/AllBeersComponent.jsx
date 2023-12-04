@@ -92,8 +92,6 @@ function AllBeersComponent({ customFilter }) {
   //   }
   // });
 
-  // console.log("filteredBeers");
-  // console.log(filteredBeers);
   return (
     <>
       {/* <AllBeersComponent /> */}

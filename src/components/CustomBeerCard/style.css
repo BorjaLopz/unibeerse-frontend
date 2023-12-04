@@ -173,7 +173,7 @@ button.disabled {
   order: 1;
 }
 
-#flag_icon {
+.flag_icon {
   max-height: 50%;
   object-fit: contain;
   order: 2;
@@ -311,6 +311,24 @@ button.disabled {
     font-weight: 500;
   }
 
+  #container_country_flag_multiple {
+    display: flex;
+    flex-direction: row;
+    width: 5rem;
+    height: 100%;
+    gap: 0.4rem;
+    /* background-color: black; */
+  }
+
+  #container_country_flag_multiple .flag_icon {
+    /* max-width: 1rem; */
+    width: 0.4rem;
+  }
+
+  .currentBeer #container_country_flag_multiple img:not(.beer_image) {
+    min-width: 0;
+  }
+
   #container_graduation_style #beer_graduation {
     order: 2;
   }
@@ -330,7 +348,7 @@ button.disabled {
     justify-content: center;
   }
 
-  #flag_icon {
+  .flag_icon {
     height: 4rem;
     max-width: 80%;
     max-height: 80%;
