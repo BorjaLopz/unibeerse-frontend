@@ -26,7 +26,7 @@ function StylesComponent() {
             ) : (
               <>
                 {" "}
-                <section className="style-article-disable">
+                <section className="style-article-disable" key={id}>
                   <article id="article-style">
                     <h2>{s.style}</h2>
                     <p>{s.description}</p>

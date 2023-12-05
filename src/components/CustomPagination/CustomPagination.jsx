@@ -41,8 +41,8 @@ function CustomPagination({
   }
 
   const getPaginatedData = () => {
-    const startIndex = currentPage * dataLimit - dataLimit;
 
+    const startIndex = NumericNumberPage * dataLimit - dataLimit;
     const endIndex = startIndex + dataLimit;
 
     setDataAvailable(data?.slice(startIndex, endIndex));
@@ -57,11 +57,6 @@ function CustomPagination({
   };
 
   useEffect(() => {
-    // Actualizar currentPage cuando NumericNumberPage cambie
-    setCurrentPage(NumericNumberPage);
-  }, [NumericNumberPage]);
-
-  useEffect(() => {
     // Lógica para cargar la lista de datos paginados y otras acciones necesarias
     getPaginatedData();
     window.scrollTo({ behavior: "smooth", top: "0px" });
@@ -71,6 +66,12 @@ function CustomPagination({
       navigate("/404");
     }
   }, [pages, navigate, filter]);
+
+  useEffect(() => {
+    // Actualizar currentPage cuando NumericNumberPage cambie
+    setCurrentPage(NumericNumberPage);
+  }, [NumericNumberPage]);
+
 
   return (
     <>
