@@ -49,7 +49,7 @@ function Footer() {
               <Link to={"/"}>Inicio</Link>
             </li>
             <li>
-              <Link to={"/beers"}>Cervezas</Link>
+              <Link to={"/beers/page/1"}>Cervezas</Link>
             </li>
             <li>
               <Link to={"/styles"}>Estilos</Link>
