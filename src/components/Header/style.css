@@ -95,3 +95,16 @@ header menu {
     padding-left: 10px;
   }
 }
+
+@media (max-width: 500px) { 
+  .mainTitle {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 400px) { 
+  .mainTitle {
+    font-size: 28px;
+  }
+}
+

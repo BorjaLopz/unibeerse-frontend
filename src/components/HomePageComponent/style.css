@@ -128,12 +128,11 @@ main {
 }
 
 @media (max-width: 850px) {
-
   .home-component .container-title {
     display: none;
   }
 
-  .home-component #welcomeText{
+  .home-component #welcomeText {
     font-family: "Poppins";
     text-align: center;
     font-weight: 500;
@@ -145,7 +144,7 @@ main {
     font-family: "Poppins";
   }
 
-  .home-component #container-car-text p{
+  .home-component #container-car-text p {
     font-size: 1.2rem;
     text-align: center;
   }
@@ -162,5 +161,17 @@ main {
 
   #car-home > img {
     height: 8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .home-component #welcomeText {
+    font-size: 225%;
+  }
+}
+
+@media (max-width: 400px) {
+  .home-component #welcomeText {
+    font-size: 180%;
   }
 }
