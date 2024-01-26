@@ -1,5 +1,5 @@
 * {
-  --anchoIcono: 2rem;
+  --anchoIcono: 2.4rem;
 }
 main {
   align-items: center;
@@ -52,14 +52,24 @@ main {
   font-size: 2rem;
 }
 
-#buttonReportIssue {
+#buttonReportIssue,
+#buttonEditBeer {
   position: absolute;
-  top: calc((var(--anchoIcono) / -2));
-  right: calc((var(--anchoIcono) / -2));
   margin: 10px;
+  top: calc((var(--anchoIcono) / -1.5));
 }
 
-#buttonReportIssue .ReportIssueIcon {
+#buttonReportIssue {
+  transform: scaleX(-1);
+  left: calc((var(--anchoIcono) / -2));
+}
+
+#buttonEditBeer {
+  right: calc((var(--anchoIcono) / -2));
+}
+
+#buttonReportIssue .ReportIssueIcon,
+#buttonEditBeer .EditBeerIcon {
   width: var(--anchoIcono);
   height: var(--anchoIcono);
   padding: 0;

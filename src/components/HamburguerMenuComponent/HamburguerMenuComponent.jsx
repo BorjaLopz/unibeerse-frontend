@@ -1,16 +1,20 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./style.css";
 import SearchBar from "../SearchBar/SearchBar";
 
 function HamburguerMenuComponent({ handleFilter }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuClicked, setIsMenuClicked] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const beerPage = location.pathname.includes("beers");
 
   useEffect(() => {
     setIsMenuClicked(false);
+    const userToken = sessionStorage.getItem("autenticacion");
+    setIsLoggedIn(!!userToken);
   }, [location]);
 
   const menuClass = isMenuClicked
@@ -24,6 +28,13 @@ function HamburguerMenuComponent({ handleFilter }) {
 
   const updateMenu = () => {
     setIsMenuClicked(!isMenuClicked);
+  };
+
+  const handleLogOut = () => {
+    sessionStorage.removeItem("autenticacion");
+    setIsMenuClicked(false);
+    navigate("/");
+    setIsLoggedIn(false);
   };
   return (
     <div id="containerBurguerMenu">
@@ -41,6 +52,11 @@ function HamburguerMenuComponent({ handleFilter }) {
           <Link to="/beers/page/1">Cervezas</Link>
           <Link to="/styles">Estilos</Link>
           <Link to="/contact">Contacto</Link>
+          {isLoggedIn ? (
+            <button onClick={handleLogOut}>LOGOUT</button>
+          ) : (
+            <Link to="/login">LogIN</Link>
+          )}
         </div>
         <div id="searchHamburguer">
           {beerPage && <SearchBar handleFilter={handleFilter} />}

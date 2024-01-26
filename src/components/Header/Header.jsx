@@ -12,6 +12,9 @@ function Header({ handleCustomFilter }) {
     handleCustomFilter(_filter);
   };
 
+  // console.log("filter");
+  // console.log(filter);
+
   return (
     <>
       <header>
@@ -24,6 +27,7 @@ function Header({ handleCustomFilter }) {
             <Link to={`${`beers/page/1`}`}>Cervezas</Link>
             <Link to="/styles">Estilos</Link>
             <Link to="/contact">Contacto</Link>
+            {/* <Link to="Login">Login</Link> */}
           </menu>
           <SearchBar handleFilter={handleFilter} />
         </section>

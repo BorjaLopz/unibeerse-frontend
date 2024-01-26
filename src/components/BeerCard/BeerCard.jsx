@@ -11,6 +11,19 @@ import BeerFormComponent from "../BeerFormComponent/BeerFormComponent";
 import BeerCommentsComponent from "../BeerCommentsComponent/BeerCommentsComponent";
 import ReportIssueIcon from "../ReportIssueIcon";
 import FormReportIssueComponent from "../FormReportIssueComponent/FormReportIssueComponent";
+import FormEditBeerComponent from "../FormEditBeerComponent/FormEditBeerComponent";
+
+/* FIREBASE */
+
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
 function BeerCard() {
   const { get } = useServer();
@@ -18,59 +31,63 @@ function BeerCard() {
   const [previousBeer, setPreviousBeer] = useState({});
   const [nextBeer, setNextBeer] = useState({});
   const [formIssueVisibility, setFormIssueVisibility] = useState(false);
+  const [formEditVisibility, setFormEditVisibility] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
   const { id } = useParams();
   const idInteger = parseInt(id);
   const navigate = useNavigate();
 
-  const fetchBeerId = async () => {
-    try {
-      const res = await fetch(
-        `https://primer-proyecto-nodejs.glitch.me/api/v1/beer/id/${
-          idInteger + 1
-        }`
-      );
-      const data = await res.json();
+  /* Primera aproximacion */
+  // const fetchBeerId = async () => {
+  //   try {
+  //     const res = await fetch(
+  //       `https://primer-proyecto-nodejs.glitch.me/api/v1/beer/id/${
+  //         idInteger + 1
+  //       }`
+  //     );
+  //     const data = await res.json();
 
-      if (!data) {
-        navigate("/404");
-      }
+  //     if (!data) {
+  //       navigate("/404");
+  //     }
 
-      setBeer(data.data[0]);
-    } catch (e) {
-      console.log("Error: ", e.message);
-    }
-  };
+  //     setBeer(data.data[0]);
+  //   } catch (e) {
+  //     console.log("Error: ", e.message);
+  //   }
+  // };
 
-  const fetchPreviousBeer = async () => {
-    try {
-      const res = await fetch(
-        `https://primer-proyecto-nodejs.glitch.me/api/v1/beer/id/${idInteger}`
-      );
+  // const fetchPreviousBeer = async () => {
+  //   try {
+  //     const res = await fetch(
+  //       `https://primer-proyecto-nodejs.glitch.me/api/v1/beer/id/${idInteger}`
+  //     );
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      setPreviousBeer(data?.data[0]);
-    } catch (e) {
-      console.log("Error: ", e.message);
-    }
-  };
+  //     setPreviousBeer(data?.data[0]);
+  //   } catch (e) {
+  //     console.log("Error: ", e.message);
+  //   }
+  // };
 
-  const fetchNextsBeer = async () => {
-    try {
-      const res = await fetch(
-        `https://primer-proyecto-nodejs.glitch.me/api/v1/beer/id/${
-          idInteger + 2
-        }`
-      );
+  // const fetchNextsBeer = async () => {
+  //   try {
+  //     const res = await fetch(
+  //       `https://primer-proyecto-nodejs.glitch.me/api/v1/beer/id/${
+  //         idInteger + 2
+  //       }`
+  //     );
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      setNextBeer(data?.data[0]);
-    } catch (e) {
-      console.log("Error: ", e.message);
-    }
-  };
+  //     setNextBeer(data?.data[0]);
+  //   } catch (e) {
+  //     console.log("Error: ", e.message);
+  //   }
+  // };
 
+  /* Aproximacion con JSON */
   const fetchCurrentBeerJSON = () => {
     try {
       const currentBeer = beerData.data.find((b) => {
@@ -113,15 +130,87 @@ function BeerCard() {
     }
   };
 
+  const getBeerByIDFirebase = async (coleccion, id) => {
+    try {
+      const q = query(collection(db, coleccion), where("ID", "==", id));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const beerData = querySnapshot.docs[0].data();
+        // console.log("beerData");
+        // console.log(beerData);
+        return beerData;
+      } else {
+        console.log("NO EXISTE");
+        return null;
+      }
+    } catch (e) {
+      console.error("Error al obtener el elemento: ", e);
+      throw e;
+    }
+  };
+
+  /* Aproximacion con Firebase */
+  const fetchCurrentBeerFirebase = async () => {
+    try {
+      const data = await getBeerByIDFirebase("beers", idInteger + 1);
+      // console.log("data");
+      // console.log(data);
+      setBeer(data);
+      // console.log("beer");
+      // console.log(beer);
+    } catch (e) {
+      console.error(`Error: ${e}`);
+    }
+  };
+
+  const fetchNextBeerFirebase = async () => {
+    try {
+      const nextBeer = await getBeerByIDFirebase("beers", idInteger + 2);
+      // console.log("data");
+      // console.log(data);
+      nextBeer(nextBeer);
+      // console.log("beer");
+      // console.log(beer);
+    } catch (e) {
+      console.error(`Error: ${e}`);
+    }
+  };
+
+  const fetchPreviousBeerFirebase = async () => {
+    try {
+      const prevBeer = await getBeerByIDFirebase("beers", idInteger - 1);
+      // console.log("data");
+      // console.log(data);
+      previousBeer(prevBeer);
+      // console.log("beer");
+      // console.log(beer);
+    } catch (e) {
+      console.error(`Error: ${e}`);
+    }
+  };
+
   const handleReportIssueToggle = () => {
     setFormIssueVisibility((prevVisibility) => !prevVisibility);
   };
+
+  const handleEditBeerToggle = () => {
+    setFormEditVisibility((prevVisibility) => !prevVisibility);
+  };
+
+  //Comprobamos si carga beer con useEffect
+  // useEffect(() => {
+  //   console.log("beer: ", beer);
+  // }, [beer]);
 
   useEffect(() => {
     // fetchBeerId();
     // fetchPreviousBeer();
     // fetchNextsBeer();
-    fetchCurrentBeerJSON();
+    const userToken = sessionStorage.getItem("autenticacion");
+    setIsLogged(!!userToken);
+
+    fetchCurrentBeerFirebase();
     fetchNextBeerJSON();
     fetchPreviousBeerJSON();
   }, [id]);
@@ -134,40 +223,51 @@ function BeerCard() {
             <div id="buttonReportIssue">
               <button onClick={handleReportIssueToggle}>
                 <img
-                  src="/icons/reportIssueIcon_2.png"
+                  src="/icons/reportIssueIcon.png"
                   alt="Report Issue Icon"
                   className="ReportIssueIcon"
                 />
               </button>
             </div>
-            {beer.img_file !== "" ? (
+            {isLogged && (
+              <div id="buttonEditBeer">
+                <button onClick={handleEditBeerToggle}>
+                  <img
+                    src="/icons/editBeerIcon.png"
+                    alt="Edit Beer Icon"
+                    className="EditBeerIcon"
+                  />
+                </button>
+              </div>
+            )}
+
+            {beer.IMAGEN !== "" ? (
               <img
-                src={`/BeerImages/${beer?.img_file}`}
-                alt={`Imagen de ${beer.brand} | ${beer.name}`}
+                src={`${beer.IMAGEN}`}
+                alt={`Imagen de ${beer.MARCA} | ${beer.NOMBRE}`}
               />
             ) : (
-              <BeerIcon style={beer.style} />
+              <BeerIcon style={beer.ESTILO} />
             )}
           </div>
 
           <div id="brand_name_beerCard">
-            <h2 className={`${beer?.brand?.length > 12 ? "brandShorter" : ""}`}>
-              {beer?.brand}
+            <h2 className={`${beer?.MARCA?.length > 12 ? "brandShorter" : ""}`}>
+              {beer?.MARCA}
             </h2>
-            <h3>{beer?.name}</h3>
+            <h3>{beer?.NOMBRE}</h3>
           </div>
 
           <div id="informacion_card">
             <div id="container_graduation_style_beerCard">
-              <p id="beer_graduation">{beer?.graduation}</p>
-              <p id="beer_style">{beer?.style}</p>
+              <p id="beer_graduation">{beer?.GRADUACIÓN}</p>
+              <p id="beer_style">{beer?.ESTILO}</p>
             </div>
             <div id="container_country_icon_beerCard">
-              {splitCountryName(beer?.country)?.length ? (
+              {splitCountryName(beer?.NACIONALIDAD)?.length ? (
                 <>
                   <div id="container_country_card">
-                    {beer?.country
-                      .split(" /")
+                    {beer?.NACIONALIDAD.split(" /")
                       .flat()
                       .map((c) => {
                         return <p id="beer_country_card">{c}</p>;
@@ -175,15 +275,15 @@ function BeerCard() {
                   </div>
                 </>
               ) : (
-                <p id="beer_country_card">{beer?.country}</p>
+                <p id="beer_country_card">{beer?.NACIONALIDAD}</p>
               )}
-              {splitCountryName(beer?.country)?.length ? (
+              {splitCountryName(beer?.NACIONALIDAD)?.length ? (
                 <>
-                  {splitCountryName(beer?.country).map((item) => {
+                  {splitCountryName(beer?.NACIONALIDAD).map((item) => {
                     return (
                       <img
                         src={`https://flagcdn.com/w1280/${item}.png`}
-                        alt={`Bandera de ${beer?.country}`}
+                        alt={`Bandera de ${beer?.NACIONALIDAD}`}
                         id="flag_icon_card"
                       />
                     );
@@ -193,9 +293,9 @@ function BeerCard() {
                 <>
                   <img
                     src={`https://flagcdn.com/w1280/${getCodeCountryByName(
-                      beer?.country
+                      beer?.NACIONALIDAD
                     )}.png`}
-                    alt={`Bandera de ${beer?.country}`}
+                    alt={`Bandera de ${beer?.NACIONALIDAD}`}
                     id="flag_icon_card"
                   />
                 </>
@@ -231,6 +331,13 @@ function BeerCard() {
           content={beer}
           classes={`${formIssueVisibility === true ? "visibleForm" : ""}`}
           formIssueVisibility={formIssueVisibility}
+        />
+
+        <FormEditBeerComponent
+          onClose={handleEditBeerToggle}
+          content={beer}
+          classes={`${formEditVisibility === true ? "visibleForm" : ""}`}
+          formIssueVisibility={formEditVisibility}
         />
 
         <div className="arrowContainer">

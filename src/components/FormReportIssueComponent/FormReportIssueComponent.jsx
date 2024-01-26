@@ -63,9 +63,9 @@ function FormReportIssueComponent({
           />
         </button>
         <form ref={form} onSubmit={handleSubmitForm} className="formIssues">
-          <h3
-            style={{ fontStyle: "italic" }}
-          >{`${content.name} - ${content.brand}`}</h3>
+          <h3 style={{ fontStyle: "italic" }}>
+            Reportar problema de {`${content.NOMBRE} - ${content.MARCA}`}
+          </h3>
           <label className="formulario-label">
             Nombre:
             <input

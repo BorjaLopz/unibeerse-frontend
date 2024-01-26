@@ -8,6 +8,10 @@ import CustomPagination from "./CustomPagination/CustomPagination";
 import CustomBeerCard from "./CustomBeerCard/CustomBeerCard";
 import { removingAccents } from "../helpers";
 
+/* Obtencion de datos desde firebase */
+import { db } from "./firebaseConfig.js";
+import { collection, getDocs } from "firebase/firestore";
+
 function AllBeersComponent({ customFilter }) {
   const [beers, setBeers] = useState([]);
   const { get } = useServer();
@@ -19,10 +23,29 @@ function AllBeersComponent({ customFilter }) {
   let filteredBeers = [];
 
   const [beerJSON, setBeerJSON] = useState({});
+  const [beerData, setBeerData] = useState({});
 
   const [totalPages, setTotalPages] = useState(0);
 
   const itemsPerPage = 10;
+
+  const getBeersFirebase = async () => {
+    try {
+      const dataBruto = await getDocs(collection(db, "beers"));
+      // console.log(dataBruto);
+      // console.log("dataBruto");
+      const unorderedData = dataBruto.docs.map((doc) => doc.data());
+      // console.log("unorderedData");
+      // console.log(unorderedData);
+      const orderedData = unorderedData.sort((a, b) => a.ID - b.ID);
+      // console.log("orderedData");
+      // console.log(orderedData);
+      setBeerData(orderedData);
+      setLoading(true);
+    } catch (e) {
+      console.error("Error al obtener los datos: ", e);
+    }
+  };
 
   const getBeers = async () => {
     try {
@@ -57,20 +80,41 @@ function AllBeersComponent({ customFilter }) {
 
   useEffect(() => {
     // getBeers();
-    getBeersJSON();
+    // getBeersJSON();
+    getBeersFirebase();
 
     setTotalPages(Math.ceil(beers.length / itemsPerPage));
   }, []);
 
   //Añadimos cervezas filtradas desde el archivo JSON
+  /* SI USAMOS UN JSON HARDCODEADO */
+  // if (customFilter !== "") {
+  //   beerJSON.filter((beer) => {
+  //     if (
+  //       removingAccents(beer.name.toLowerCase()).includes(customFilter) ||
+  //       removingAccents(beer.style.toLowerCase()).includes(customFilter) ||
+  //       removingAccents(beer.brand.toLowerCase()).includes(customFilter) ||
+  //       removingAccents(beer.country.toLowerCase()).includes(customFilter) ||
+  //       removingAccents(beer.graduation.toLowerCase()).includes(customFilter)
+  //     ) {
+  //       filteredBeers.push(beer);
+  //       return beer;
+  //     }
+  //   });
+  // }
+
+  /* USANDO FIREBASE */
   if (customFilter !== "") {
-    beerJSON.filter((beer) => {
+    beerData.filter((beer) => {
       if (
-        removingAccents(beer.name.toLowerCase()).includes(customFilter) ||
-        removingAccents(beer.style.toLowerCase()).includes(customFilter) ||
-        removingAccents(beer.brand.toLowerCase()).includes(customFilter) ||
-        removingAccents(beer.country.toLowerCase()).includes(customFilter) ||
-        removingAccents(beer.graduation.toLowerCase()).includes(customFilter)
+        removingAccents(beer.NOMBRE.toLowerCase()).includes(customFilter) ||
+        removingAccents(beer.ESTILO.toLowerCase()).includes(customFilter) ||
+        removingAccents(beer.MARCA.toLowerCase()).includes(customFilter) ||
+        removingAccents(beer.NACIONALIDAD.toLowerCase()).includes(
+          customFilter
+        ) ||
+        beer.GRADUACIÓN.toString().includes(customFilter)
+        // removingAccents(beer.GRADUACIÓN).includes(customFilter)
       ) {
         filteredBeers.push(beer);
         return beer;
@@ -112,7 +156,7 @@ function AllBeersComponent({ customFilter }) {
         {loading ? (
           customFilter === "" ? (
             <CustomPagination
-              data={beerJSON}
+              data={beerData}
               pageLimit={`${screenWidth.current < 500 ? 2 : 4}`}
               dataLimit={20}
               RenderComponent={CustomBeerCard}

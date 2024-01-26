@@ -41,7 +41,6 @@ function CustomPagination({
   }
 
   const getPaginatedData = () => {
-
     const startIndex = NumericNumberPage * dataLimit - dataLimit;
     const endIndex = startIndex + dataLimit;
 
@@ -71,7 +70,6 @@ function CustomPagination({
     // Actualizar currentPage cuando NumericNumberPage cambie
     setCurrentPage(NumericNumberPage);
   }, [NumericNumberPage]);
-
 
   return (
     <>

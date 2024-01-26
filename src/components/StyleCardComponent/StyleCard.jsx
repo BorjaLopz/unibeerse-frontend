@@ -8,6 +8,10 @@ import { removingAccents } from "../../helpers";
 import "./style.css";
 import CustomBeerCard from "../CustomBeerCard/CustomBeerCard";
 
+/* FIREBASE */
+import { db } from "../firebaseConfig";
+import { collection, getDocs, or } from "firebase/firestore";
+
 import beerData from "/public/beer-data.json";
 import ScrollTopComponent from "../ScrollTop/ScrollTopComponent";
 
@@ -94,6 +98,41 @@ function StyleCard() {
     }
   };
 
+  const getBeersFirebase = async () => {
+    try {
+      const dataBruto = await getDocs(collection(db, "beers"));
+      // console.log(dataBruto);
+      // console.log("dataBruto");
+      const unorderedData = dataBruto.docs.map((doc) => doc.data());
+      // console.log("unorderedData");
+      // console.log(unorderedData);
+      const orderedData = unorderedData.sort((a, b) => a.ID - b.ID);
+      const filteredBeers = orderedData.filter((b) => {
+        if (style.split(" ").length > 1) {
+          if (
+            b?.ESTILO?.toLowerCase().includes(ESTILO.split(" ").slice(0)[0]) &&
+            removingAccents(ESTILO.split(" ").slice(-1)[0]) ===
+              removingAccents(b?.NACIONALIDAD.toLowerCase())
+          ) {
+            return b;
+          }
+        }
+        if (b?.ESTILO?.toLowerCase() === currentStyle?.itemKey?.toLowerCase()) {
+          return b;
+        }
+      });
+
+      console.log("filteredBeers");
+      console.log(filteredBeers);
+      setBeers(filteredBeers);
+
+      // setBeers(orderedData);
+      setLoading(true);
+    } catch (e) {
+      console.error("Error al obtener los datos: ", e);
+    }
+  };
+
   const selectBeersRandom = () => {
     setLoading(true);
     const copiaCervezas = [];
@@ -123,7 +162,8 @@ function StyleCard() {
 
   useEffect(() => {
     // getBeers();
-    getBeersJSON();
+    // getBeersJSON();
+    getBeersFirebase();
   }, [currentStyle]);
 
   useEffect(() => {
