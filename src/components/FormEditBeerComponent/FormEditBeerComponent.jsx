@@ -54,7 +54,7 @@ function FormEditBeerComponent({
         toast.success(`${content.NOMBRE} editada con exito!`);
         setTimeout(() => {
           onClose();
-          navigate("/");
+          navigate("/beers/page/3");
         }, 1000);
       }
     } catch (e) {
