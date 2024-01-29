@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,83 +8,109 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import { auth } from "../firebaseConfig";
+import "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getFirestore,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+
+import CryptoJS from "crypto-js";
+import { saveSessionToken, KEY_ENCRIPT } from "../../helpers";
 
 function LogInComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [decryptedPassword, setDecryptedPassword] = useState("");
+  const firestore = getFirestore();
+
+  const [dataDoc, setDataDoc] = useState({});
 
   const navigate = useNavigate();
 
-  const saveSessionToken = (authUser) => {
-    const token = {
-      email: authUser.user.email,
-      auth: true,
-    };
+  const getUserIDByEmail = async (_email) => {
+    const userCollection = collection(firestore, "users");
+    const q = query(userCollection, where("email", "==", _email));
 
-    sessionStorage.setItem("autenticacion", JSON.stringify(token));
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot?.docs[0]?.id || null;
   };
+
+  const getUserEmailByID = async (_userID) => {
+    const docRef = doc(getFirestore(), "users", _userID);
+
+    try {
+      const docSnapshot = await getDoc(docRef);
+
+      if (docSnapshot.exists()) {
+        const docData = docSnapshot.data();
+        return docData;
+      } else {
+        console.log("El documento no existe");
+        return null;
+      }
+    } catch (e) {
+      console.log("Error al obtener el documento: ", e.message);
+      return null;
+    }
+  };
+
+  const decryptPassword = (_data) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const decrypted = CryptoJS.AES.decrypt(_data, KEY_ENCRIPT).toString(
+          CryptoJS.enc.Utf8
+        );
+        setDecryptedPassword(decrypted);
+        resolve(decrypted);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  // useEffect(() => {
+  //   console.log(`dataDoc: ${dataDoc}`);
+  // }, [dataDoc]);
 
   const signIn = async (e) => {
     e.preventDefault();
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((auth) => {
-        // console.log("auth");
-        // console.log(auth);
+    console.log(`Email: ${email}\npassword: ${password}`);
 
-        // console.log("email");
-        // console.log(auth.user.email);
+    const userID = await getUserIDByEmail(email.toLowerCase());
 
-        if (auth) {
-          toast.success(`Bienvenido ${auth.user.email.split("@")[0]}`);
-
-          saveSessionToken(auth);
+    if (userID !== null) {
+      const docData = await getUserEmailByID(userID);
+      console.log("docData");
+      console.log(docData);
+      if (docData !== null) {
+        const decrypted = await decryptPassword(docData?.password);
+        if (decrypted === password) {
+          saveSessionToken(docData.email, docData.rol, docData.name);
+          toast.success(`Bienvenido ${docData.name}`);
           navigate("/");
+        } else {
+          toast.error("Email o contraseña incorrectos");
         }
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(`Email o contraseña incorrectos`);
-      });
-
-    // const result = await signInWithEmailAndPassword(auth, email, password);
-
-    // console.log("result");
-    // console.log(result);
-
-    // console.log("email");
-    // console.log(result.user.email);
-
-    // if (result.user) {
-    //   toast.success(`Bienvenido ${result.user.email.split("@")[0]}`);
-    //   navigate("/");
-    // } else {
-    //   console.log("NO PASA NADA");
-    //   toast.error(`Email o contraseña incorrectos`);
-    // }
-
-    // signInWithEmailAndPassword(email, password)
-    //   .then((authUser) => {
-    //     navigate("/");
-    //   })
-    //   .catch((error) => alert(error));
+      }
+    } else {
+      toast.error("Email o contraseña incorrectos");
+    }
   };
 
   return (
     <div className="login">
-      {/* <Link to="/">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"
-          alt=""
-          className="login_logo"
-        />
-      </Link> */}
-
       <div className="login_container">
         <h2>UNIBEERSE LOGIN</h2>
 
-        <form className="login_form">
+        <form className="login_form" onSubmit={signIn}>
           <div className="email_gap">
             <h5>E-mail</h5>
             <input
@@ -104,9 +130,19 @@ function LogInComponent() {
             />
           </div>
 
-          <button type="submit" onClick={signIn} className="login_signInButton">
+          <button type="submit" className="login_signInButton">
             Sign In
           </button>
+
+          <p>
+            ¿Aún no formas parte de la experiencia única de UNIBEERSE? ¡Únete
+            ahora y descubre un mundo de sabores!
+          </p>
+          <p>
+            <a href="/signup">
+              ¡Regístrate gratis y comienza tu viaje cervecero hoy mismo!
+            </a>
+          </p>
         </form>
       </div>
     </div>

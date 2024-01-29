@@ -12,6 +12,8 @@ import {
 import { db } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
+const DATA_LIMIT_PER_PAGE = 20;
+
 function FormEditBeerComponent({
   onClose,
   content,
@@ -23,11 +25,8 @@ function FormEditBeerComponent({
   const [estilo, setEstilo] = useState(content.ESTILO || "");
   const [graduacion, setGraduacion] = useState(content.GRADUACIÓN || "");
   const [nacionalidad, setNacionalidad] = useState(content.NACIONALIDAD || "");
-
   const form = useRef();
   const navigate = useNavigate();
-
-  const currenWidth = window.innerWidth;
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
@@ -42,6 +41,11 @@ function FormEditBeerComponent({
     updateBeerData("beers", "ID", content.ID, newData);
   };
 
+  //Conseguimos el numero de pagina mediante el ID de la cerveza
+  const getPageNumberByID = (_id) => {
+    return Math.ceil(_id / DATA_LIMIT_PER_PAGE);
+  };
+
   const updateBeerData = async (collectionName, field, value, newData) => {
     const beerCollection = collection(db, collectionName);
     const q = query(beerCollection, where("ID", "==", value));
@@ -52,9 +56,10 @@ function FormEditBeerComponent({
         await updateDoc(docRef, newData);
 
         toast.success(`${content.NOMBRE} editada con exito!`);
+        const page = getPageNumberByID(content.ID);
         setTimeout(() => {
           onClose();
-          navigate("/beers/page/3");
+          navigate(`/beers/page/${page}`);
         }, 1000);
       }
     } catch (e) {

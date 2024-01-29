@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import "./style.css";
 import emailjs from "@emailjs/browser";
 import toast from "react-hot-toast";
+import { getSessionToken } from "../../helpers";
 
 function FormReportIssueComponent({
   onClose,
@@ -10,7 +11,7 @@ function FormReportIssueComponent({
   formIssueVisibility,
 }) {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(getSessionToken().email);
   const [issue, setIssue] = useState("");
 
   const form = useRef();
@@ -19,7 +20,7 @@ function FormReportIssueComponent({
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    console.log("Datos enviados:", { name, email, issue });
+    // console.log("Datos enviados:", { name, email, issue });
 
     emailjs.send(
       "service_751su1s",
@@ -82,7 +83,7 @@ function FormReportIssueComponent({
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
+              readOnly
             />
           </label>
 

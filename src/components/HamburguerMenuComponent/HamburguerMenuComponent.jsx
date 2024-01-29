@@ -2,6 +2,11 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./style.css";
 import SearchBar from "../SearchBar/SearchBar";
+import {
+  deleteSessionToken,
+  getSessionToken,
+  saveSessionToken,
+} from "../../helpers";
 
 function HamburguerMenuComponent({ handleFilter }) {
   const location = useLocation();
@@ -13,7 +18,7 @@ function HamburguerMenuComponent({ handleFilter }) {
 
   useEffect(() => {
     setIsMenuClicked(false);
-    const userToken = sessionStorage.getItem("autenticacion");
+    const userToken = getSessionToken();
     setIsLoggedIn(!!userToken);
   }, [location]);
 
@@ -31,7 +36,7 @@ function HamburguerMenuComponent({ handleFilter }) {
   };
 
   const handleLogOut = () => {
-    sessionStorage.removeItem("autenticacion");
+    deleteSessionToken();
     setIsMenuClicked(false);
     navigate("/");
     setIsLoggedIn(false);

@@ -4,7 +4,11 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import useServer from "../../hooks/useServer";
 import BeerIcon from "../BeerIcon";
-import { splitCountryName, getCodeCountryByName } from "../../helpers";
+import {
+  splitCountryName,
+  getCodeCountryByName,
+  getSessionToken,
+} from "../../helpers";
 
 import beerData from "/public/beer-data.json";
 import BeerFormComponent from "../BeerFormComponent/BeerFormComponent";
@@ -32,7 +36,8 @@ function BeerCard() {
   const [nextBeer, setNextBeer] = useState({});
   const [formIssueVisibility, setFormIssueVisibility] = useState(false);
   const [formEditVisibility, setFormEditVisibility] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
   const { id } = useParams();
   const idInteger = parseInt(id);
   const navigate = useNavigate();
@@ -207,9 +212,9 @@ function BeerCard() {
     // fetchBeerId();
     // fetchPreviousBeer();
     // fetchNextsBeer();
-    const userToken = sessionStorage.getItem("autenticacion");
-    setIsLogged(!!userToken);
-
+    const token = getSessionToken();
+    setIsAdmin(token?.rol === "admin");
+    setIsRegistered(!!token || false);
     fetchCurrentBeerFirebase();
     fetchNextBeerJSON();
     fetchPreviousBeerJSON();
@@ -220,16 +225,19 @@ function BeerCard() {
       <section className="main-container">
         <div className="_beerCard">
           <div id="beer_icon_card">
-            <div id="buttonReportIssue">
-              <button onClick={handleReportIssueToggle}>
-                <img
-                  src="/icons/reportIssueIcon.png"
-                  alt="Report Issue Icon"
-                  className="ReportIssueIcon"
-                />
-              </button>
-            </div>
-            {isLogged && (
+            {/* Comprobamos si esta registrado */}
+            {isRegistered && (
+              <div id="buttonReportIssue">
+                <button onClick={handleReportIssueToggle}>
+                  <img
+                    src="/icons/reportIssueIcon.png"
+                    alt="Report Issue Icon"
+                    className="ReportIssueIcon"
+                  />
+                </button>
+              </div>
+            )}
+            {isAdmin && (
               <div id="buttonEditBeer">
                 <button onClick={handleEditBeerToggle}>
                   <img

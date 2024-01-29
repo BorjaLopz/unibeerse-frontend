@@ -10,7 +10,7 @@ import CustomBeerCard from "../CustomBeerCard/CustomBeerCard";
 
 /* FIREBASE */
 import { db } from "../firebaseConfig";
-import { collection, getDocs, or } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 import beerData from "/public/beer-data.json";
 import ScrollTopComponent from "../ScrollTop/ScrollTopComponent";

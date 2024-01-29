@@ -55,7 +55,7 @@ function HomePageComponent() {
             </div>
           ))}
         </Fade>
-        <Link to="/beers">
+        <Link to="/beers/page/1">
           <div id="container-text-arrow">
             <h3 id="first-paragraph">
               Explora, Celebra, Comparte: ¡La Cerveza une a Todos!

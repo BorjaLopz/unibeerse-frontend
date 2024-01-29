@@ -13,6 +13,7 @@ import StyleCard from "./components/StyleCardComponent/StyleCard";
 import HomePage from "./views/HomePage";
 import Footer from "./components/Footer/Footer";
 import LogInComponent from "./components/LogInComponent/LogInComponent";
+import SignUpComponent from "./components/SignUpComponent/SignUpComponent";
 
 function App() {
   const [customFilter, setCustomFilter] = useState("");
@@ -38,8 +39,9 @@ function App() {
           path="/style/:style"
           element={<StyleCard stylejson={"../public/style.json"} />}
         />
-        <Route path="/*" element={<NotFound />} />
         <Route path="/login" element={<LogInComponent />} />
+        <Route path="/signup" element={<SignUpComponent />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
     </div>

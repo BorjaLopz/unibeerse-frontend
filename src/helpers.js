@@ -3522,6 +3522,28 @@ function splitCountryName(_country) {
   }
 }
 
+function saveSessionToken(_email, _rol = "user", _name = "") {
+  const token = {
+    email: _email,
+    name: _name == "" ? "prueba" : _email.split("@")[0],
+    rol: _rol,
+  };
+
+  sessionStorage.setItem("USER", JSON.stringify(token));
+}
+
+function getSessionToken() {
+  const tokenString = sessionStorage.getItem("USER");
+  const token = JSON.parse(tokenString);
+  return token;
+}
+
+function deleteSessionToken() {
+  sessionStorage.removeItem("USER");
+}
+
+const KEY_ENCRIPT = "ASIDGHs1298uh298";
+
 function getCodeCountryByName(_country) {
   if (_country?.includes("/")) {
     let objetoEncontrado = [];
@@ -3567,6 +3589,10 @@ export {
   removingAccents,
   splitCountryName,
   createRating,
+  saveSessionToken,
+  getSessionToken,
+  deleteSessionToken,
+  KEY_ENCRIPT,
 };
 
 /* LO QUE VAMOS A TENER QUE HACER ES SACAR UN ARRAY DE CODE_2, SI ES SOLO 1 PERFECTO, PERO SI HAY MAS DE 1 TENDREMOS QUE MOSTRAR LAS DOS BANDERAS. ESPERO QUE LO HAGAS BIEN BORJA DEL FUTURO :)*/
