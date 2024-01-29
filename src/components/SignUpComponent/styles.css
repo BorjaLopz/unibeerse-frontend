@@ -42,7 +42,7 @@
   gap: 1rem;
 }
 
-.signUp_form :nth-child(10) {
+.signUp_form :last-child {
   margin-top: 2rem;
   margin-bottom: 0;
   justify-items: flex-end;
@@ -54,11 +54,25 @@
   padding: 10px;
   border: none;
   border-radius: 4px;
-  cursor:pointer;
+  cursor: pointer;
+}
+
+.passwordInputContainer {
+  position: relative;
+  width: 100%;
+}
+
+.passwordInputContainer button {
+  position: absolute;
+  top: -78%;
+  right: 5px;
+  cursor: pointer;
+  width: 40px;
+  height: 76%;
+  border: 1px solid blue;
 }
 
 /* .signUp_button:hover,
 .login_registerButton:hover {
   scale: 1.05;
 } */
-

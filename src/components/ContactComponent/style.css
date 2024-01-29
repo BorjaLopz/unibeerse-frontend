@@ -86,7 +86,7 @@
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-form button {
+.first_form button {
   border-radius: 0.5rem;
   height: 2.5rem;
   width: 50%;

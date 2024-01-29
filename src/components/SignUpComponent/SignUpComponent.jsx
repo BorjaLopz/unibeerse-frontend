@@ -20,6 +20,7 @@ function SignUpComponent() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [encryptedPassword, setEncryptedPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const firestore = getFirestore();
 
@@ -73,28 +74,32 @@ function SignUpComponent() {
     e.preventDefault();
 
     try {
-      encryptPassword();
+      if (password === confirmPassword) {
+        encryptPassword();
 
-      console.log("encryptedPassword desde handleSubmit");
-      console.log(encryptedPassword);
-      // Añadir usuario a Firestore
-      const userId = await createUserInFirestore(
-        email.toLowerCase(),
-        name,
-        "user",
-        encryptedPassword
-      );
+        console.log("encryptedPassword desde handleSubmit");
+        console.log(encryptedPassword);
+        // Añadir usuario a Firestore
+        const userId = await createUserInFirestore(
+          email.toLowerCase(),
+          name,
+          "user",
+          encryptedPassword
+        );
 
-      if (userId) {
-        // Guardar token en sessionStorage
-        saveSessionToken(email, "user", name);
-        toast.success(`Bienvenido ${email.split("@")[0]}`);
+        if (userId) {
+          // Guardar token en sessionStorage
+          saveSessionToken(email, "user", name);
+          toast.success(`Bienvenido ${email.split("@")[0]}`);
 
-        // Redirigir al usuario
-        navigate("/");
+          // Redirigir al usuario
+          navigate("/");
+        } else {
+          // Manejar el caso de error al añadir usuario a Firestore
+          toast.error("Usuario ya registrado");
+        }
       } else {
-        // Manejar el caso de error al añadir usuario a Firestore
-        toast.error("Usuario ya registrado");
+        toast.error("Las contraseñas deben coincidir");
       }
     } catch (error) {
       console.error("Error al registrar usuario: ", error.message);
@@ -129,18 +134,26 @@ function SignUpComponent() {
           />
 
           <label htmlFor="password">Contraseña:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className="passwordInputContainer">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "A" : "C"}
+            </button>
+          </div>
 
           <label htmlFor="confirmPassword">Confirmar contraseña:</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="confirmPassword"
             name="confirmPassword"
             value={confirmPassword}

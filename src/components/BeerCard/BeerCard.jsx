@@ -214,7 +214,7 @@ function BeerCard() {
     // fetchNextsBeer();
     const token = getSessionToken();
     setIsAdmin(token?.rol === "admin");
-    setIsRegistered(!!token || false);
+    setIsRegistered(!!token?.rol === "user" || false);
     fetchCurrentBeerFirebase();
     fetchNextBeerJSON();
     fetchPreviousBeerJSON();

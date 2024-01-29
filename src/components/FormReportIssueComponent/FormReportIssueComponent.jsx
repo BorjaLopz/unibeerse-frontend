@@ -11,7 +11,7 @@ function FormReportIssueComponent({
   formIssueVisibility,
 }) {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState(getSessionToken().email);
+  const [email, setEmail] = useState(getSessionToken()?.email || "");
   const [issue, setIssue] = useState("");
 
   const form = useRef();
