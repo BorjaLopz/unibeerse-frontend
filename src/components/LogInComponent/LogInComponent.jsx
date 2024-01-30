@@ -22,11 +22,14 @@ import {
 
 import CryptoJS from "crypto-js";
 import { saveSessionToken, KEY_ENCRIPT } from "../../helpers";
+import eye from "/icons/eye.png";
+import eyeOff from "/icons/eye-off.png";
 
 function LogInComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [decryptedPassword, setDecryptedPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const firestore = getFirestore();
 
   const [dataDoc, setDataDoc] = useState({});
@@ -88,8 +91,6 @@ function LogInComponent() {
 
     if (userID !== null) {
       const docData = await getUserEmailByID(userID);
-      console.log("docData");
-      console.log(docData);
       if (docData !== null) {
         const decrypted = await decryptPassword(docData?.password);
         if (decrypted === password) {
@@ -111,23 +112,30 @@ function LogInComponent() {
         <h2>UNIBEERSE LOGIN</h2>
 
         <form className="login_form" onSubmit={signIn}>
+          <label htmlFor="email">Email</label>
           <div className="email_gap">
-            <h5>E-mail</h5>
             <input
+              id="email"
               type="email"
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+          <label htmlFor="password">Contraseña</label>
           <div className="password_gap">
-            <h5>Password</h5>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               required
               onChange={(e) => setPassword(e.target.value)}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <img src={eyeOff} /> : <img src={eye} />}
+            </button>
           </div>
 
           <button type="submit" className="login_signInButton">
@@ -139,9 +147,11 @@ function LogInComponent() {
             ahora y descubre un mundo de sabores!
           </p>
           <p>
-            <a href="/signup">
-              ¡Regístrate gratis y comienza tu viaje cervecero hoy mismo!
-            </a>
+            ¡
+            <span className="importantText">
+              <a href="/signup">Regístrate</a>
+            </span>{" "}
+            gratis y comienza tu viaje cervecero hoy mismo!
           </p>
         </form>
       </div>

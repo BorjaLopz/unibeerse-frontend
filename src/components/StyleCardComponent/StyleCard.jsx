@@ -122,8 +122,6 @@ function StyleCard() {
         }
       });
 
-      console.log("filteredBeers");
-      console.log(filteredBeers);
       setBeers(filteredBeers);
 
       // setBeers(orderedData);

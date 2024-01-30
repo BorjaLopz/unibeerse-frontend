@@ -8,6 +8,8 @@ body {
 
 #containerBurguerMenu {
   width: 90%;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 #containerBurguerMenu nav {
@@ -15,7 +17,7 @@ body {
   height: 5em;
   display: flex;
   justify-content: center;
-  padding: 1.2em 0 ;
+  padding: 1.2em 0;
 }
 
 .burguerMenu {
@@ -43,7 +45,7 @@ body {
 
   background-color: rgb(37, 39, 53);
   position: absolute;
-  top: 10rem;
+  top: 6rem;
   right: 0;
   z-index: 9;
 
@@ -64,8 +66,16 @@ body {
   animation: menuAnimationReverse 0.5s forwards; /* Utiliza una animación llamada "menuAnimation" */
 }
 
-.menuBurguer.gap {
-  gap: 2rem;
+.menuBurguer.grande {
+  top: 10rem;
+}
+
+.menuBurguer.smallFont {
+  font-size: 0.8rem;
+}
+
+.menuBurguer.normalFont {
+  font-size: 1rem;
 }
 
 #searchRoutes {
@@ -100,13 +110,13 @@ body {
 }
 
 .burguerBar.clicked:nth-child(1) {
-  transform: rotate(45deg) translate(0.55em, 0.9em);
+  transform: rotate(45deg) translate(0.45em, 0.85em);
   transition: ease-out 0.25s;
 }
 
 .burguerBar.clicked:nth-child(2) {
-  transform: scale(0.1);
-  transition: ease-out 0.25s;
+  transform: scale(0.01);
+  transition: ease-out 0.05s;
 }
 
 .burguerBar.clicked:nth-child(3) {
@@ -117,4 +127,10 @@ body {
 .burguerBar.unclicked {
   transform: rotate(0) translate(0);
   transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+}
+
+#searchHamburguer {
+  grid-column-start: 4;
+  grid-column-end: 4;
+  grid-row: 2;
 }

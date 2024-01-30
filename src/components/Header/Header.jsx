@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useState } from "react";
 import "./style.css";
@@ -6,6 +6,11 @@ import HamburguerMenuComponent from "../HamburguerMenuComponent/HamburguerMenuCo
 
 function Header({ handleCustomFilter }) {
   const [filter, setFilter] = useState("");
+  const location = useLocation();
+  const beerPage = location.pathname.includes("/beers/page/");
+  const headerClass = location.pathname.includes("/beers/page/")
+    ? "headerGrande"
+    : "headerPequeño";
 
   const handleFilter = (_filter) => {
     setFilter(_filter);
@@ -32,12 +37,15 @@ function Header({ handleCustomFilter }) {
           <SearchBar handleFilter={handleFilter} />
         </section>
 
-        <section id="lowView">
+        <section id="lowView" className={headerClass}>
           <div className="mainIcon">
             <h2 className="mainTitle">UNIBEERSE</h2>
           </div>
 
           <HamburguerMenuComponent handleFilter={handleFilter} />
+          <div id="searchHamburguer">
+            {beerPage && <SearchBar handleFilter={handleFilter} />}
+          </div>
         </section>
       </header>
     </>

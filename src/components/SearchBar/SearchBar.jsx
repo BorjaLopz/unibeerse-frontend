@@ -23,34 +23,19 @@ function SearchBar({ handleFilter }) {
 
   return (
     <>
-      {location.pathname.split("/").slice(0, 3).join("/") === "/beers/page" ? (
-        <>
-          {" "}
-          <section id="search-bar-input">
-            <div className="search">
-              <input
-                type="search"
-                name="search"
-                placeholder="Busqueda"
-                onChange={inputHandler}
-              />
-            </div>
-          </section>
-        </>
-      ) : (
-        <>
-          <section id="disabled-search-bar">
-            <div className="search">
-              <input
-                type="search"
-                name="search"
-                disabled
-                onChange={inputHandler}
-              />
-            </div>
-          </section>
-        </>
-      )}
+      <>
+        {" "}
+        <section id="search-bar-input">
+          <div className="search">
+            <input
+              type="search"
+              name="search"
+              placeholder="Busqueda"
+              onChange={inputHandler}
+            />
+          </div>
+        </section>
+      </>
     </>
   );
 }

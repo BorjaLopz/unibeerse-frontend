@@ -3518,7 +3518,7 @@ function splitCountryName(_country) {
       );
     });
 
-    return objetoEncontrado ? objetoEncontrado.flat() : "Objeto no encontrado";
+    return objetoEncontrado ? objetoEncontrado.flat() : "???";
   }
 }
 
@@ -3553,7 +3553,7 @@ function getCodeCountryByName(_country) {
       objetoEncontrado.push(
         countries
           .filter(function (c) {
-            return c.name_es === currentCountry;
+            return c.name_es.toLowerCase() === currentCountry.toLowerCase();
           })
           .map(function (c) {
             return c.code_2.toLowerCase();

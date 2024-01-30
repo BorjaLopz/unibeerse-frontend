@@ -21,8 +21,6 @@ function BeerFormComponent() {
     // Haz algo con textareaValue y rating, como enviarlos a un servidor
 
     const beerJSON = { id: id, rating: rating, comment: textAreaValue };
-    console.log("beerJSON");
-    console.log(beerJSON);
 
     axios
       .post(URL_POST, beerJSON)
@@ -30,9 +28,6 @@ function BeerFormComponent() {
       .catch((e) => console.log(`Error en la llamada de la API ${e}`));
 
     const JSONstring = JSON.stringify(beerJSON);
-
-    console.log("JSONstring");
-    console.log(JSONstring);
 
     // console.log(`id: ${id}\nrating: ${rating}\ncomment: ${textAreaValue}`);
 

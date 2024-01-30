@@ -110,7 +110,8 @@ function BeerCard() {
   const fetchNextBeerJSON = () => {
     try {
       const nextBeer = beerData.data.find((b) => {
-        if (parseInt(b.id) === parseInt(id) + 2) {
+        console.log(b.id);
+        if (parseInt(b.id) === parseInt(id) + 1) {
           return b;
         }
       });
@@ -146,7 +147,6 @@ function BeerCard() {
         // console.log(beerData);
         return beerData;
       } else {
-        console.log("NO EXISTE");
         return null;
       }
     } catch (e) {
@@ -174,7 +174,7 @@ function BeerCard() {
       const nextBeer = await getBeerByIDFirebase("beers", idInteger + 2);
       // console.log("data");
       // console.log(data);
-      nextBeer(nextBeer);
+      setNextBeer(nextBeer);
       // console.log("beer");
       // console.log(beer);
     } catch (e) {
@@ -185,9 +185,9 @@ function BeerCard() {
   const fetchPreviousBeerFirebase = async () => {
     try {
       const prevBeer = await getBeerByIDFirebase("beers", idInteger - 1);
-      // console.log("data");
-      // console.log(data);
-      previousBeer(prevBeer);
+      // console.log("prevBeer");
+      // console.log(prevBeer);
+      setPreviousBeer(prevBeer);
       // console.log("beer");
       // console.log(beer);
     } catch (e) {
@@ -203,21 +203,18 @@ function BeerCard() {
     setFormEditVisibility((prevVisibility) => !prevVisibility);
   };
 
-  //Comprobamos si carga beer con useEffect
-  // useEffect(() => {
-  //   console.log("beer: ", beer);
-  // }, [beer]);
-
   useEffect(() => {
     // fetchBeerId();
     // fetchPreviousBeer();
     // fetchNextsBeer();
     const token = getSessionToken();
-    setIsAdmin(token?.rol === "admin");
-    setIsRegistered(!!token?.rol === "user" || false);
+    setIsAdmin(token?.rol === "admin" || false);
+    setIsRegistered(token?.rol === "user" || false);
     fetchCurrentBeerFirebase();
-    fetchNextBeerJSON();
-    fetchPreviousBeerJSON();
+    fetchNextBeerFirebase();
+    fetchPreviousBeerFirebase();
+    // fetchNextBeerJSON();
+    // fetchPreviousBeerJSON();
   }, [id]);
 
   return (
@@ -358,7 +355,7 @@ function BeerCard() {
               </>
             </Link>
           </div>
-          <div className={`right ${nextBeer === undefined ? "blocked" : ""}`}>
+          <div className={`right ${nextBeer === null ? "blocked" : ""}`}>
             <Link to={`/beer/${idInteger + 1}`}>
               <>
                 <div className="arrow">

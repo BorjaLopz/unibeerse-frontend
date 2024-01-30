@@ -54,9 +54,8 @@
   gap: 1rem;
 }
 
-.login_form :nth-child(3) {
-  margin-top: 2rem;
-  margin-bottom: 0;
+.login_form .login_signInButton {
+  margin: 1rem;
   justify-items: flex-end;
 }
 
@@ -66,7 +65,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.2rem;
-  width: 96%;
+  width: 100%;
 }
 
 .login_container > p {
@@ -99,4 +98,80 @@
 .login_signInButton:hover,
 .login_registerButton:hover {
   scale: 1.05;
+}
+
+.password_gap {
+  position: relative;
+}
+
+.password_gap button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(37, 39, 53, 0.116);
+}
+
+.password_gap img {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 1.2rem;
+}
+
+.password_gap button {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  cursor: pointer;
+  width: 40px;
+  height: 74%;
+  border-left: 1px solid rgb(0, 0, 0);
+  border-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 10%,
+    rgb(37, 39, 53) 10%,
+    rgb(37, 39, 53) 50%,
+    rgb(37, 39, 53) 90%,
+    transparent 90%,
+    transparent 100%
+  );
+  border-image-slice: 1; /* Cortar el degradado en la posición del borde */
+}
+
+.importantText {
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
+  color: rgb(23, 40, 187);
+  font-style: italic;
+  font-weight: 800;
+}
+
+.importantText::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: rgb(23, 40, 187);
+  animation: underlineAnimation 3s infinite; /* Puedes ajustar la duración según tus preferencias */
+}
+
+@keyframes underlineAnimation {
+  0% {
+    width: 0;
+  }
+  15% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  85% {
+    width: 0;
+  }
+  100% {
+    width: 0;
+  }
 }

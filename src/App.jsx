@@ -14,6 +14,7 @@ import HomePage from "./views/HomePage";
 import Footer from "./components/Footer/Footer";
 import LogInComponent from "./components/LogInComponent/LogInComponent";
 import SignUpComponent from "./components/SignUpComponent/SignUpComponent";
+import AddNewBeerComponent from "./components/AddNewBeerComponent/AddNewBeerComponent";
 
 function App() {
   const [customFilter, setCustomFilter] = useState("");
@@ -41,6 +42,7 @@ function App() {
         />
         <Route path="/login" element={<LogInComponent />} />
         <Route path="/signup" element={<SignUpComponent />} />
+        <Route path="/addNewBeer" element={<AddNewBeerComponent />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />

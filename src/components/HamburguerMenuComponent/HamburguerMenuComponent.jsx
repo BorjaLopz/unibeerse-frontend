@@ -1,5 +1,5 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./style.css";
 import SearchBar from "../SearchBar/SearchBar";
 import {
@@ -13,20 +13,33 @@ function HamburguerMenuComponent({ handleFilter }) {
   const navigate = useNavigate();
   const [isMenuClicked, setIsMenuClicked] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const beerPage = location.pathname.includes("beers");
+  const beerPage = location.pathname.includes("beers/page/");
+  const screenWidth = useRef(window.innerWidth);
 
   useEffect(() => {
     setIsMenuClicked(false);
     const userToken = getSessionToken();
     setIsLoggedIn(!!userToken);
+    const token = getSessionToken();
+    setIsAdmin(token?.rol === "admin" || false);
   }, [location]);
 
   const menuClass = isMenuClicked
     ? "menuBurguer visible"
     : "menuBurguer closed";
 
-  const newMenuClass = beerPage ? menuClass + " gap" : menuClass;
+  console.log("screenWidth");
+  console.log(screenWidth);
+
+  const fontSizeMenu = screenWidth.current <= 350 ? "smallFont" : "normalFont";
+  console.log("fontSizeMenu");
+  console.log(fontSizeMenu);
+
+  const newMenuClass = beerPage
+    ? menuClass + " grande " + fontSizeMenu
+    : menuClass;
   const burguerItem = isMenuClicked
     ? "burguerBar clicked"
     : "burguerBar unclicked";
@@ -56,15 +69,13 @@ function HamburguerMenuComponent({ handleFilter }) {
           <Link to="/">Inicio</Link>
           <Link to="/beers/page/1">Cervezas</Link>
           <Link to="/styles">Estilos</Link>
-          <Link to="/contact">Contacto</Link>
+          {/* <Link to="/contact">Contacto</Link> */}
+          {isAdmin ? <Link to="/addNewBeer">Añadir</Link> : <></>}
           {isLoggedIn ? (
             <button onClick={handleLogOut}>LOGOUT</button>
           ) : (
             <Link to="/login">LogIN</Link>
           )}
-        </div>
-        <div id="searchHamburguer">
-          {beerPage && <SearchBar handleFilter={handleFilter} />}
         </div>
       </div>
     </div>

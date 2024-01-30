@@ -13,6 +13,8 @@ import {
 } from "firebase/firestore";
 import CryptoJS from "crypto-js";
 import { saveSessionToken, KEY_ENCRIPT } from "../../helpers";
+import eye from "/icons/eye.png";
+import eyeOff from "/icons/eye-off.png";
 
 function SignUpComponent() {
   const [name, setName] = useState("");
@@ -50,8 +52,6 @@ function SignUpComponent() {
   };
 
   async function createUserInFirestore(email, name, rol, encryptedPassword) {
-    console.log("encryptedPassword desde createUser");
-    console.log(encryptedPassword);
     try {
       if (await isEmailAvailable(email)) {
         // Añadir usuario a Firestore
@@ -76,9 +76,6 @@ function SignUpComponent() {
     try {
       if (password === confirmPassword) {
         encryptPassword();
-
-        console.log("encryptedPassword desde handleSubmit");
-        console.log(encryptedPassword);
         // Añadir usuario a Firestore
         const userId = await createUserInFirestore(
           email.toLowerCase(),
@@ -147,19 +144,35 @@ function SignUpComponent() {
               type="button"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? "A" : "C"}
+              {showPassword ? (
+                <img src={eyeOff} />
+              ) : (
+                <img src={eye} />
+              )}
             </button>
           </div>
 
           <label htmlFor="confirmPassword">Confirmar contraseña:</label>
-          <input
-            type={showPassword ? "text" : "password"}
-            id="confirmPassword"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
+          <div className="confirmPasswordInputContainer">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="confirmPassword"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <img src={eyeOff} />
+              ) : (
+                <img src={eye} />
+              )}
+            </button>
+          </div>
 
           <button type="submit" className="signUp_button">
             Registrarse
