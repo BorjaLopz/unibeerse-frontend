@@ -1,4 +1,4 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import "./style.css";
 
 import { useState, useEffect } from "react";
@@ -16,6 +16,7 @@ import BeerCommentsComponent from "../BeerCommentsComponent/BeerCommentsComponen
 import ReportIssueIcon from "../ReportIssueIcon";
 import FormReportIssueComponent from "../FormReportIssueComponent/FormReportIssueComponent";
 import FormEditBeerComponent from "../FormEditBeerComponent/FormEditBeerComponent";
+import AddCommentsFirebase from "../AddCommentsFirebase/AddCommentsFirebase";
 
 /* FIREBASE */
 
@@ -28,7 +29,6 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import AddCommentsFirebase from "../AddCommentsFirebase/AddCommentsFirebase";
 
 function BeerCard() {
   const { get } = useServer();
@@ -37,10 +37,13 @@ function BeerCard() {
   const [nextBeer, setNextBeer] = useState({});
   const [formIssueVisibility, setFormIssueVisibility] = useState(false);
   const [formEditVisibility, setFormEditVisibility] = useState(false);
+  const [formSendComments, setFormSendComments] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
+
   const [showFormComments, setShowFormComments] = useState(false);
   const { id } = useParams();
+  const location = useLocation();
   const idInteger = parseInt(id);
   const navigate = useNavigate();
 
@@ -205,6 +208,10 @@ function BeerCard() {
     setFormEditVisibility((prevVisibility) => !prevVisibility);
   };
 
+  const handleSendCommentsToggle = () => {
+    setFormSendComments((prevVisibility) => !prevVisibility);
+  };
+
   useEffect(() => {
     // fetchBeerId();
     // fetchPreviousBeer();
@@ -218,6 +225,10 @@ function BeerCard() {
     // fetchNextBeerJSON();
     // fetchPreviousBeerJSON();
   }, [id]);
+
+  useEffect(() => {
+    setShowFormComments(true);
+  }, [location]);
 
   return (
     <main>
@@ -325,6 +336,13 @@ function BeerCard() {
           formIssueVisibility={formEditVisibility}
         />
 
+        <AddCommentsFirebase
+          onClose={handleSendCommentsToggle}
+          content={beer}
+          classes={`${formSendComments === true ? "visibleForm" : ""}`}
+          formIssueVisibility={formSendComments}
+        />
+
         <div className="arrowContainer">
           <div className={`left ${idInteger === 0 ? "blocked" : ""}`}>
             <Link to={`/beer/${idInteger - 1}`}>
@@ -349,20 +367,13 @@ function BeerCard() {
           {showFormComments ? (
             <button
               className="addCommentsButton"
-              onClick={() => setShowFormComments(!showFormComments)}
+              onClick={handleSendCommentsToggle}
             >
               AÑADIR COMENTARIOS
             </button>
           ) : (
-            <button
-              className="closeCommentsButton"
-              onClick={() => setShowFormComments(!showFormComments)}
-            >
-              Cerrar
-            </button>
+            ""
           )}
-
-          {showFormComments && <AddCommentsFirebase />}
         </section>
       </section>
 
