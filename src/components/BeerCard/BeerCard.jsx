@@ -28,6 +28,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import AddCommentsFirebase from "../AddCommentsFirebase/AddCommentsFirebase";
 
 function BeerCard() {
   const { get } = useServer();
@@ -38,6 +39,7 @@ function BeerCard() {
   const [formEditVisibility, setFormEditVisibility] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [showFormComments, setShowFormComments] = useState(false);
   const { id } = useParams();
   const idInteger = parseInt(id);
   const navigate = useNavigate();
@@ -309,28 +311,6 @@ function BeerCard() {
           </div>
         </div>
 
-        {/* Comentamos comentarios jejeje */}
-        {/* {beer?.comments ? (
-          <div id="commentas_card">
-            <div id="comments_beer_card">
-              <h2 id="h2_notas">Notas</h2>
-              <h2 id="comment">{beer?.comments}</h2>
-            </div>
-          </div>
-        ) : (
-          <></>
-        )} */}
-
-        {/* MOSTRAMOS EL FORMULARIO PARA REPORTAR ALGÚN ERROR */}
-        {/* {formIssueVisibility && (
-          <FormReportIssueComponent
-            onClose={handleReportIssueToggle}
-            content={beer}
-            classes={`${formIssueVisibility === true ? "visibleForm" : ""}`}
-            formIssueVisibility={formIssueVisibility}
-          />
-        )} */}
-
         <FormReportIssueComponent
           onClose={handleReportIssueToggle}
           content={beer}
@@ -365,7 +345,38 @@ function BeerCard() {
             </Link>
           </div>
         </div>
+        <section className="commentsForm">
+          {showFormComments ? (
+            <button
+              className="addCommentsButton"
+              onClick={() => setShowFormComments(!showFormComments)}
+            >
+              AÑADIR COMENTARIOS
+            </button>
+          ) : (
+            <button
+              className="closeCommentsButton"
+              onClick={() => setShowFormComments(!showFormComments)}
+            >
+              Cerrar
+            </button>
+          )}
+
+          {showFormComments && <AddCommentsFirebase />}
+        </section>
       </section>
+
+      {/* Comentamos comentarios jejeje */}
+      {/* {beer?.comments ? (
+          <div id="commentas_card">
+            <div id="comments_beer_card">
+              <h2 id="h2_notas">Notas</h2>
+              <h2 id="comment">{beer?.comments}</h2>
+            </div>
+          </div>
+        ) : (
+          <></>
+        )} */}
 
       {/* En caso de que se pudiera modificar un fichero desde cliente, que no se puede :/ */}
       {/* <BeerFormComponent /> */}
@@ -375,53 +386,3 @@ function BeerCard() {
 }
 
 export default BeerCard;
-
-/*<div className="flex flex-col justify-center h-screen">
-      <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white">
-        <div className="w-full md:w-1/3 bg-white grid place-items-center">
-          {beer.img_file !== "" ? (
-            <img
-              src={beer.img_file}
-              alt={`Imagen de ${beer.brand} | ${beer.name}`}
-              className="rounded-xl"
-              width={300}
-            />
-          ) : (
-            <BeerIcon />
-          )}
-        </div>
-        <div className="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3">
-          <div className="flex justify-between item-center">
-            <p className="text-gray-500 font-medium hidden md:block">
-              {beer.style}
-            </p>
-          </div>
-          <h3 className="font-black text-gray-800 md:text-3xl text-xl">
-            {beer.brand} | {beer.name}
-          </h3>
-          {beer.comments !== "" ? (
-            <p className="md:text-lg text-gray-500 text-base">
-              {beer.comments}
-            </p>
-          ) : (
-            <p className="md:text-lg text-gray-500 text-base">{`${
-              beer.name
-            }  de ${beer.brand.toLowerCase()} es una cerveza ${beer.style.toLowerCase()}`}</p>
-          )}
-          {beer.score ? (
-            <p className="text-xl font-black text-gray-800">
-              {beer.score}
-              <span className="font-normal text-gray-600 text-base">/10</span>
-            </p>
-          ) : (
-            <p className="text-xl font-black text-gray-800">
-              {beer.score}
-              <span className="font-normal text-gray-600 text-base">
-                Sin valoración aún
-              </span>
-            </p>
-          )}
-        </div>
-      </div>
-    </div>
-    */

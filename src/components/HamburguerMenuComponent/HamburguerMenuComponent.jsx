@@ -30,12 +30,10 @@ function HamburguerMenuComponent({ handleFilter }) {
     ? "menuBurguer visible"
     : "menuBurguer closed";
 
-  console.log("screenWidth");
-  console.log(screenWidth);
+
 
   const fontSizeMenu = screenWidth.current <= 350 ? "smallFont" : "normalFont";
-  console.log("fontSizeMenu");
-  console.log(fontSizeMenu);
+
 
   const newMenuClass = beerPage
     ? menuClass + " grande " + fontSizeMenu
