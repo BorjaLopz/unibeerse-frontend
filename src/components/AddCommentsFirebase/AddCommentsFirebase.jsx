@@ -1,8 +1,17 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./styles.css";
 import emailjs from "@emailjs/browser";
 import toast from "react-hot-toast";
 import { getSessionToken } from "../../helpers";
+import { useLocation } from "react-router-dom";
+import {
+  addDoc,
+  collection,
+  getFirestore,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 
 function AddCommentsFirebase({
   onClose,
@@ -12,47 +21,65 @@ function AddCommentsFirebase({
 }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState(getSessionToken()?.email || "");
+  const [comment, setComment] = useState("");
+
   const [issue, setIssue] = useState("");
 
   const form = useRef();
 
   const currenWidth = window.innerWidth;
+  const maxLength = 200;
+  const location = useLocation();
+  const firestore = getFirestore();
 
-  const handleSubmitForm = (e) => {
+  const resetFields = () => {
+    setName("");
+    setComment("");
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("Datos enviados:", { name, email, issue });
 
-    // emailjs.send(
-    //   "service_751su1s",
-    //   "template_swpat2t",
-    //   {
-    //     from_name: "Unibeerse",
-    //     to_name: name,
-    //     message: issue,
-    //     reply_to: email,
-    //     beer_id: content.id,
-    //     beer_name: content.name,
-    //     beer_brand: content.brand,
-    //   },
-    //   "93HxoJsy-yVEfyDYt"
-    // );
+    console.log(
+      `Cosas a enviar: nombre: ${name}\nemail: ${email}\ncomentario: ${comment} \nidCerveza: ${content.ID}`
+    );
 
-    toast.success("Email enviado correctamente");
+    const commentId = await createCommentInFirestore(
+      name,
+      email,
+      content.ID,
+      comment
+    );
+
+    if (commentId) {
+      toast.success("Comentario enviado con exito!");
+    }
 
     resetFields();
 
     onClose();
   };
 
-  const resetFields = () => {
-    setName("");
-    setEmail("");
-    setIssue("");
-  };
+  async function createCommentInFirestore(name, email, beerID, comment) {
+    try {
+      // Añadir comentario a Firestore
+      const docRef = await addDoc(collection(firestore, "comments"), {
+        name,
+        email,
+        comment,
+        beerID,
+      });
+      console.log("docRef.id: ", docRef.id);
+      return docRef.id;
+    } catch (error) {
+      console.error("Error al añadir usuario a Firestore: ", error.message);
+      return null;
+    }
+  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  };
+  useEffect(() => {
+    resetFields();
+  }, [location]);
 
   return (
     <section
@@ -67,8 +94,8 @@ function AddCommentsFirebase({
             className="ReportIssueIcon"
           />
         </button>
-        <form className="signUp_form" onSubmit={handleSubmit}>
-          <label htmlFor="fullName">Nombre completo:</label>
+        <form className="commentForm_form" onSubmit={handleSubmit}>
+          <label htmlFor="fullName">Nombre</label>
           <input
             type="text"
             id="fullName"
@@ -78,8 +105,34 @@ function AddCommentsFirebase({
             required
           />
 
-          <button type="submit" className="signUp_button">
-            Registrarse
+          <label htmlFor="email">email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            required
+            readOnly
+          />
+
+          <label htmlFor="comment">Comentario</label>
+          <div className="textAreaContainer">
+            <textarea
+              name="comment"
+              id="comment"
+              cols="30"
+              rows="4"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              required
+              maxLength={maxLength}
+            ></textarea>
+            <div className="charCounter">
+              {comment.length} / {maxLength}
+            </div>
+          </div>
+          <button type="submit" className="commentForm_button">
+            Registrar comentario
           </button>
         </form>
         {/* <form ref={form} onSubmit={handleSubmitForm} className="formIssues">

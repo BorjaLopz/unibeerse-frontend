@@ -22,13 +22,12 @@ import AddCommentsFirebase from "../AddCommentsFirebase/AddCommentsFirebase";
 
 import {
   collection,
-  doc,
-  getDoc,
   getDocs,
   query,
   where,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import GetAllCommentsComponent from "../GetAllCommentsComponent/GetAllCommentsComponent";
 
 function BeerCard() {
   const { get } = useServer();
@@ -336,6 +335,7 @@ function BeerCard() {
           formIssueVisibility={formEditVisibility}
         />
 
+        {/* Formulario para enviar comentarios */}
         <AddCommentsFirebase
           onClose={handleSendCommentsToggle}
           content={beer}
@@ -343,6 +343,7 @@ function BeerCard() {
           formIssueVisibility={formSendComments}
         />
 
+        {/* Flechas para cambiar a la siguiente o anterior cerveza */}
         <div className="arrowContainer">
           <div className={`left ${idInteger === 0 ? "blocked" : ""}`}>
             <Link to={`/beer/${idInteger - 1}`}>
@@ -363,18 +364,13 @@ function BeerCard() {
             </Link>
           </div>
         </div>
-        <section className="commentsForm">
-          {showFormComments ? (
-            <button
-              className="addCommentsButton"
-              onClick={handleSendCommentsToggle}
-            >
-              AÑADIR COMENTARIOS
-            </button>
-          ) : (
-            ""
-          )}
-        </section>
+
+        <GetAllCommentsComponent
+          isRegistered={isRegistered}
+          showFormComments={showFormComments}
+          handleSendCommentsToggle={handleSendCommentsToggle}
+          beerContent={beer}
+        />
       </section>
 
       {/* Comentamos comentarios jejeje */}

@@ -242,8 +242,11 @@ main {
 }
 
 .commentsForm {
+  margin: auto;
   margin-top: 2rem;
-  min-width: 80%;
+  margin-bottom: 2rem;
+  min-width: 60%;
+  width: 60%;
 
   display: flex;
   flex-direction: column;
@@ -252,7 +255,7 @@ main {
   /* background-color: bisque; */
 }
 
-.commentsForm .addCommentsButton, 
+.commentsForm .addCommentsButton,
 .commentsForm .closeCommentsButton {
   width: 100%;
   color: #fff;

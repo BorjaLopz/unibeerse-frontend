@@ -1,0 +1,18 @@
+.commentsSection {
+  width: 100%;
+}
+
+.commentsBeer {
+  background-color: rgba(203, 229, 238, 0.329);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.212);
+  border-radius: 5px;
+}
+
+.commentsBeer .comments:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.205);
+  border-radius: 2px;
+}
+
+.commentsBeer .comments {
+  padding: 5px;
+}
