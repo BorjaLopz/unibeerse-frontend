@@ -55,7 +55,7 @@ function Footer() {
               <Link to={"/styles"}>Estilos</Link>
             </li>
             <li>
-              <Link to={"/contact"}>Contacto</Link>
+              <Link to={"/login"}>Login</Link>
             </li>
           </ul>
         </article>

@@ -75,7 +75,7 @@ function CustomPagination({
     <>
       <>
         <article>
-          <section id="title">
+          {/* <section id="title">
             {data?.length === 0 ? (
               <h2>No hay ningun resultado</h2>
             ) : (
@@ -83,7 +83,7 @@ function CustomPagination({
                 filter === "" ? "todos los resultados" : filter
               }`}</h2>
             )}
-          </section>
+          </section> */}
           <article id="shownFilteredBeers">
             {!isShown ? (
               data?.length > 0 ? (

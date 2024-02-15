@@ -20,12 +20,7 @@ import AddCommentsFirebase from "../AddCommentsFirebase/AddCommentsFirebase";
 
 /* FIREBASE */
 
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import GetAllCommentsComponent from "../GetAllCommentsComponent/GetAllCommentsComponent";
 
@@ -365,12 +360,21 @@ function BeerCard() {
           </div>
         </div>
 
-        <GetAllCommentsComponent
-          isRegistered={isRegistered}
-          showFormComments={showFormComments}
-          handleSendCommentsToggle={handleSendCommentsToggle}
-          beerContent={beer}
-        />
+        {isRegistered === true ? (
+          <GetAllCommentsComponent
+            isRegistered={isRegistered}
+            showFormComments={showFormComments}
+            handleSendCommentsToggle={handleSendCommentsToggle}
+            beerContent={beer}
+          />
+        ) : (
+          <section className="registerToAddComments">
+            Para poder añadir un comentario debes{" "}
+            <span className="importantText">
+              <Link to={"/signup"}>registrarte</Link>
+            </span>
+          </section>
+        )}
       </section>
 
       {/* Comentamos comentarios jejeje */}

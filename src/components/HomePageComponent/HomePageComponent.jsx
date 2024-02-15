@@ -23,11 +23,11 @@ function HomePageComponent() {
   };
   return (
     <div className="home-component">
-      <div className="container-title">
+      {/* <div className="container-title">
         <h2>UNI</h2>
         <img src="/favicon.svg" alt="beer" />
         <h2>SE</h2>
-      </div>
+      </div> */}
       <p id="welcomeText">¡Bienvenido/a!</p>
       <div id="container-car-text">
         <div id="text">

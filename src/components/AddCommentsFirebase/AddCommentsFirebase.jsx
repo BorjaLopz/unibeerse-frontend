@@ -19,7 +19,7 @@ function AddCommentsFirebase({
   classes,
   formIssueVisibility,
 }) {
-  const [name, setName] = useState("");
+  const [name, setName] = useState(getSessionToken()?.name || "");
   const [email, setEmail] = useState(getSessionToken()?.email || "");
   const [comment, setComment] = useState("");
 
@@ -33,7 +33,6 @@ function AddCommentsFirebase({
   const firestore = getFirestore();
 
   const resetFields = () => {
-    setName("");
     setComment("");
   };
 
@@ -100,9 +99,10 @@ function AddCommentsFirebase({
             type="text"
             id="fullName"
             name="fullName"
+            // value={name[0].toUpperCase() + name.slice(1)}
             value={name}
-            onChange={(e) => setName(e.target.value)}
             required
+            readOnly
           />
 
           <label htmlFor="email">email</label>

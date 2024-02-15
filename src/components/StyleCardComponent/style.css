@@ -5,6 +5,16 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.158);
 }
 
+#beer_examples {
+  flex-direction: row;
+  flex-wrap: wrap;
+  box-shadow: none;
+  background-color: inherit;
+  width: 85%;
+  background-color: #dde2ee5b;
+  border-radius: 1rem;
+}
+
 @media (max-width: 850px) {
   #style-main {
     margin-top: 4rem;

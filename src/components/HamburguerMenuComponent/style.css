@@ -45,7 +45,7 @@ body {
 
   background-color: rgb(37, 39, 53);
   position: absolute;
-  top: 6rem;
+  top: 5.9rem;
   right: 0;
   z-index: 9;
 
@@ -67,7 +67,7 @@ body {
 }
 
 .menuBurguer.grande {
-  top: 10rem;
+  top: 9.9rem;
 }
 
 .menuBurguer.smallFont {

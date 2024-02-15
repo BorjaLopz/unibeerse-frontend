@@ -10,9 +10,34 @@
 
 .commentsBeer .comments:not(:last-child) {
   border-bottom: 1px solid rgba(0, 0, 0, 0.205);
-  border-radius: 2px;
+  /* border-radius: 2px; */
 }
 
 .commentsBeer .comments {
   padding: 5px;
+  width: 80%;
+}
+
+.commentsBeer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.commentsBeer .comments {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.commentsBeer .comments .commentName {
+  align-self: flex-start;
+  font-style: italic;
+  text-transform: capitalize;
+  text-decoration: underline;
+}
+
+.commentsBeer .comments .commentComment {
+  font-size: 1.2rem;
+  
 }

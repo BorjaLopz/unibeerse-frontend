@@ -29,7 +29,22 @@
     rgba(9, 79, 121, 0.35) 0%,
     rgba(0, 212, 255, 0.05) 100%
   ); */
-  display: none;
+  /* display: none; */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  justify-items: center;
+  align-items: center;
+}
+
+#lowView.headerPequeño {
+  height: 6rem;
+}
+
+#lowView .mainIcon {
+  grid-column-start: 3;
+  grid-column-end: 7;
+  grid-row: 1;
 }
 
 #highView .mainIcon {
@@ -57,6 +72,18 @@ header menu {
   align-items: flex-end;
   flex-flow: column nowrap;
   z-index: 10;
+}
+
+.mainTitle {
+  font-size: 48px;
+  /* letter-spacing: 4px; */
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  background: linear-gradient(to right, #fc4c2d, #ecae95);
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+  -webkit-text-fill-color: transparent;
 }
 
 @media (max-width: 850px) {

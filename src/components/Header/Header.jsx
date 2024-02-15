@@ -23,7 +23,7 @@ function Header({ handleCustomFilter }) {
   return (
     <>
       <header>
-        <section id="highView">
+        {/* <section id="highView">
           <div className="mainIcon">
             <img src="../../../mainIcon.svg" alt="Icono Borja" />
           </div>
@@ -32,10 +32,9 @@ function Header({ handleCustomFilter }) {
             <Link to={`${`beers/page/1`}`}>Cervezas</Link>
             <Link to="/styles">Estilos</Link>
             <Link to="/contact">Contacto</Link>
-            {/* <Link to="Login">Login</Link> */}
           </menu>
           <SearchBar handleFilter={handleFilter} />
-        </section>
+        </section> */}
 
         <section id="lowView" className={headerClass}>
           <div className="mainIcon">
@@ -43,9 +42,11 @@ function Header({ handleCustomFilter }) {
           </div>
 
           <HamburguerMenuComponent handleFilter={handleFilter} />
-          <div id="searchHamburguer">
-            {beerPage && <SearchBar handleFilter={handleFilter} />}
-          </div>
+          {beerPage && (
+            <div id="searchHamburguer">
+              {beerPage && <SearchBar handleFilter={handleFilter} />}
+            </div>
+          )}
         </section>
       </header>
     </>

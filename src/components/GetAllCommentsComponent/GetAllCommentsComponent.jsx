@@ -26,19 +26,22 @@ function GetAllCommentsComponent({
   const location = useLocation();
 
   const isThereAnyCommentsInThisBeer = async (_IDBeer) => {
-    const commentCollection = collection(firestore, "comments");
-    const q = query(commentCollection, where("beerID", "==", _IDBeer));
+    console.log("_IDBeer");
+    console.log(_IDBeer);
+    if (_IDBeer !== undefined) {
+      const commentCollection = collection(firestore, "comments");
+      const q = query(commentCollection, where("beerID", "==", _IDBeer));
 
-    const querySnapshot = await getDocs(q);
-    setIsLoading(true);
+      const querySnapshot = await getDocs(q);
+      setIsLoading(true);
 
-    if (!querySnapshot.empty) {
-      const commentIDs = querySnapshot.docs.map((doc) => doc.id);
-      setCommentListIDs(commentIDs);
-      setIsLoading(false);
-    } else {
-      setCommentListIDs([]);
-      setIsLoading(false);
+      if (!querySnapshot.empty) {
+        const commentIDs = querySnapshot.docs.map((doc) => doc.id);
+        setCommentListIDs(commentIDs);
+      } else {
+        // setIsLoading(false);
+        setCommentListIDs([]);
+      }
     }
   };
 
@@ -108,16 +111,61 @@ function GetAllCommentsComponent({
 
   const fetchData = async () => {
     setIsLoading(true);
-    await isThereAnyCommentsInThisBeer(beerContent.ID);
-    await getCommentsByIDs();
-    setIsLoading(false);
+
+    // Simular una carga de 2 segundos antes de realizar las operaciones asincrónicas
+    setTimeout(async () => {
+      await isThereAnyCommentsInThisBeer(beerContent.ID);
+      await getCommentsByIDs();
+      setIsLoading(false);
+    }, 2000);
+  };
+
+  const fetchData_2 = async () => {
+    try {
+      setIsLoading(true);
+
+      await isThereAnyCommentsInThisBeer(beerContent.ID);
+      // Obtener comentarios solo si hay algún comentario
+      if (commentListIDs.length > 0) {
+        const commentsData = await Promise.all(
+          commentListIDs.map(async (docID) => {
+            const docRef = doc(getFirestore(), "comments", docID);
+            const docSnapshot = await getDoc(docRef);
+
+            if (docSnapshot.exists()) {
+              return docSnapshot.data();
+            }
+
+            return null;
+          })
+        );
+
+        // Filtrar comentarios que existen (no son nulos)
+        const existingComments = commentsData.filter(
+          (comment) => comment !== null
+        );
+
+        setComments(existingComments);
+      } else {
+        // No hay comentarios, establecer comments en un array vacío
+        setComments([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener comentarios:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData_2();
   }, [location]);
 
-  console.log(comments)
+  // useEffect(() => {
+  //   fetchData();
+  // }, [location, beerContent]);
+
+  console.log(comments);
   return (
     <section className="commentsSection">
       {/* Mostramos botón para añadir comentario */}
@@ -147,8 +195,8 @@ function GetAllCommentsComponent({
               {comments.map((comment) => (
                 // Renderizar cada comentario individual
                 <div key={comment.id} className="comments">
-                  <p>{comment.name}</p>
-                  <p>{comment.comment}</p>
+                  <p className="commentName">{comment.name}</p>
+                  <p className="commentComment">{comment.comment}</p>
                 </div>
               ))}
             </section>
