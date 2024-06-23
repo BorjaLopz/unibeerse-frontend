@@ -137,13 +137,11 @@ function BeerCard() {
 
   const getBeerByIDFirebase = async (coleccion, id) => {
     try {
-      const q = query(collection(db, coleccion), where("ID", "==", id));
+      const q = query(collection(db, coleccion), where("ID", "==", `${id}`));
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
         const beerData = querySnapshot.docs[0].data();
-        // console.log("beerData");
-        // console.log(beerData);
         return beerData;
       } else {
         return null;
@@ -157,12 +155,8 @@ function BeerCard() {
   /* Aproximacion con Firebase */
   const fetchCurrentBeerFirebase = async () => {
     try {
-      const data = await getBeerByIDFirebase("beers", idInteger + 1);
-      // console.log("data");
-      // console.log(data);
-      setBeer(data);
-      // console.log("beer");
-      // console.log(beer);
+      const currentBeer = await getBeerByIDFirebase("beers", idInteger + 1);
+      setBeer(currentBeer);
     } catch (e) {
       console.error(`Error: ${e}`);
     }
@@ -171,11 +165,7 @@ function BeerCard() {
   const fetchNextBeerFirebase = async () => {
     try {
       const nextBeer = await getBeerByIDFirebase("beers", idInteger + 2);
-      // console.log("data");
-      // console.log(data);
       setNextBeer(nextBeer);
-      // console.log("beer");
-      // console.log(beer);
     } catch (e) {
       console.error(`Error: ${e}`);
     }
@@ -184,11 +174,7 @@ function BeerCard() {
   const fetchPreviousBeerFirebase = async () => {
     try {
       const prevBeer = await getBeerByIDFirebase("beers", idInteger - 1);
-      // console.log("prevBeer");
-      // console.log(prevBeer);
       setPreviousBeer(prevBeer);
-      // console.log("beer");
-      // console.log(beer);
     } catch (e) {
       console.error(`Error: ${e}`);
     }
@@ -253,10 +239,10 @@ function BeerCard() {
               </div>
             )}
 
-            {beer.IMAGEN !== "" ? (
+            {beer?.IMAGEN !== "" ? (
               <img
-                src={`${beer.IMAGEN}`}
-                alt={`Imagen de ${beer.MARCA} | ${beer.NOMBRE}`}
+                src={`/BeerImages/${beer?.IMAGEN}`}
+                alt={`Imagen de ${beer?.MARCA} | ${beer?.NOMBRE}`}
               />
             ) : (
               <BeerIcon style={beer.ESTILO} />
@@ -272,7 +258,7 @@ function BeerCard() {
 
           <div id="informacion_card">
             <div id="container_graduation_style_beerCard">
-              <p id="beer_graduation">{beer?.GRADUACIÓN}</p>
+              <p id="beer_graduation">{beer?.GRADUACION}</p>
               <p id="beer_style">{beer?.ESTILO}</p>
             </div>
             <div id="container_country_icon_beerCard">

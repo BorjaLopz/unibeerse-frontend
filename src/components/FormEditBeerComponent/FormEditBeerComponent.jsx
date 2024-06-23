@@ -20,11 +20,11 @@ function FormEditBeerComponent({
   classes,
   formIssueVisibility,
 }) {
-  const [name, setName] = useState(content.NOMBRE || "");
-  const [marca, setMarca] = useState(content.MARCA || "");
-  const [estilo, setEstilo] = useState(content.ESTILO || "");
-  const [graduacion, setGraduacion] = useState(content.GRADUACIÓN || "");
-  const [nacionalidad, setNacionalidad] = useState(content.NACIONALIDAD || "");
+  const [name, setName] = useState(content?.NOMBRE || "");
+  const [marca, setMarca] = useState(content?.MARCA || "");
+  const [estilo, setEstilo] = useState(content?.ESTILO || "");
+  const [graduacion, setGraduacion] = useState(content?.GRADUACION || "");
+  const [nacionalidad, setNacionalidad] = useState(content?.NACIONALIDAD || "");
   const form = useRef();
   const navigate = useNavigate();
 
@@ -35,10 +35,10 @@ function FormEditBeerComponent({
       ESTILO: estilo,
       NACIONALIDAD: nacionalidad,
       NOMBRE: name,
-      GRADUACIÓN: parseInt(graduacion),
+      GRADUACION: parseInt(graduacion),
     };
 
-    updateBeerData("beers", "ID", content.ID, newData);
+    updateBeerData("beers", "ID", content?.ID, newData);
   };
 
   //Conseguimos el numero de pagina mediante el ID de la cerveza
@@ -55,8 +55,8 @@ function FormEditBeerComponent({
         const docRef = doc(db, collectionName, querySnapshot.docs[0].id);
         await updateDoc(docRef, newData);
 
-        toast.success(`${content.NOMBRE} editada con exito!`);
-        const page = getPageNumberByID(content.ID);
+        toast.success(`${content?.NOMBRE} editada con exito!`);
+        const page = getPageNumberByID(content?.ID);
         setTimeout(() => {
           onClose();
           navigate(`/beers/page/${page}`);
@@ -69,18 +69,18 @@ function FormEditBeerComponent({
   };
 
   useEffect(() => {
-    setName(content.NOMBRE || "");
-    setMarca(content.MARCA || "");
-    setNacionalidad(content.NACIONALIDAD || "");
-    setGraduacion(content.GRADUACIÓN || "");
-    setEstilo(content.ESTILO || "");
+    setName(content?.NOMBRE || "");
+    setMarca(content?.MARCA || "");
+    setNacionalidad(content?.NACIONALIDAD || "");
+    setGraduacion(content?.GRADUACION || "");
+    setEstilo(content?.ESTILO || "");
   }, [content]);
 
   return (
     <section
       className={`overlay ${formIssueVisibility === true ? "BGVisible" : ""}`}
     >
-      <div className={`overlay-content ${classes}`}>
+      <div className={`overlay-content? ${classes}`}>
         {/*  */}
         <button onClick={onClose} className="closeFormButton">
           <img
@@ -91,7 +91,7 @@ function FormEditBeerComponent({
         </button>
         <form ref={form} onSubmit={handleSubmitForm} className="formIssues">
           <h3 style={{ fontStyle: "italic" }}>
-            Editar {`${content.NOMBRE} - ${content.MARCA}`}
+            Editar {`${content?.NOMBRE} - ${content?.MARCA}`}
           </h3>
           <label className="formulario-label">
             Marca:

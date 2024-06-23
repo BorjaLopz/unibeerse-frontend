@@ -30,9 +30,9 @@ function FormReportIssueComponent({
         to_name: name,
         message: issue,
         reply_to: email,
-        beer_id: content.id,
-        beer_name: content.name,
-        beer_brand: content.brand,
+        beer_id: content?.id,
+        beer_name: content?.name,
+        beer_brand: content?.brand,
       },
       "93HxoJsy-yVEfyDYt"
     );
@@ -65,7 +65,7 @@ function FormReportIssueComponent({
         </button>
         <form ref={form} onSubmit={handleSubmitForm} className="formIssues">
           <h3 style={{ fontStyle: "italic" }}>
-            Reportar problema de {`${content.NOMBRE} - ${content.MARCA}`}
+            Reportar problema de {`${content?.NOMBRE} - ${content?.MARCA}`}
           </h3>
           <label className="formulario-label">
             Nombre:

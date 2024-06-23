@@ -9,7 +9,7 @@ function CustomBeerCard({ data, page }) {
     MARCA,
     NOMBRE,
     ESTILO,
-    GRADUACIÓN,
+    GRADUACION,
     IMAGEN,
     NACIONALIDAD,
     NOTA,
@@ -17,18 +17,15 @@ function CustomBeerCard({ data, page }) {
     ID,
   } = data;
 
-  // console.log("data desde custombeercard");
-  // console.log(data);
-
   return (
     <Link key={ID} to={`/beer/${ID - 1}`} className="currentBeer">
       <div id="beer_card">
         <div id="beer_brand_name">
           <h2 id="beer_brand">{`${
-            MARCA.length > 8 ? `${MARCA.substring(0, 8)}...` : MARCA
+            MARCA?.length > 8 ? `${MARCA.substring(0, 8)}...` : MARCA
           }`}</h2>
           <h2 id="beer_name">{`${
-            NOMBRE.length > 15 ? `${NOMBRE.substring(0, 15)}...` : NOMBRE
+            NOMBRE?.length > 15 ? `${NOMBRE.substring(0, 15)}...` : NOMBRE
           }`}</h2>
         </div>
         <div id="beer_icon">
@@ -39,7 +36,7 @@ function CustomBeerCard({ data, page }) {
           ) : (
             <>
               <img
-                src={`${IMAGEN}`}
+                src={`/BeerImages/${IMAGEN}`}
                 alt={`Imagen de ${NOMBRE}`}
                 className="beer_image"
               />
@@ -47,14 +44,14 @@ function CustomBeerCard({ data, page }) {
           )}
         </div>
         <div id="container_graduation_style">
-          <p id="beer_graduation">{GRADUACIÓN}</p>
+          <p id="beer_graduation">{GRADUACION}</p>
           <p id="beer_style">{`${
-            ESTILO.includes(" ")
-              ? ESTILO.length > 12
-                ? `${ESTILO.substring(0, 11)}...`
+            ESTILO?.includes(" ")
+              ? ESTILO?.length > 12
+                ? `${ESTILO?.substring(0, 11)}...`
                 : ESTILO
-              : ESTILO.length > 8
-              ? `${ESTILO.substring(0, 7)}...`
+              : ESTILO?.length > 8
+              ? `${ESTILO?.substring(0, 7)}...`
               : ESTILO
           }`}</p>
         </div>

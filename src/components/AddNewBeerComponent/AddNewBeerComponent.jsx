@@ -70,7 +70,7 @@ function AddNewBeerComponent() {
         NOMBRE: beerName,
         MARCA: beerBrand,
         NACIONALIDAD: beerCountry,
-        GRADUACIÓN: beerGraduation,
+        GRADUACION: beerGraduation,
         ESTILO: beerStyle,
         COMENTARIOS: beerComments,
         NOTA: beerNota,

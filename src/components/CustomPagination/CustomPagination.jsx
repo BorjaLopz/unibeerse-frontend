@@ -15,6 +15,7 @@ function CustomPagination({
   const NumericNumberPage = Number(numberPage);
 
   let pages = Math.ceil(data?.length / dataLimit);
+  console.log("pages: ", pages);
   const [currentPage, setCurrentPage] = useState(NumericNumberPage || 1);
   const [dataAvailable, setDataAvailable] = useState([]);
   const navigate = useNavigate();

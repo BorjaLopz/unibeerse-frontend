@@ -7,6 +7,7 @@ import CustomBeerCard from "./CustomBeerCard/CustomBeerCard";
 import { removingAccents } from "../helpers";
 
 import { BeerContext } from "./Context/BeerContext.jsx";
+import Pagination from "./CustomPagination/Pagination.jsx";
 
 function AllBeersComponent({ customFilter }) {
   const { beerData, loading } = useContext(BeerContext);
@@ -83,14 +84,14 @@ function AllBeersComponent({ customFilter }) {
   if (customFilter !== "") {
     beerData.filter((beer) => {
       if (
-        removingAccents(beer.NOMBRE.toLowerCase()).includes(customFilter) ||
-        removingAccents(beer.ESTILO.toLowerCase()).includes(customFilter) ||
-        removingAccents(beer.MARCA.toLowerCase()).includes(customFilter) ||
-        removingAccents(beer.NACIONALIDAD.toLowerCase()).includes(
+        removingAccents(beer?.NOMBRE?.toLowerCase())?.includes(customFilter) ||
+        removingAccents(beer?.ESTILO?.toLowerCase())?.includes(customFilter) ||
+        removingAccents(beer?.MARCA?.toLowerCase())?.includes(customFilter) ||
+        removingAccents(beer?.NACIONALIDAD?.toLowerCase())?.includes(
           customFilter
         ) ||
-        beer.GRADUACIÓN.toString().includes(customFilter)
-        // removingAccents(beer.GRADUACIÓN).includes(customFilter)
+        beer?.GRADUACION?.toString()?.includes(customFilter)
+        // removingAccents(beer.GRADUACION).includes(customFilter)
       ) {
         filteredBeers.push(beer);
         return beer;
@@ -129,6 +130,7 @@ function AllBeersComponent({ customFilter }) {
           <LoadingComponent />
         )} */}
 
+        {/* No funciona ahora esto desde firebase, lo hemos roto :) */}
         {!loading ? (
           customFilter === "" ? (
             <CustomPagination
@@ -151,6 +153,24 @@ function AllBeersComponent({ customFilter }) {
         ) : (
           <LoadingComponent />
         )}
+        {/* {!loading ? (
+          customFilter === "" ? (
+            <Pagination data={beerData} RenderComponent={CustomBeerCard} />
+          ) : (
+            <p>Queremos filtrar cosas</p>
+          )
+        ) : (
+          <LoadingComponent />
+        )}
+        <ul>
+          {beerData?.map((beer) => {
+            return (
+              <li>
+                <p>{beer.name}</p>
+              </li>
+            );
+          })}
+        </ul> */}
       </main>
     </>
   );
