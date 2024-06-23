@@ -3,7 +3,9 @@ import AllBeersComponent from "../components/AllBeersComponent";
 function AllBeersPage({ customFilter }) {
   return (
     <>
-      <AllBeersComponent customFilter={customFilter} />
+      <AllBeersComponent
+        customFilter={customFilter}
+      />
     </>
   );
 }

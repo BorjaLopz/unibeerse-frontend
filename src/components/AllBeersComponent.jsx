@@ -1,21 +1,17 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import useServer from "../hooks/useServer";
 import LoadingComponent from "./LoadingComponent/LoadingComponent";
-
-import beerData from "/public/beer-data.json";
 
 import CustomPagination from "./CustomPagination/CustomPagination";
 import CustomBeerCard from "./CustomBeerCard/CustomBeerCard";
 import { removingAccents } from "../helpers";
 
-/* Obtencion de datos desde firebase */
-import { db } from "./firebaseConfig.js";
-import { collection, getDocs } from "firebase/firestore";
+import { BeerContext } from "./Context/BeerContext.jsx";
 
 function AllBeersComponent({ customFilter }) {
+  const { beerData, loading } = useContext(BeerContext);
   const [beers, setBeers] = useState([]);
   const { get } = useServer();
-  const [loading, setLoading] = useState(false);
 
   const screenWidth = useRef(window.innerWidth);
   const screenHeight = useRef(window.innerHeight);
@@ -23,29 +19,11 @@ function AllBeersComponent({ customFilter }) {
   let filteredBeers = [];
 
   const [beerJSON, setBeerJSON] = useState({});
-  const [beerData, setBeerData] = useState({});
+  // const [beerData, setBeerData] = useState({});
 
   const [totalPages, setTotalPages] = useState(0);
 
   const itemsPerPage = 10;
-
-  const getBeersFirebase = async () => {
-    try {
-      const dataBruto = await getDocs(collection(db, "beers"));
-      // console.log(dataBruto);
-      // console.log("dataBruto");
-      const unorderedData = dataBruto.docs.map((doc) => doc.data());
-      // console.log("unorderedData");
-      // console.log(unorderedData);
-      const orderedData = unorderedData.sort((a, b) => a.ID - b.ID);
-      // console.log("orderedData");
-      // console.log(orderedData);
-      setBeerData(orderedData);
-      setLoading(true);
-    } catch (e) {
-      console.error("Error al obtener los datos: ", e);
-    }
-  };
 
   const getBeers = async () => {
     try {
@@ -81,8 +59,6 @@ function AllBeersComponent({ customFilter }) {
   useEffect(() => {
     // getBeers();
     // getBeersJSON();
-    getBeersFirebase();
-
     setTotalPages(Math.ceil(beers.length / itemsPerPage));
   }, []);
 
@@ -153,7 +129,7 @@ function AllBeersComponent({ customFilter }) {
           <LoadingComponent />
         )} */}
 
-        {loading ? (
+        {!loading ? (
           customFilter === "" ? (
             <CustomPagination
               data={beerData}
