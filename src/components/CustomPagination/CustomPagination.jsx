@@ -15,7 +15,6 @@ function CustomPagination({
   const NumericNumberPage = Number(numberPage);
 
   let pages = Math.ceil(data?.length / dataLimit);
-  console.log("pages: ", pages);
   const [currentPage, setCurrentPage] = useState(NumericNumberPage || 1);
   const [dataAvailable, setDataAvailable] = useState([]);
   const navigate = useNavigate();
@@ -114,7 +113,7 @@ function CustomPagination({
         {data?.length !== 0 && isShown && (
           <div className="pagination">
             {/* First Page */}
-            <Link to={`/beers/page/1`}>
+            <Link to={`/beers/page/1`} key={"firstPage"}>
               <button
                 onClick={goToFirstPage}
                 className={`prev ${currentPage === 1 ? "disabled" : ""}`}
@@ -124,7 +123,7 @@ function CustomPagination({
             </Link>
 
             {/* previous button */}
-            <Link to={`/beers/page/${currentPage - 1}`}>
+            <Link to={`/beers/page/${currentPage - 1}`} key={"prevPage"}>
               <button
                 onClick={goToPreviousPage}
                 className={`prev ${currentPage === 1 ? "disabled" : ""}`}
@@ -135,7 +134,7 @@ function CustomPagination({
 
             {/* show page numbers */}
             {getPaginationGroup().map((item, index) => (
-              <Link to={`/beers/page/${item}`}>
+              <Link to={`/beers/page/${item}`} key={`Page${index}`}>
                 <button
                   key={index}
                   onClick={changePage}
@@ -149,7 +148,7 @@ function CustomPagination({
             ))}
 
             {/* next button */}
-            <Link to={`/beers/page/${currentPage + 1}`}>
+            <Link to={`/beers/page/${currentPage + 1}`} key={"nextPage"}>
               <button
                 onClick={goToNextPage}
                 className={`next ${currentPage === pages ? "disabled" : ""}`}
@@ -159,7 +158,7 @@ function CustomPagination({
             </Link>
 
             {/* Last Page */}
-            <Link to={`/beers/page/${pages}`}>
+            <Link to={`/beers/page/${pages}`} key={"lastPage"}>
               <button
                 onClick={goToLastPage}
                 className={`prev ${currentPage === pages ? "disabled" : ""}`}

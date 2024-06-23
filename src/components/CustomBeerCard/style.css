@@ -40,9 +40,9 @@ main {
 /* Aplicamos estilo a todas las imagenes menos a la clase beer_image */
 .currentBeer img:not(.beer_image),
 .currentBeer svg {
-  min-width: 7rem;
-  align-self: center;
-  width: 8rem;
+  min-width: 1rem;
+  align-self: self-end;
+  width: 3rem;
   flex-grow: 1;
 }
 
@@ -183,6 +183,7 @@ button.disabled {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  align-items: end;
 }
 
 #beer_brand {
@@ -320,8 +321,8 @@ button.disabled {
     /* background-color: black; */
   }
 
-  #container_country_flag_multiple .flag_icon {
-    /* max-width: 1rem; */
+  #container_country_flag_multiple.flag_icon {
+    max-width: 16px;
     width: 0.4rem;
   }
 
