@@ -17,6 +17,8 @@ function CustomBeerCard({ data, page }) {
     ID,
   } = data;
 
+  console.log("IMAGEN: ", IMAGEN, data);
+
   return (
     <Link key={ID} to={`/beer/${ID - 1}`} className="currentBeer">
       <div id="beer_card">

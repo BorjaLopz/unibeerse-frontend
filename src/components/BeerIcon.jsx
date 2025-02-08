@@ -1,22 +1,24 @@
 function BeerIcon({ style }) {
   switch (style.toLowerCase()) {
     case "lager":
-      return <img src="/BeerIcons/lager.svg" alt="" />;
+      return <img src="/BeerIcons/lager.svg" alt="" className="beer_image" />;
     case "pilsen":
-      return <img src="/BeerIcons/pilsen.svg" alt="" />;
+      return <img src="/BeerIcons/pilsen.svg" alt="" className="beer_image" />;
     case "stout":
-      return <img src="/BeerIcons/stout.svg" alt="" />;
+      return <img src="/BeerIcons/stout.svg" alt="" className="beer_image" />;
     case "abadia":
-      return <img src="/BeerIcons/abadia.svg" alt="" />;
+      return <img src="/BeerIcons/abadia.svg" alt="" className="beer_image" />;
     case "ale":
-      return <img src="/BeerIcons/ale.svg" alt="" />;
+      return <img src="/BeerIcons/ale.svg" alt="" className="beer_image" />;
     case "ipa":
-      return <img src="/BeerIcons/ipa.svg" alt="" />;
+      return <img src="/BeerIcons/ipa.svg" alt="" className="beer_image" />;
     case "trapenses":
-      return <img src="/BeerIcons/trapenses.svg" alt="" />;
+      return (
+        <img src="/BeerIcons/trapenses.svg" alt="" className="beer_image" />
+      );
 
     default:
-      return <img src="/BeerIcons/default.svg" alt="" />;
+      return <img src="/BeerIcons/default.svg" alt="" className="beer_image" />;
 
     // return (
     //   <svg

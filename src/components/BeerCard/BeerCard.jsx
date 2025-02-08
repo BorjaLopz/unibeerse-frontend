@@ -210,6 +210,8 @@ function BeerCard() {
     setShowFormComments(true);
   }, [location]);
 
+  console.log("beer: ", beer)
+
   return (
     <main>
       <section className="main-container">
