@@ -37,6 +37,9 @@ app:
     project-id: ${FIREBASE_PROJECT_ID}
   # uids de Firebase con permisos de administrador (separados por comas)
   admin-uids: ${ADMIN_UIDS:}
+  # Clave compartida con el bot de Telegram (minimo 32 caracteres). Vacia = bot desactivado.
+  bot:
+    key: ${BOT_API_KEY:}
   media:
     dir: ${MEDIA_DIR:/data/media}
   # Aviso opcional por Telegram cuando llega un mensaje de contacto (dejar vacio para desactivarlo)

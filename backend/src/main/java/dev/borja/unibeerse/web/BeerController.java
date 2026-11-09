@@ -117,7 +117,7 @@ public class BeerController {
         return v.setScale(scale, java.math.RoundingMode.HALF_UP);
     }
 
-    private static void apply(Beer b, BeerInput in) {
+    static void apply(Beer b, BeerInput in) {
         if (in == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cuerpo vacio");
         }

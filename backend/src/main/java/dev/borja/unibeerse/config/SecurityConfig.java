@@ -26,6 +26,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
@@ -41,7 +42,8 @@ public class SecurityConfig {
             "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com";
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http, @Value("${app.admin-uids:}") String adminUids) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http, @Value("${app.admin-uids:}") String adminUids,
+                                    @Value("${app.bot.key:}") String botKey) throws Exception {
         Set<String> admins = Arrays.stream(adminUids.split(","))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
@@ -63,11 +65,15 @@ public class SecurityConfig {
                         .requestMatchers("/actuator/health", "/actuator/health/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/beers", "/api/beers/*", "/api/beers/*/comments").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()
+                        // El bot de Telegram entra con su propia clave (BotApiKeyFilter), no con Firebase.
+                        // nginx devuelve 404 a /api/bot/ desde fuera: solo se llega por la red interna de Docker.
+                        .requestMatchers("/api/bot/**").hasRole("BOT")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/me").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/beers/*/comments").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/comments/*").authenticated()
                         .anyRequest().denyAll())
+                .addFilterBefore(new BotApiKeyFilter(botKey, "telegram-bot"), BearerTokenAuthenticationFilter.class)
                 .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(converter)))
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
         return http.build();

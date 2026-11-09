@@ -14,6 +14,7 @@ services:
       DB_PASSWORD: ${UNIBEERSE_DB_PASSWORD}
       FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
       ADMIN_UIDS: ${ADMIN_UIDS:?Falta ADMIN_UIDS en deploy/.env}
+      BOT_API_KEY: ${BOT_API_KEY:-}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
       TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
     volumes:
@@ -39,6 +40,35 @@ services:
     networks:
       - unibeerse_net
     # sin puertos publicados: solo el contenedor de Tailscale llega a nginx por la red interna
+
+  # Quita el fondo a las fotos de cervezas (rembg, en el propio NUC). Solo accesible desde la red interna.
+  unibeerse-cutout:
+    build: ../cutout
+    container_name: unibeerse-cutout
+    restart: unless-stopped
+    mem_limit: 1536m
+    networks:
+      - unibeerse_net
+
+  # Bot de Telegram para añadir cervezas con foto, cambiar fotos y puntuar. Solo salida (long polling).
+  unibeerse-bot:
+    build: ../bot
+    container_name: unibeerse-bot
+    restart: unless-stopped
+    depends_on:
+      - unibeerse-api
+      - unibeerse-cutout
+    environment:
+      UNIBEERSE_BOT_TOKEN: ${UNIBEERSE_BOT_TOKEN:?Falta UNIBEERSE_BOT_TOKEN en deploy/.env}
+      ALLOWED_TELEGRAM_ID: ${ALLOWED_TELEGRAM_ID:?Falta ALLOWED_TELEGRAM_ID en deploy/.env}
+      BOT_API_KEY: ${BOT_API_KEY:?Falta BOT_API_KEY en deploy/.env}
+      UNIBEERSE_API_URL: http://unibeerse-api:8080
+      CUTOUT_URL: http://unibeerse-cutout:8000
+      WEB_URL: http://unibeerse-web
+      PUBLIC_URL: ${PUBLIC_URL:-https://unibeerse.tail9e5eae.ts.net}
+      TZ: Europe/Madrid
+    networks:
+      - unibeerse_net
 
   # Publica la web en internet (Tailscale Funnel) con su propia direccion: https://unibeerse.<tu-tailnet>.ts.net
   # Es un "dispositivo" aparte en tu tailnet: Ledger, Kuma y el resto siguen privados.

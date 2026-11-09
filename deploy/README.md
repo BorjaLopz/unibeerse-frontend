@@ -79,3 +79,26 @@ crypto-js ni Firestore; Firebase solo se usa para iniciar sesión.
 5. Despliegue: lo de la sección 4 (`docker compose ... up -d --build`) ya construye la web.
 
 Las direcciones antiguas `/beer/<n>` redirigen a la ficha nueva.
+
+
+## Bot de Telegram (añadir cervezas con foto, cambiar fotos, puntuar)
+
+Tres piezas nuevas en el compose: `unibeerse-bot` (el bot), `unibeerse-cutout` (quita el fondo con rembg, en el propio NUC)
+y las rutas internas `/api/bot/**` de la API (con clave `X-Bot-Key`; nginx responde 404 a esa ruta desde internet).
+
+1. **Crea el bot**: en Telegram, @BotFather → `/newbot` → nombre «Unibeerse» → copia el token. (Es un bot nuevo, distinto del de avisos y del de Ledger.)
+2. **`.env`** (`~/unibeerse/deploy/.env`), añade:
+   - `UNIBEERSE_BOT_TOKEN`: el token del paso 1.
+   - `ALLOWED_TELEGRAM_ID`: tu ID numérico de Telegram (el mismo que usas en Ledger). El bot solo te responde a ti.
+   - `BOT_API_KEY`: genera una con `openssl rand -hex 32`.
+3. **Arranca**: `docker compose --env-file .env up -d --build` (la primera vez tarda: descarga el modelo de recorte, ~180 MB).
+4. En Telegram abre tu bot y pulsa Start.
+
+Uso:
+- **Cerveza nueva**: manda la foto con los datos en el pie: `Estrella Galicia, Especial, Lager, 5,5, España`
+  (todo opcional menos el nombre; también vale `nota 8` y la graduación con `%`). Te enseña cómo queda sin fondo y confirmas.
+  Si la mandas sin pie, te pregunta. Mejor enviarla «como archivo» para no perder calidad.
+- `/foto` cambia la foto de una existente; `/sinfoto` lista las que no tienen.
+- `/nota` pone nota a una cerveza (la buscas por nombre); `/sinnota` te las va enseñando una a una.
+
+Consumo: el recorte usa ~1 GB de RAM mientras procesa y tarda unos segundos por foto (la primera vez, más: carga el modelo).
