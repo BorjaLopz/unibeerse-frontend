@@ -19,7 +19,7 @@ export function BeersProvider({ children }: { children: ReactNode }) {
 
   const reload = useCallback(async () => {
     try {
-      setBeers(await api.beers());
+      setBeers(await api.beers(true));
       setStatus("ready");
     } catch (e) {
       setError((e as Error).message);

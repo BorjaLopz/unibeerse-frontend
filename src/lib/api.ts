@@ -9,7 +9,7 @@ export class ApiError extends Error {
 
 async function request<T>(
   path: string,
-  opts: { method?: string; body?: unknown; form?: FormData; auth?: boolean | "optional" } = {},
+  opts: { method?: string; body?: unknown; form?: FormData; auth?: boolean | "optional"; cache?: RequestCache } = {},
 ): Promise<T> {
   const headers: Record<string, string> = {};
   if (opts.auth) {
@@ -27,7 +27,7 @@ async function request<T>(
 
   let res: Response;
   try {
-    res = await fetch(path, { method: opts.method ?? "GET", headers, body });
+    res = await fetch(path, { method: opts.method ?? "GET", headers, body, cache: opts.cache });
   } catch {
     throw new ApiError(0, "No hay conexión con el servidor. Prueba de nuevo en un momento.");
   }
@@ -53,7 +53,8 @@ function friendly(status: number): string {
 }
 
 export const api = {
-  beers: () => request<Beer[]>("/api/beers"),
+  /** fresh=true se salta la caché del navegador (la API cachea la lista 60 s): úsalo tras guardar cambios. */
+  beers: (fresh = false) => request<Beer[]>("/api/beers", { cache: fresh ? "reload" : undefined }),
   me: () => request<{ admin: boolean }>("/api/me", { auth: true }),
 
   comments: (beerId: number) =>
