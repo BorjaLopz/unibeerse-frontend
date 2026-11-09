@@ -3,7 +3,7 @@ import type { Beer } from "../types";
 import { formatAbv, formatScore, photoOf } from "../lib/format";
 import { Flags } from "./Flags";
 import { BottleGlyph } from "./BottleGlyph";
-import { CrownCap } from "./CrownCap";
+import { ScoreBadge } from "./ScoreBadge";
 
 export function BeerCard({ beer, priority = false }: { beer: Beer; priority?: boolean }) {
   const src = photoOf(beer, true);
@@ -24,7 +24,7 @@ export function BeerCard({ beer, priority = false }: { beer: Beer; priority?: bo
         )}
         {beer.score != null && (
           <span className="bottle__cap">
-            <CrownCap value={formatScore(beer.score)} size={44} />
+            <ScoreBadge value={formatScore(beer.score)} size={44} />
           </span>
         )}
       </div>

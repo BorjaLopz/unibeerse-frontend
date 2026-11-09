@@ -17,6 +17,8 @@
   --cap-light: #f5cf6b;
   --cap-edge: #8a5a00;
   --cap-ink: #3b2600;
+  --logo-bg: #0f3b2e;
+  --logo-foam: #f4ebd0;
 
   --font: "Archivo Variable", "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
   --wrap: 72rem;
@@ -35,6 +37,7 @@
     --line: #234238;
     --danger: #ff8d78;
     --focus: #6fd0b0;
+    --logo-bg: #1d5a47;
   }
 }
 
@@ -361,10 +364,32 @@ input[type="file"] { padding: 0.45rem; }
 .detail__actions { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 2rem; font-size: 0.95rem; }
 section + section { margin-top: 1.5rem; }
 
-.cap { display: block; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25)); }
+.badge { display: block; }
+.logo { display: block; flex: none; }
 
 .pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
 .pager a { max-width: 48%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- Puntuar (solo administración) ---------- */
+.quick { margin-bottom: 2rem; padding: 1rem; background: var(--surface); border-radius: var(--radius); }
+.quick h2 { font-size: 1.4rem; }
+.quick__row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; margin-top: 0.5rem; }
+@media (min-width: 30rem) { .quick__row { grid-template-columns: repeat(10, 1fr); } }
+.quick__n {
+  font: inherit;
+  font-weight: 700;
+  min-height: 2.75rem;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--shelf);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.quick__n:hover { border-color: var(--glass); }
+.quick__n[aria-pressed="true"] { background: var(--cap); border-color: var(--cap-edge); color: var(--cap-ink); }
+.quick__n:disabled { opacity: 0.6; cursor: default; }
+.quick__more { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; margin-top: 0.75rem; font-size: 0.95rem; }
+.quick__status { margin: 0.5rem 0 0; min-height: 1.5em; color: var(--muted); font-size: 0.95rem; }
 
 /* ---------- Comentarios ---------- */
 .comments { margin-top: 4rem; max-width: 44rem; }

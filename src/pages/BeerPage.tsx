@@ -7,8 +7,9 @@ import { splitCountries } from "../lib/countries";
 import { usePageTitle } from "../lib/usePageTitle";
 import { Flags } from "../components/Flags";
 import { BottleGlyph } from "../components/BottleGlyph";
-import { CrownCap } from "../components/CrownCap";
+import { ScoreBadge } from "../components/ScoreBadge";
 import { Comments } from "../components/Comments";
+import { QuickScore } from "../components/QuickScore";
 import NotFoundPage from "./NotFoundPage";
 
 export default function BeerPage() {
@@ -28,6 +29,9 @@ export default function BeerPage() {
   const prev = beers[idx - 1];
   const next = beers[idx + 1];
   const src = photoOf(beer);
+  // La siguiente cerveza sin nota a partir de esta (da la vuelta al final): así puntúas toda la colección seguida.
+  const nextUnscored =
+    [...beers.slice(idx + 1), ...beers.slice(0, idx)].find((b) => b.score == null && b.id !== beer.id);
 
   return (
     <main className="wrap page">
@@ -60,10 +64,12 @@ export default function BeerPage() {
             {beer.score != null && (
               <>
                 <dt>Nota</dt>
-                <dd><CrownCap value={formatScore(beer.score)} size={64} /></dd>
+                <dd><ScoreBadge value={formatScore(beer.score)} size={64} /></dd>
               </>
             )}
           </dl>
+
+          {isAdmin && <QuickScore beer={beer} nextUnscored={nextUnscored} />}
 
           {beer.notes && (
             <section aria-labelledby="notes-title">

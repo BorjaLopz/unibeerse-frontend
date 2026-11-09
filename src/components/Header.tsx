@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../lib/auth";
-import { CrownCap } from "./CrownCap";
+import { Logo } from "./Logo";
 
 export function Header() {
   const { user, loading, isAdmin, logout } = useAuth();
@@ -8,7 +8,7 @@ export function Header() {
     <header className="site-header">
       <div className="wrap site-header__row">
         <Link to="/" className="brand" aria-label="Unibeerse, inicio">
-          <CrownCap size={30} />
+          <Logo size={34} />
           <span>Unibeerse</span>
         </Link>
         <nav aria-label="Principal" className="nav">
