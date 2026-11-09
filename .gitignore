@@ -25,3 +25,7 @@ dist-ssr
 
 #PSD
 *.psd
+
+migration/out/
+deploy/.env
+backend/target/

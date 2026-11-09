@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: unibeerse-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/unibeerse}
+    username: ${DB_USER:unibeerse_user}
+    password: ${DB_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 3MB
+  jackson:
+    default-property-inclusion: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+app:
+  firebase:
+    project-id: ${FIREBASE_PROJECT_ID}
+  # uids de Firebase con permisos de administrador (separados por comas)
+  admin-uids: ${ADMIN_UIDS:}
+  media:
+    dir: ${MEDIA_DIR:/data/media}
+  # Aviso opcional por Telegram cuando llega un mensaje de contacto (dejar vacio para desactivarlo)
+  telegram:
+    token: ${TELEGRAM_BOT_TOKEN:}
+    chat-id: ${TELEGRAM_CHAT_ID:}

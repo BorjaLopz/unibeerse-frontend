@@ -1,0 +1,71 @@
+# Stack publico de Unibeerse. Requiere la red "backend" y el contenedor "postgres" de ~/servicios/postgres.
+# Uso (desde la carpeta deploy/):  docker compose --env-file .env up -d --build
+#
+# Aislamiento: la web publica vive en su propia red (unibeerse_net) y NO comparte red con Ledger ni con Postgres.
+# Solo unibeerse-api toca la red "backend" (para llegar a Postgres, con un usuario que solo ve la base unibeerse).
+services:
+  unibeerse-api:
+    build: ../backend
+    container_name: unibeerse-api
+    restart: unless-stopped
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/unibeerse
+      DB_USER: unibeerse_user
+      DB_PASSWORD: ${UNIBEERSE_DB_PASSWORD}
+      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
+      ADMIN_UIDS: ${ADMIN_UIDS:?Falta ADMIN_UIDS en deploy/.env}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+    volumes:
+      - unibeerse_media:/data/media
+    networks:
+      - unibeerse_net
+      - backend
+
+  unibeerse-web:
+    build:
+      context: ..
+      args:
+        VITE_FIREBASE_API_KEY: ${VITE_FIREBASE_API_KEY}
+        VITE_FIREBASE_AUTH_DOMAIN: ${VITE_FIREBASE_AUTH_DOMAIN}
+        VITE_FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
+        VITE_FIREBASE_APP_ID: ${VITE_FIREBASE_APP_ID}
+    container_name: unibeerse-web
+    restart: unless-stopped
+    depends_on:
+      - unibeerse-api
+    volumes:
+      - unibeerse_media:/data/media:ro
+    networks:
+      - unibeerse_net
+    # sin puertos publicados: solo el contenedor de Tailscale llega a nginx por la red interna
+
+  # Publica la web en internet (Tailscale Funnel) con su propia direccion: https://unibeerse.<tu-tailnet>.ts.net
+  # Es un "dispositivo" aparte en tu tailnet: Ledger, Kuma y el resto siguen privados.
+  unibeerse-ts:
+    image: tailscale/tailscale:stable
+    container_name: unibeerse-ts
+    hostname: unibeerse
+    restart: unless-stopped
+    environment:
+      TS_AUTHKEY: ${TS_AUTHKEY:?Falta TS_AUTHKEY en deploy/.env}
+      TS_STATE_DIR: /var/lib/tailscale
+      TS_SERVE_CONFIG: /config/serve.json
+      TS_USERSPACE: "true"
+    volumes:
+      - unibeerse_ts_state:/var/lib/tailscale
+      - ./ts-serve.json:/config/serve.json:ro
+    depends_on:
+      - unibeerse-web
+    networks:
+      - unibeerse_net
+
+volumes:
+  unibeerse_media:
+  unibeerse_ts_state:
+
+networks:
+  unibeerse_net:
+  backend:
+    external: true
+    name: backend
