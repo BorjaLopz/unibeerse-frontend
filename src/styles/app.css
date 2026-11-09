@@ -1,0 +1,416 @@
+/* ---------- Tokens ----------
+   Idea: la colección es una nevera de cervezas. Fondo frío tipo escarcha, tinta verde botella,
+   y el dorado de la chapa solo para lo que cuenta (la nota y la marca). */
+:root {
+  --bg: #e4ebe8;
+  --surface: #f2f6f4;
+  --ink: #14201c;
+  --muted: #4d6058;
+  --glass: #0f3b2e;
+  --glass-ink: #eaf3ef;
+  --shelf: #8fa69c;
+  --line: #c3d1ca;
+  --danger: #a73a27;
+  --focus: #0b6b53;
+
+  --cap: #e0a526;
+  --cap-light: #f5cf6b;
+  --cap-edge: #8a5a00;
+  --cap-ink: #3b2600;
+
+  --font: "Archivo Variable", "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --wrap: 72rem;
+  --radius: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c1a16;
+    --surface: #132721;
+    --ink: #e3ece8;
+    --muted: #9db3aa;
+    --glass: #2f8a6c;
+    --glass-ink: #07130f;
+    --shelf: #3f6155;
+    --line: #234238;
+    --danger: #ff8d78;
+    --focus: #6fd0b0;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-stretch: 100%;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--glass);
+  text-underline-offset: 0.18em;
+}
+
+@media (prefers-color-scheme: dark) {
+  a { color: var(--focus); }
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  background: var(--glass);
+  color: var(--glass-ink);
+  padding: 0.5rem 0.75rem;
+  z-index: 20;
+}
+.skip:focus { top: 0.5rem; }
+
+/* ---------- Tipografía ----------
+   Una sola familia con eje de anchura: titulares condensados como el rotulado de una lata,
+   texto en anchura normal. */
+h1, h2, h3 {
+  font-stretch: 62%;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.005em;
+  margin: 0;
+  text-wrap: balance;
+}
+h1 { font-size: clamp(2.6rem, 7vw, 4.75rem); }
+h2 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+
+.prose { max-width: 62ch; margin: 0 0 1rem; }
+.muted { color: var(--muted); }
+
+/* ---------- Cabecera ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.site-header__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.5rem;
+  min-height: 3.5rem;
+  padding-block: 0.4rem;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+  text-decoration: none;
+  font-stretch: 62%;
+  font-weight: 800;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+.nav { display: flex; gap: 0.25rem; flex: 1; flex-wrap: wrap; }
+.nav a {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+}
+.nav a:hover { background: var(--surface); }
+.nav a[aria-current="page"] { background: var(--glass); color: var(--glass-ink); }
+.session { display: flex; align-items: center; gap: 0.75rem; }
+.session__name { font-weight: 600; max-width: 12ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- Botones y controles ---------- */
+.btn {
+  display: inline-block;
+  background: var(--glass);
+  color: var(--glass-ink);
+  border: 0;
+  border-radius: var(--radius);
+  padding: 0.7rem 1.1rem;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn:hover { filter: brightness(1.12); }
+.btn:disabled { opacity: 0.55; cursor: default; }
+.btn--small { padding: 0.35rem 0.8rem; font-size: 0.95rem; }
+
+.link-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--glass);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+@media (prefers-color-scheme: dark) { .link-btn { color: var(--focus); } }
+.link-btn--danger { color: var(--danger); }
+
+.field { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.field--grow { flex: 1 1 16rem; }
+label { font-weight: 600; font-size: 0.95rem; }
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--shelf);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  width: 100%;
+}
+textarea { resize: vertical; }
+input[type="file"] { padding: 0.45rem; }
+
+.notice {
+  background: var(--surface);
+  border-left: 4px solid var(--glass);
+  padding: 0.6rem 0.9rem;
+  margin: 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.notice--error { border-left-color: var(--danger); }
+
+/* ---------- Páginas ---------- */
+.page { padding-block: 2rem 4rem; }
+.page--narrow { max-width: 44rem; }
+.intro { margin-bottom: 1.75rem; }
+.intro p { margin: 0.75rem 0 0; max-width: 56ch; color: var(--muted); }
+.intro--row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+.state { margin: 2rem 0; }
+
+/* ---------- Catálogo ---------- */
+.toolbar { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: end; }
+.toolbar .field:not(.field--grow) { flex: 1 1 9rem; max-width: 14rem; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.chip {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--shelf);
+  border-radius: 99rem;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+}
+.chip:hover { background: var(--surface); }
+.chip[aria-pressed="true"] { background: var(--glass); border-color: var(--glass); color: var(--glass-ink); }
+.chip__n { opacity: 0.65; margin-left: 0.2rem; font-size: 0.85em; }
+
+.count { margin: 1.5rem 0 0.5rem; color: var(--muted); display: flex; gap: 1rem; align-items: baseline; }
+
+/* La estantería: cada cerveza se apoya en una balda que recorre toda la fila. */
+.shelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  row-gap: 1.5rem;
+}
+.bottle {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+}
+.bottle__stage {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  aspect-ratio: 5 / 6;
+  padding: 0.5rem 0.75rem 0;
+  border-bottom: 4px solid var(--shelf);
+}
+.bottle__stage::after {
+  content: "";
+  position: absolute;
+  inset: 100% 0 auto;
+  height: 0.7rem;
+  background: linear-gradient(rgba(15, 59, 46, 0.16), transparent);
+  pointer-events: none;
+}
+.bottle__stage img {
+  width: auto;
+  height: auto;
+  max-width: 88%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 5px rgba(10, 30, 24, 0.22));
+  transition: transform 0.2s ease;
+}
+.bottle:hover .bottle__stage img,
+.bottle:focus-visible .bottle__stage img { transform: translateY(-6px); }
+.glyph { width: 28%; color: var(--shelf); opacity: 0.55; margin-bottom: 0.25rem; }
+.bottle__cap { position: absolute; top: 0.4rem; right: 0.5rem; transform: rotate(8deg); }
+
+.bottle__text { display: flex; flex-direction: column; gap: 0.1rem; padding: 0.9rem 0.75rem 0; }
+.bottle__brand {
+  font-size: 0.85rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bottle__name {
+  font-stretch: 62%;
+  font-weight: 800;
+  font-size: 1.4rem;
+  line-height: 1.02;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.bottle:hover .bottle__name { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.bottle__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.15rem 0.6rem; margin-top: 0.35rem; font-size: 0.875rem; }
+.bottle__style { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+
+.flags { display: inline-flex; gap: 0.2rem; }
+.flags img { width: 20px; height: 15px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18); }
+
+/* ---------- Ficha ---------- */
+.crumbs { margin: 0 0 1.25rem; }
+.detail { display: grid; gap: 2rem; align-items: start; }
+@media (min-width: 52rem) {
+  .detail { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 3.5rem; }
+  .detail__photo { position: sticky; top: 5rem; }
+}
+.detail__stage {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  aspect-ratio: 1 / 1.1;
+  border-bottom: 6px solid var(--shelf);
+  padding: 1rem 1.5rem 0;
+}
+.detail__stage img {
+  width: auto;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 10px rgba(10, 30, 24, 0.25));
+}
+.detail__stage .glyph { width: 22%; }
+.detail__brand { margin: 0 0 0.35rem; font-size: 1.1rem; color: var(--muted); }
+.detail__name { font-size: clamp(3rem, 9vw, 6rem); margin-bottom: 1.5rem; overflow-wrap: anywhere; }
+
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.6rem 1.5rem;
+  align-items: center;
+  margin: 0 0 2rem;
+  padding: 1rem 0;
+  border-block: 1px solid var(--line);
+}
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; font-weight: 600; }
+.facts__country { display: flex; align-items: center; gap: 0.5rem; }
+.detail__actions { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 2rem; font-size: 0.95rem; }
+section + section { margin-top: 1.5rem; }
+
+.cap { display: block; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25)); }
+
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+.pager a { max-width: 48%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- Comentarios ---------- */
+.comments { margin-top: 4rem; max-width: 44rem; }
+.comments__list { list-style: none; padding: 0; margin: 1rem 0 1.5rem; display: grid; gap: 1.25rem; }
+.comments__who { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; align-items: baseline; margin: 0; }
+.comments__who time { color: var(--muted); font-size: 0.875rem; }
+.comments__text { margin: 0.2rem 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.comments__form { display: grid; gap: 0.5rem; justify-items: start; }
+.comments__form textarea { max-width: 100%; }
+
+/* ---------- Estilos ---------- */
+.style { padding-block: 1.5rem; border-top: 1px solid var(--line); }
+.style h2 { font-size: 2.2rem; }
+
+/* ---------- Formularios ---------- */
+.form { display: grid; gap: 1.1rem; margin-top: 1.5rem; }
+.form__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
+.form__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.tabs { justify-self: start; display: inline-flex; border: 1px solid var(--shelf); border-radius: var(--radius); overflow: hidden; margin-top: 1rem; }
+.tabs button {
+  font: inherit;
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+}
+.tabs button[aria-pressed="true"] { background: var(--glass); color: var(--glass-ink); font-weight: 600; }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- Administración ---------- */
+.admin-list { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.25rem; }
+.admin-list a { display: flex; align-items: center; gap: 0.75rem; padding: 0.35rem 0.5rem; border-radius: var(--radius); color: var(--ink); text-decoration: none; }
+.admin-list a:hover { background: var(--surface); }
+.admin-list img, .admin-list__blank { width: 40px; height: 40px; object-fit: contain; flex: none; }
+.admin-preview { margin-top: 0.5rem; object-fit: contain; }
+
+/* ---------- Pie ---------- */
+.site-footer { border-top: 1px solid var(--line); padding-block: 1.5rem 2.5rem; color: var(--muted); font-size: 0.95rem; }
+.site-footer p { margin: 0 0 0.4rem; }
+.site-footer a { margin-right: 1rem; }
+
+/* ---------- Movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bottle__stage img { transition: none; }
+  .bottle:hover .bottle__stage img { transform: none; }
+}
+
+@media (max-width: 40rem) {
+  .site-header__row { gap: 0.25rem 1rem; }
+  .session { margin-left: auto; }
+  .nav { order: 3; flex-basis: 100%; }
+}
+
+@media (max-width: 30rem) {
+  .nav a { padding-inline: 0.5rem; }
+  .shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bottle__name { font-size: 1.25rem; }
+}

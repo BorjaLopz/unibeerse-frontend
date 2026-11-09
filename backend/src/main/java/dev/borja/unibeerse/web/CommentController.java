@@ -23,7 +23,7 @@ public class CommentController {
     public record CommentInput(String text) {}
 
     /** Lo que ve el publico: nunca el uid ni el email del autor. */
-    public record CommentView(Long id, String authorName, String text, java.time.Instant createdAt, boolean legacy) {}
+    public record CommentView(Long id, String authorName, String text, java.time.Instant createdAt, boolean legacy, boolean mine) {}
 
     private final CommentRepository comments;
     private final BeerRepository beers;
@@ -33,13 +33,15 @@ public class CommentController {
         this.beers = beers;
     }
 
-    private static CommentView view(Comment c) {
-        return new CommentView(c.id, c.authorName, c.text, c.createdAt, c.uid == null);
+    /** "mine" solo es true si la peticion trae el token de quien escribio el comentario. */
+    private static CommentView view(Comment c, Jwt jwt) {
+        boolean mine = jwt != null && c.uid != null && c.uid.equals(jwt.getSubject());
+        return new CommentView(c.id, c.authorName, c.text, c.createdAt, c.uid == null, mine);
     }
 
     @GetMapping("/api/beers/{beerId}/comments")
-    public List<CommentView> list(@PathVariable Long beerId) {
-        return comments.findByBeerIdOrderByCreatedAtAscIdAsc(beerId).stream().map(CommentController::view).toList();
+    public List<CommentView> list(@AuthenticationPrincipal Jwt jwt, @PathVariable Long beerId) {
+        return comments.findByBeerIdOrderByCreatedAtAscIdAsc(beerId).stream().map(c -> view(c, jwt)).toList();
     }
 
     @PostMapping("/api/beers/{beerId}/comments")
@@ -57,7 +59,7 @@ public class CommentController {
         c.uid = jwt.getSubject();
         c.authorName = displayName(jwt);
         c.text = text;
-        return view(comments.save(c));
+        return view(comments.save(c), jwt);
     }
 
     /** Puede borrarlo su autor o un administrador. */

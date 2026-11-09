@@ -64,6 +64,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/beers", "/api/beers/*", "/api/beers/*/comments").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/me").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/beers/*/comments").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/comments/*").authenticated()
                         .anyRequest().denyAll())

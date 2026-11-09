@@ -65,3 +65,17 @@ El `pg_dumpall` del backup nocturno ya incluye la base `unibeerse`. Las fotos su
 
 En Uptime Kuma añade un monitor HTTP a `http://unibeerse-web/` y otro a `http://unibeerse-api:8080/actuator/health` (palabra clave `UP`). Recuerda que Kuma tiene que estar en la red `backend`... y para ver `unibeerse-web` también en `unibeerse_net`:
 `docker network connect deploy_unibeerse_net uptime-kuma`.
+
+
+## Frontend nuevo (fase 2)
+
+La web se reescribió en React + TypeScript (Vite). Cambios respecto a la antigua: sin Tailwind, styled-components, EmailJS,
+crypto-js ni Firestore; Firebase solo se usa para iniciar sesión.
+
+1. Rama `selfhost`, desde la raíz del repo: `bash deploy/limpiar.sh` (borra la web antigua con `git rm`).
+2. Descomprime `unibeerse-fase2.zip` encima.
+3. `npm install` (genera `package-lock.json`; haz commit de él) y `npm run build` para comprobar que compila.
+4. Para desarrollar en local: `npm run dev` (necesita la API en `localhost:8080` y un `.env.local` con las `VITE_FIREBASE_*`).
+5. Despliegue: lo de la sección 4 (`docker compose ... up -d --build`) ya construye la web.
+
+Las direcciones antiguas `/beer/<n>` redirigen a la ficha nueva.
