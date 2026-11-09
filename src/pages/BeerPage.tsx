@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useBeers } from "../lib/beers";
 import { useAuth } from "../lib/auth";
 import { describeFamily, familyOf } from "../lib/styles";
-import { formatAbv, formatScore, photoOf } from "../lib/format";
+import { beerTitle, brandIsRedundant, formatAbv, formatScore, photoOf } from "../lib/format";
 import { splitCountries } from "../lib/countries";
 import { usePageTitle } from "../lib/usePageTitle";
 import { Flags } from "../components/Flags";
@@ -18,7 +18,7 @@ export default function BeerPage() {
   const { isAdmin } = useAuth();
   const navigate = useNavigate();
   const beer = Number.isFinite(id) ? byId(id) : undefined;
-  usePageTitle(beer ? `${beer.brand} ${beer.name}`.trim() : undefined);
+  usePageTitle(beer ? beerTitle(beer) : undefined);
 
   if (status === "loading") return <main className="wrap page"><p className="muted state" role="status">Cargando…</p></main>;
   if (!beer) return <NotFoundPage />;
@@ -44,12 +44,12 @@ export default function BeerPage() {
       <article className="detail">
         <div className="detail__photo">
           <div className="detail__stage">
-            {src ? <img src={src} alt={`${beer.brand} ${beer.name}`.trim()} width={640} height={640} /> : <BottleGlyph />}
+            {src ? <img src={src} alt={beerTitle(beer)} width={640} height={640} /> : <BottleGlyph />}
           </div>
         </div>
 
         <div className="detail__body">
-          {beer.brand && <p className="detail__brand">{beer.brand}</p>}
+          {!brandIsRedundant(beer) && <p className="detail__brand">{beer.brand}</p>}
           <h1 className="detail__name">{beer.name}</h1>
 
           <dl className="facts">

@@ -4,8 +4,13 @@ const nf = new Intl.NumberFormat("es-ES", { minimumFractionDigits: 0, maximumFra
 
 export const num = (v: number): string => nf.format(v);
 
+/** Marca + nombre, sin repetir cuando el nombre ya empieza por la marca ("Duvel" / "Duvel" → "Duvel"). */
 export function beerTitle(b: { brand: string; name: string }): string {
-  return `${b.brand} ${b.name}`.trim();
+  const brand = b.brand.trim();
+  const name = b.name.trim();
+  const [nb, nn] = [norm(brand), norm(name)];
+  if (!brand || nn === nb || nn.startsWith(nb + " ")) return name;
+  return `${brand} ${name}`;
 }
 
 /** "1906 Reserva Especial · 6,5 % · España · Lager" (solo lo que haya). */

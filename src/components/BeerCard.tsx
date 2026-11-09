@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Beer } from "../types";
-import { formatAbv, formatScore, photoOf } from "../lib/format";
+import { brandIsRedundant, formatAbv, formatScore, photoOf } from "../lib/format";
 import { Flags } from "./Flags";
 import { BottleGlyph } from "./BottleGlyph";
 import { ScoreBadge } from "./ScoreBadge";
@@ -29,7 +29,7 @@ export function BeerCard({ beer, priority = false }: { beer: Beer; priority?: bo
         )}
       </div>
       <div className="bottle__text">
-        {beer.brand && <span className="bottle__brand">{beer.brand}</span>}
+        {!brandIsRedundant(beer) && <span className="bottle__brand">{beer.brand}</span>}
         <span className="bottle__name">{beer.name}</span>
         <span className="bottle__meta">
           {beer.abv != null && <span>{formatAbv(beer.abv)}</span>}
